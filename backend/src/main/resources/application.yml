@@ -1,0 +1,16 @@
+spring:
+  messages:
+    basename: i18n/messages
+  application:
+    name: backend
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@//localhost:1521/orcl
+    username: system
+    password: hr
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+server:
+  port: 6060
