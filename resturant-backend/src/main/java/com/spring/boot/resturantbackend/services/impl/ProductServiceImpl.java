@@ -20,7 +20,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> getAllProducts() {
-        List<Product> products = productRepo.findAll();
+        List<Product> products = productRepo.findAllByOrderByIdAsc();
         return products.stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList();
     }
 
@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
         if (Objects.isNull(id)) {
             throw new SystemException("id.must_be.not_null");
         }
-        List<Product> products = productRepo.findAllProductsByCategoryId(id);
+        List<Product> products = productRepo.findAllProductsByCategoryIdByOrderByIdAsc(id);
         return products.stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList();
     }
 
@@ -144,7 +144,7 @@ public class ProductServiceImpl implements ProductService {
             if (Objects.isNull(key)) {
                 throw new SystemException("key.null");
             }
-            List<Product> result = productRepo.getAllProductsByKey(key);
+            List<Product> result = productRepo.getAllProductsByKeyByOrderByIdAsc(key);
             if (result.isEmpty()) {
                 throw new SystemException("product.not.found");
             }

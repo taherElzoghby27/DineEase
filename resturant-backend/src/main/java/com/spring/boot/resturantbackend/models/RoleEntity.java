@@ -6,24 +6,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(schema = "hr")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-public class ContactInfo {
+public class RoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String name;
-    @Column(nullable = false)
-    private String email;
-    @Column(nullable = false)
-    private String subject;
-    @Column(nullable = false)
-    private String message;
-    @ManyToOne
-    private UserEntity user;
+    private String code;
+    @ManyToMany
+    @JoinTable(
+            schema = "hr",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "role_id"})
+    )
+    private List<UserEntity> users;
 }

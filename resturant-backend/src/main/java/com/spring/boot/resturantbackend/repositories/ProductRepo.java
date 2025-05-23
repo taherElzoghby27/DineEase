@@ -9,8 +9,11 @@ import java.util.List;
 
 @Repository
 public interface ProductRepo extends JpaRepository<Product, Long> {
-    @Query(value = "select p from Product p where p.category.id=:id")
-    List<Product> findAllProductsByCategoryId(Long id);
-    @Query(value = "select p from Product p where :key in (p.name,p.description)")
-    List<Product> getAllProductsByKey(String key);
+    List<Product> findAllByOrderByIdAsc();
+
+    @Query(value = "select p from Product p where p.category.id=:id order by p.id")
+    List<Product> findAllProductsByCategoryIdByOrderByIdAsc(Long id);
+
+    @Query(value = "select p from Product p where :key in (p.name,p.description) order by p.id")
+    List<Product> getAllProductsByKeyByOrderByIdAsc(String key);
 }

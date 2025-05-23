@@ -17,7 +17,7 @@ public class ChefServiceImpl implements ChefService {
 
     @Override
     public List<ChefDto> getAllChefs() {
-        List<Chef> chefsList = chefRepo.findAll();
+        List<Chef> chefsList = chefRepo.findAllByOrderByIdAsc();
         return chefsList.stream().map(ChefMapper.CHEF_MAPPER::toChefDto).toList();
     }
 }
