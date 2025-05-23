@@ -6,6 +6,8 @@ import jakarta.transaction.SystemException;
 import java.util.List;
 
 public interface ProductService {
+    List<ProductDto> getAllProducts();
+
     List<ProductDto> getAllProductsByCategoryId(Long id) throws SystemException;
 
     ProductDto createProduct(ProductDto productDto) throws SystemException;

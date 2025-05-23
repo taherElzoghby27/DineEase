@@ -19,6 +19,12 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepo productRepo;
 
     @Override
+    public List<ProductDto> getAllProducts() {
+        List<Product> products = productRepo.findAll();
+        return products.stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList();
+    }
+
+    @Override
     public List<ProductDto> getAllProductsByCategoryId(Long id) throws SystemException {
         if (Objects.isNull(id)) {
             throw new SystemException("id.must_be.not_null");
