@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Product} from '../model/product';
 import {map} from 'rxjs/operators';
@@ -24,9 +24,12 @@ export class ProductService {
       map(response => response)
     );
   }
-  getProductsByCategoryId(id: string): Observable<Product[]> {
-    return this.http.get<Product[]>(this.baseUrl + 'all-products/' + id).pipe(
-      map(response => response)
-    );
+
+  getProductsByKey(key: string): Observable<Product[]> {
+    const params = new HttpParams().set('key', key);
+    return this.http.get<Product[]>(this.baseUrl + 'all-products-by-key', {params})
+      .pipe(
+        map(response => response)
+      );
   }
 }
