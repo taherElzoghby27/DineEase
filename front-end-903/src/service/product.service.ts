@@ -24,4 +24,9 @@ export class ProductService {
       map(response => response)
     );
   }
+  getProductsByCategoryId(id: string): Observable<Product[]> {
+    return this.http.get<Product[]>(this.baseUrl + 'all-products/' + id).pipe(
+      map(response => response)
+    );
+  }
 }

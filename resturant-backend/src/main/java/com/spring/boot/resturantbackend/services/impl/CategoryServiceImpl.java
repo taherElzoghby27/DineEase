@@ -35,8 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
             category = categoryRepo.save(category);
             return CategoryMapper.CATEGORY_MAPPER.toCategoryDto(category);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new SystemException("something.error");
+            throw new SystemException(e.getMessage());
         }
     }
 
@@ -50,8 +49,7 @@ public class CategoryServiceImpl implements CategoryService {
             categories = categoryRepo.saveAll(categories);
             return categories.stream().map(CategoryMapper.CATEGORY_MAPPER::toCategoryDto).toList();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new SystemException("something.error");
+            throw new SystemException(e.getMessage());
         }
     }
 
@@ -66,8 +64,7 @@ public class CategoryServiceImpl implements CategoryService {
             categoryDto = CategoryMapper.CATEGORY_MAPPER.toCategoryDto(category);
             return categoryDto;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new SystemException("something.error");
+            throw new SystemException(e.getMessage());
         }
     }
 
@@ -81,8 +78,7 @@ public class CategoryServiceImpl implements CategoryService {
             categories = categoryRepo.saveAll(categories);
             return categories.stream().map(CategoryMapper.CATEGORY_MAPPER::toCategoryDto).toList();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new SystemException("something.error");
+            throw new SystemException(e.getMessage());
         }
     }
 
@@ -95,8 +91,7 @@ public class CategoryServiceImpl implements CategoryService {
             getCategoryById(id);
             categoryRepo.deleteById(id);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new SystemException("something.error");
+            throw new SystemException(e.getMessage());
         }
     }
 
@@ -108,8 +103,7 @@ public class CategoryServiceImpl implements CategoryService {
             }
             categoryRepo.deleteAllById(categoryIds);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new SystemException("something.error");
+            throw new SystemException(e.getMessage());
         }
     }
 
@@ -125,8 +119,7 @@ public class CategoryServiceImpl implements CategoryService {
             }
             return CategoryMapper.CATEGORY_MAPPER.toCategoryDto(result.get());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new SystemException("something.error");
+            throw new SystemException(e.getMessage());
         }
     }
 }

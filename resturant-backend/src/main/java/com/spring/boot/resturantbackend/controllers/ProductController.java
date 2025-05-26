@@ -25,4 +25,9 @@ public class ProductController {
     public ResponseEntity<List<ProductDto>> getAllProductsByCategoryId(@PathVariable Long id) throws SystemException {
         return ResponseEntity.ok(productService.getAllProductsByCategoryId(id));
     }
+
+    @GetMapping("/all-products-by-key")
+    public ResponseEntity<List<ProductDto>> getAllProductsByKey(@RequestParam String key) throws SystemException {
+        return ResponseEntity.ok(productService.getAllProductsByKey(key));
+    }
 }

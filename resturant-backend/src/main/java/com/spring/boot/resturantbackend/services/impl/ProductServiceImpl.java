@@ -43,8 +43,7 @@ public class ProductServiceImpl implements ProductService {
             product = productRepo.save(product);
             return ProductMapper.PRODUCT_MAPPER.toProductDto(product);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new SystemException("something.error");
+            throw new SystemException(e.getMessage());
         }
     }
 
@@ -58,8 +57,7 @@ public class ProductServiceImpl implements ProductService {
             products = productRepo.saveAll(products);
             return products.stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new SystemException("something.error");
+            throw new SystemException(e.getMessage());
         }
     }
 
@@ -73,8 +71,7 @@ public class ProductServiceImpl implements ProductService {
             product = productRepo.save(product);
             return ProductMapper.PRODUCT_MAPPER.toProductDto(product);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new SystemException("something.error");
+            throw new SystemException(e.getMessage());
         }
     }
 
@@ -88,8 +85,7 @@ public class ProductServiceImpl implements ProductService {
             products = productRepo.saveAll(products);
             return products.stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new SystemException("something.error");
+            throw new SystemException(e.getMessage());
         }
     }
 
@@ -102,8 +98,7 @@ public class ProductServiceImpl implements ProductService {
             getProductById(id);
             productRepo.deleteById(id);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new SystemException("something.error");
+            throw new SystemException(e.getMessage());
         }
 
     }
@@ -116,8 +111,7 @@ public class ProductServiceImpl implements ProductService {
             }
             productRepo.deleteAllById(productIds);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new SystemException("something.error");
+            throw new SystemException(e.getMessage());
         }
     }
 
@@ -133,8 +127,7 @@ public class ProductServiceImpl implements ProductService {
             }
             return ProductMapper.PRODUCT_MAPPER.toProductDto(result.get());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new SystemException("something.error");
+            throw new SystemException(e.getMessage());
         }
     }
 
@@ -150,8 +143,7 @@ public class ProductServiceImpl implements ProductService {
             }
             return result.stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new SystemException("something.error");
+            throw new SystemException(e.getMessage());
         }
     }
 }

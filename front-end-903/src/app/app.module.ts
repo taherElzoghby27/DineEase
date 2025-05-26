@@ -8,10 +8,10 @@ import {CardDetailsComponent} from './componants/card-details/card-details.compo
 import {CardComponent} from './componants/card/card.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {FooterComponent} from './componants/footer/footer.component';
-import { ChefsComponent } from './componants/chefs/chefs.component';
-import { ContactInfoComponent } from './componants/contact-info/contact-info.component';
+import {ChefsComponent} from './componants/chefs/chefs.component';
+import {ContactInfoComponent} from './componants/contact-info/contact-info.component';
 import {APP_BASE_HREF} from '@angular/common';
-import { PanelComponent } from './componants/panel/panel.component';
+import {PanelComponent} from './componants/panel/panel.component';
 import {HttpClientModule} from '@angular/common/http';
 
 // http://localhost:4200/
@@ -19,6 +19,7 @@ export const routes: Routes = [
   // http://localhost:4200/products
   {path: 'products', component: ProductsComponent},
   {path: 'category/:id', component: ProductsComponent},
+  {path: 'search/:key', component: ProductsComponent},
   // http://localhost:4200/cardDetails
   {path: 'cardDetails', component: CardDetailsComponent},
   // http://localhost:4200/cardDetails
@@ -53,9 +54,10 @@ export const routes: Routes = [
     BrowserModule,
     HttpClientModule
   ],
-  providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
+  providers: [{provide: APP_BASE_HREF, useValue: '/'}],
   bootstrap: [
     AppComponent
   ]
 })
-export class AppModule { }
+export class AppModule {
+}

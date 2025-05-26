@@ -29,8 +29,7 @@ public class ContactInfoServiceImpl implements ContactInfoService {
             contactInfo = contactInfoRepo.save(contactInfo);
             return ContactInfoMapper.CONTACT_INFO_MAPPER.toContactInfoDto(contactInfo);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new SystemException("something.error");
+            throw new SystemException(e.getMessage());
         }
     }
 }
