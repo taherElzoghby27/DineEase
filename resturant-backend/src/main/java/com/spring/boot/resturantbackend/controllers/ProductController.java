@@ -1,4 +1,5 @@
 package com.spring.boot.resturantbackend.controllers;
+
 import com.spring.boot.resturantbackend.dto.ProductDto;
 import com.spring.boot.resturantbackend.services.ProductService;
 import jakarta.transaction.SystemException;
@@ -16,11 +17,12 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/all-products")
-    public ResponseEntity<List<ProductDto>> getAllProducts()  {
+    public ResponseEntity<List<ProductDto>> getAllProducts() {
         return ResponseEntity.ok(productService.getAllProducts());
     }
-    @GetMapping("/all-products-by-category-id")
-    public ResponseEntity<List<ProductDto>> getAllProductsByCategoryId(@RequestParam Long categoryId) throws SystemException {
-        return ResponseEntity.ok(productService.getAllProductsByCategoryId(categoryId));
+
+    @GetMapping("/all-products/{id}")
+    public ResponseEntity<List<ProductDto>> getAllProductsByCategoryId(@PathVariable Long id) throws SystemException {
+        return ResponseEntity.ok(productService.getAllProductsByCategoryId(id));
     }
 }

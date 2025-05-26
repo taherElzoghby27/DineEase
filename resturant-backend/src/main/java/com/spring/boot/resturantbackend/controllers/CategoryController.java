@@ -27,4 +27,9 @@ public class CategoryController {
     public ResponseEntity<CategoryDto> createCategory(@RequestBody @Valid CategoryDto categoryDto) throws SystemException {
         return ResponseEntity.created(URI.create("create-category")).body(categoryService.createCategory(categoryDto));
     }
+
+    @GetMapping("/get-category/{id}")
+    public ResponseEntity<CategoryDto> getCategoryById(@PathVariable Long id) throws SystemException {
+        return ResponseEntity.ok(categoryService.getCategoryById(id));
+    }
 }
