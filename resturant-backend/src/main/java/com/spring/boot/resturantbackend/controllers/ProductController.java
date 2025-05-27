@@ -17,17 +17,20 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/all-products")
-    public ResponseEntity<List<ProductDto>> getAllProducts() {
-        return ResponseEntity.ok(productService.getAllProducts());
+    public ResponseEntity<List<ProductDto>> getAllProducts(@RequestParam int page, @RequestParam int size)
+            throws SystemException {
+        return ResponseEntity.ok(productService.getAllProducts(page, size));
     }
 
     @GetMapping("/all-products/{id}")
-    public ResponseEntity<List<ProductDto>> getAllProductsByCategoryId(@PathVariable Long id) throws SystemException {
-        return ResponseEntity.ok(productService.getAllProductsByCategoryId(id));
+    public ResponseEntity<List<ProductDto>> getAllProductsByCategoryId(@PathVariable Long id, @RequestParam int page, @RequestParam int size)
+            throws SystemException {
+        return ResponseEntity.ok(productService.getAllProductsByCategoryId(id, page, size));
     }
 
     @GetMapping("/all-products-by-key")
-    public ResponseEntity<List<ProductDto>> getAllProductsByKey(@RequestParam String key) throws SystemException {
-        return ResponseEntity.ok(productService.getAllProductsByKey(key));
+    public ResponseEntity<List<ProductDto>> getAllProductsByKey(@RequestParam String key, @RequestParam int page, @RequestParam int size)
+            throws SystemException {
+        return ResponseEntity.ok(productService.getAllProductsByKey(key, page, size));
     }
 }

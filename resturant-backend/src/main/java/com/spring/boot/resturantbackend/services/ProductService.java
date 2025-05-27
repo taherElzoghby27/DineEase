@@ -6,9 +6,9 @@ import jakarta.transaction.SystemException;
 import java.util.List;
 
 public interface ProductService {
-    List<ProductDto> getAllProducts();
+    List<ProductDto> getAllProducts(int page, int size) throws SystemException;
 
-    List<ProductDto> getAllProductsByCategoryId(Long id) throws SystemException;
+    List<ProductDto> getAllProductsByCategoryId(Long id, int page, int size) throws SystemException;
 
     ProductDto createProduct(ProductDto productDto) throws SystemException;
 
@@ -24,5 +24,5 @@ public interface ProductService {
 
     ProductDto getProductById(Long id) throws SystemException;
 
-    List<ProductDto> getAllProductsByKey(String key) throws SystemException;
+    List<ProductDto> getAllProductsByKey(String key, int page, int size) throws SystemException;
 }
