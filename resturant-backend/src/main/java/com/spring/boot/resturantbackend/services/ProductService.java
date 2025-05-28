@@ -25,4 +25,6 @@ public interface ProductService {
     ProductDto getProductById(Long id) throws SystemException;
 
     List<ProductDto> getAllProductsByKey(String key, int page, int size) throws SystemException;
+
+    List<ProductDto> getAllProductsByCategoryIdAndKey(Long categoryId, String key, int page, int size) throws SystemException;
 }

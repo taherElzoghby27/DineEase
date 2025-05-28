@@ -33,4 +33,15 @@ public class ProductController {
             throws SystemException {
         return ResponseEntity.ok(productService.getAllProductsByKey(key, page, size));
     }
+
+    @GetMapping("/all-products-by-key-and-category-id")
+    public ResponseEntity<List<ProductDto>> getAllProductsByKeyAndCategoryId(
+            @RequestParam Long categoryId,
+            @RequestParam String key,
+            @RequestParam int page,
+            @RequestParam int size
+    )
+            throws SystemException {
+        return ResponseEntity.ok(productService.getAllProductsByCategoryIdAndKey(categoryId, key, page, size));
+    }
 }

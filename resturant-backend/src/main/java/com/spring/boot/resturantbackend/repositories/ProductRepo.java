@@ -19,4 +19,7 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
 
     @Query("SELECT p FROM Product p WHERE lower(p.name) LIKE lower(concat('%', :key, '%')) OR lower(p.description) LIKE lower(concat('%', :key, '%')) ORDER BY p.id")
     Page<Product> getAllProductsByKeyByOrderByIdAsc(@Param("key") String key, Pageable pageable);
+
+    @Query(value = "SELECT p FROM Product p WHERE lower(p.name) LIKE lower(concat('%', :key, '%')) OR lower(p.description) LIKE lower(concat('%', :key, '%')) and p.category.id = :id  ORDER BY p.id")
+    Page<Product> getAllProductsByKeyByCategoryIdByOrderByIdAsc(@Param("id") Long categoryId, @Param("key") String key, Pageable pageable);
 }

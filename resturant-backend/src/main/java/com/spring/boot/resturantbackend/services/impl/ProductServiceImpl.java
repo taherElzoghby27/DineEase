@@ -1,9 +1,11 @@
 package com.spring.boot.resturantbackend.services.impl;
 
+import com.spring.boot.resturantbackend.dto.CategoryDto;
 import com.spring.boot.resturantbackend.dto.ProductDto;
 import com.spring.boot.resturantbackend.mappers.ProductMapper;
 import com.spring.boot.resturantbackend.models.Product;
 import com.spring.boot.resturantbackend.repositories.ProductRepo;
+import com.spring.boot.resturantbackend.services.CategoryService;
 import com.spring.boot.resturantbackend.services.ProductService;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepo productRepo;
+    @Autowired
+    private CategoryService categoryService;
 
     @Override
     public List<ProductDto> getAllProducts(int page, int size) throws SystemException {
@@ -138,19 +142,29 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> getAllProductsByKey(String key, int page, int size) throws SystemException {
-        try {
-            if (Objects.isNull(key)) {
-                throw new SystemException("key.null");
-            }
-            Pageable pageable = getPageable(page, size);
-            Page<Product> result = productRepo.getAllProductsByKeyByOrderByIdAsc(key, pageable);
-            if (result.getContent().isEmpty()) {
-                throw new SystemException("product.not.found");
-            }
-            return result.getContent().stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList();
-        } catch (Exception e) {
-            throw new SystemException(e.getMessage());
+        if (Objects.isNull(key)) {
+            throw new SystemException("key.null");
         }
+        Pageable pageable = getPageable(page, size);
+        Page<Product> result = productRepo.getAllProductsByKeyByOrderByIdAsc(key, pageable);
+        if (result.getContent().isEmpty()) {
+            throw new SystemException("product.not.found");
+        }
+        return result.getContent().stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList();
+    }
+
+    @Override
+    public List<ProductDto> getAllProductsByCategoryIdAndKey(Long categoryId, String key, int page, int size) throws SystemException {
+        if (Objects.isNull(key)) {
+            throw new SystemException("key.null");
+        }
+        categoryService.getCategoryById(categoryId);
+        Pageable pageable = getPageable(page, size);
+        Page<Product> result = productRepo.getAllProductsByKeyByCategoryIdByOrderByIdAsc(categoryId, key, pageable);
+        if (result.getContent().isEmpty()) {
+            throw new SystemException("product.not.found");
+        }
+        return result.getContent().stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList();
     }
 
     private static Pageable getPageable(int page, int size) throws SystemException {

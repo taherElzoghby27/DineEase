@@ -8,7 +8,7 @@ import {map} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ChefService {
-  url: 'http://localhost:6060/chefs/all-chefs';
+  url = 'http://localhost:6060/chefs/all-chefs';
 
   constructor(private http: HttpClient) {
   }
