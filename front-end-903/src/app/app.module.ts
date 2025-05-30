@@ -21,6 +21,7 @@ export const routes: Routes = [
   {path: 'products', component: ProductsComponent},
   {path: 'category/:id', component: ProductsComponent},
   {path: 'search/:key', component: ProductsComponent},
+  {path: 'category/:id/search/:key', component: ProductsComponent},
   // http://localhost:4200/cardDetails
   {path: 'cardDetails', component: CardDetailsComponent},
   // http://localhost:4200/cardDetails

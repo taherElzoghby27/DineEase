@@ -34,4 +34,13 @@ export class ProductService {
         map(response => response)
       );
   }
+
+  searchByCategoryIdAndKey(id: string, key: string, page, size): Observable<ProductResponseVm> {
+    const params = new HttpParams()
+      .set('key', key).set('page', page).set('size', size).set('categoryId', id);
+    return this.http.get<ProductResponseVm>(`${this.baseUrl}all-products-by-key-and-category-id`, {params})
+      .pipe(
+        map(response => response)
+      );
+  }
 }

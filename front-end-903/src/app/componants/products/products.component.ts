@@ -25,7 +25,11 @@ export class ProductsComponent implements OnInit {
   handleAllActions(pageNumber): void {
     const hasId = this.activatedRoute.snapshot.paramMap.has('id');
     const hasKey = this.activatedRoute.snapshot.paramMap.has('key');
-    if (hasId) {
+    if (hasId && hasKey) {
+      const categoryId = this.activatedRoute.snapshot.paramMap.get('id');
+      const key = this.activatedRoute.snapshot.paramMap.get('key');
+      this.getProductsByKeyAndCategoryId(key, categoryId, pageNumber);
+    } else if (hasId) {
       const categoryId = this.activatedRoute.snapshot.paramMap.get('id');
       this.getAllProductsByCategoryId(categoryId, pageNumber);
     } else if (hasKey) {
@@ -57,7 +61,19 @@ export class ProductsComponent implements OnInit {
     });
   }
 
+  getProductsByKeyAndCategoryId(key: string, id: string, pageNumber): void {
+    this.service.searchByCategoryIdAndKey(id, key, pageNumber, this.size).subscribe(response => {
+      this.products = response.products;
+      this.collectionSize = response.totalProducts;
+    });
+  }
+
   doPagination(): void {
+    this.handleAllActions(this.page);
+  }
+
+  changeSizeOfItems(event: Event): void {
+    this.size = +(event.target as HTMLInputElement).value;
     this.handleAllActions(this.page);
   }
 

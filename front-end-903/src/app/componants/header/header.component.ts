@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -7,10 +7,18 @@ import {Router} from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  constructor(private router: Router) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
   }
 
   search(key: string): void {
-    this.router.navigateByUrl('search/' + key);
+    this.activatedRoute.paramMap.subscribe(params => {
+      const hasId = this.activatedRoute.firstChild.snapshot.paramMap.has('id');
+      if (hasId) {
+        const id = this.activatedRoute.firstChild.snapshot.paramMap.get('id');
+        this.router.navigateByUrl(`/category/${id}/search/${key}`);
+      } else {
+        this.router.navigateByUrl(`/search/${key}`);
+      }
+    });
   }
 }
