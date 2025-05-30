@@ -1,5 +1,6 @@
 package com.spring.boot.resturantbackend.services.impl;
 
+import com.spring.boot.resturantbackend.controllers.vm.ProductResponseVm;
 import com.spring.boot.resturantbackend.dto.CategoryDto;
 import com.spring.boot.resturantbackend.dto.ProductDto;
 import com.spring.boot.resturantbackend.mappers.ProductMapper;
@@ -26,20 +27,22 @@ public class ProductServiceImpl implements ProductService {
     private CategoryService categoryService;
 
     @Override
-    public List<ProductDto> getAllProducts(int page, int size) throws SystemException {
+    public ProductResponseVm getAllProducts(int page, int size) throws SystemException {
         Pageable pageable = getPageable(page, size);
-        Page<Product> products = productRepo.findAllByOrderByIdAsc(pageable);
-        return products.getContent().stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList();
+        Page<Product> result = productRepo.findAllByOrderByIdAsc(pageable);
+        return new ProductResponseVm(result.getContent().stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList(),
+                result.getTotalElements());
     }
 
     @Override
-    public List<ProductDto> getAllProductsByCategoryId(Long id, int page, int size) throws SystemException {
+    public ProductResponseVm getAllProductsByCategoryId(Long id, int page, int size) throws SystemException {
         if (Objects.isNull(id)) {
             throw new SystemException("id.must_be.not_null");
         }
         Pageable pageable = getPageable(page, size);
-        Page<Product> products = productRepo.findAllProductsByCategoryIdByOrderByIdAsc(id, pageable);
-        return products.getContent().stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList();
+        Page<Product> result = productRepo.findAllProductsByCategoryIdByOrderByIdAsc(id, pageable);
+        return new ProductResponseVm(result.getContent().stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList(),
+                result.getTotalElements());
     }
 
     @Override
@@ -141,7 +144,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> getAllProductsByKey(String key, int page, int size) throws SystemException {
+    public ProductResponseVm getAllProductsByKey(String key, int page, int size) throws SystemException {
         if (Objects.isNull(key)) {
             throw new SystemException("key.null");
         }
@@ -150,11 +153,12 @@ public class ProductServiceImpl implements ProductService {
         if (result.getContent().isEmpty()) {
             throw new SystemException("product.not.found");
         }
-        return result.getContent().stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList();
+        return new ProductResponseVm(result.getContent().stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList(),
+                result.getTotalElements());
     }
 
     @Override
-    public List<ProductDto> getAllProductsByCategoryIdAndKey(Long categoryId, String key, int page, int size) throws SystemException {
+    public ProductResponseVm getAllProductsByCategoryIdAndKey(Long categoryId, String key, int page, int size) throws SystemException {
         if (Objects.isNull(key)) {
             throw new SystemException("key.null");
         }
@@ -164,7 +168,8 @@ public class ProductServiceImpl implements ProductService {
         if (result.getContent().isEmpty()) {
             throw new SystemException("product.not.found");
         }
-        return result.getContent().stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList();
+        return new ProductResponseVm(result.getContent().stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList(),
+                result.getTotalElements());
     }
 
     private static Pageable getPageable(int page, int size) throws SystemException {

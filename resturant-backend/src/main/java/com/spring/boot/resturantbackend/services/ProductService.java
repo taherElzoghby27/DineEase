@@ -1,14 +1,15 @@
 package com.spring.boot.resturantbackend.services;
 
+import com.spring.boot.resturantbackend.controllers.vm.ProductResponseVm;
 import com.spring.boot.resturantbackend.dto.ProductDto;
 import jakarta.transaction.SystemException;
 
 import java.util.List;
 
 public interface ProductService {
-    List<ProductDto> getAllProducts(int page, int size) throws SystemException;
+    ProductResponseVm getAllProducts(int page, int size) throws SystemException;
 
-    List<ProductDto> getAllProductsByCategoryId(Long id, int page, int size) throws SystemException;
+    ProductResponseVm getAllProductsByCategoryId(Long id, int page, int size) throws SystemException;
 
     ProductDto createProduct(ProductDto productDto) throws SystemException;
 
@@ -24,7 +25,7 @@ public interface ProductService {
 
     ProductDto getProductById(Long id) throws SystemException;
 
-    List<ProductDto> getAllProductsByKey(String key, int page, int size) throws SystemException;
+    ProductResponseVm getAllProductsByKey(String key, int page, int size) throws SystemException;
 
-    List<ProductDto> getAllProductsByCategoryIdAndKey(Long categoryId, String key, int page, int size) throws SystemException;
+    ProductResponseVm getAllProductsByCategoryIdAndKey(Long categoryId, String key, int page, int size) throws SystemException;
 }

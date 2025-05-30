@@ -8,7 +8,7 @@
           <div class="w-100 d-flex flex-column text-start ps-4">
             <h5 class="d-flex justify-content-between border-bottom pb-2">
               <span>{{ product.name }}</span>
-              <span class="text-primary">${{product.price}}</span>
+              <span class="text-primary">${{ product.price }}</span>
             </h5>
             <small class="fst-italic">{{ product.description }}</small>
             <button type="button" class="btn btn-danger col-lg-6">ADD to Card</button>
@@ -419,16 +419,15 @@
       <!--              </div>-->
       <!--            </div>-->
       <div class="col-md-9 pag" style="padding-left: 30%">
-        <!--                <ngb-pagination-->
-        <!--                  [(page)]="page"-->
-        <!--                  [pageSize]="pageLength"-->
-        <!--                  [collectionSize]="orderSize"-->
-        <!--                  (pageChange)="doing()"-->
-        <!--                  [maxSize]="5"-->
-        <!--                  [boundaryLinks]="true"-->
-        <!--                >-->
-        <!--                </ngb-pagination>-->
-
+        <ngb-pagination
+          [(page)]=page
+          [pageSize]=size
+          [collectionSize]=collectionSize
+          [maxSize]=maxSize
+          [boundaryLinks]=true
+          (pageChange)="doPagination()"
+        >
+        </ngb-pagination>
         <div class="sel">
           <span class="mr-2">Page Size</span>
           <select>

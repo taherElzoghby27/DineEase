@@ -10,44 +10,55 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class ProductsComponent implements OnInit {
   products: Product[] = [];
+  page = 1;
+  size = 10;
+  collectionSize = 0;
+  maxSize = 3;
 
   constructor(private service: ProductService, private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe(params => this.handleAllActions());
+    this.activatedRoute.paramMap.subscribe(params => this.handleAllActions(this.page));
   }
 
-  handleAllActions(): void {
+  handleAllActions(pageNumber): void {
     const hasId = this.activatedRoute.snapshot.paramMap.has('id');
     const hasKey = this.activatedRoute.snapshot.paramMap.has('key');
     if (hasId) {
       const categoryId = this.activatedRoute.snapshot.paramMap.get('id');
-      this.getAllProductsByCategoryId(categoryId);
+      this.getAllProductsByCategoryId(categoryId, pageNumber);
     } else if (hasKey) {
       const key = this.activatedRoute.snapshot.paramMap.get('key');
-      this.getProductsByKey(key);
+      this.getProductsByKey(key, pageNumber);
     } else {
-      this.getAllProducts();
+      this.getAllProducts(pageNumber);
     }
   }
 
-  getAllProducts(): void {
-    this.service.getAllProducts().subscribe(products => {
-      this.products = products;
+  getAllProducts(pageNumber): void {
+    this.service.getAllProducts(pageNumber, this.size).subscribe(response => {
+      this.products = response.products;
+      this.collectionSize = response.totalProducts;
     });
   }
 
-  getAllProductsByCategoryId(id: string): void {
-    this.service.getProductsByCategoryId(id).subscribe(products => {
-      this.products = products;
+  getAllProductsByCategoryId(id: string, pageNumber): void {
+    this.service.getProductsByCategoryId(id, pageNumber, this.size).subscribe(response => {
+      this.products = response.products;
+      this.collectionSize = response.totalProducts;
     });
   }
 
-  getProductsByKey(key: string): void {
-    this.service.getProductsByKey(key).subscribe(products => {
-      this.products = products;
+  getProductsByKey(key: string, pageNumber): void {
+    this.service.getProductsByKey(key, pageNumber, this.size).subscribe(response => {
+      this.products = response.products;
+      this.collectionSize = response.totalProducts;
     });
+  }
+
+  doPagination(): void {
+    this.handleAllActions(this.page);
   }
 
 }

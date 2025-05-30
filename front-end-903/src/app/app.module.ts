@@ -13,6 +13,7 @@ import {ContactInfoComponent} from './componants/contact-info/contact-info.compo
 import {APP_BASE_HREF} from '@angular/common';
 import {PanelComponent} from './componants/panel/panel.component';
 import {HttpClientModule} from '@angular/common/http';
+import {NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
 
 // http://localhost:4200/
 export const routes: Routes = [
@@ -52,7 +53,8 @@ export const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbPaginationModule
   ],
   providers: [{provide: APP_BASE_HREF, useValue: '/'}],
   bootstrap: [
