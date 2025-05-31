@@ -1,7 +1,6 @@
 package com.spring.boot.resturantbackend.services.impl;
 
 import com.spring.boot.resturantbackend.controllers.vm.ProductResponseVm;
-import com.spring.boot.resturantbackend.dto.CategoryDto;
 import com.spring.boot.resturantbackend.dto.ProductDto;
 import com.spring.boot.resturantbackend.mappers.ProductMapper;
 import com.spring.boot.resturantbackend.models.Product;
