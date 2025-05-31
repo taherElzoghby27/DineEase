@@ -6,7 +6,7 @@ import jakarta.transaction.SystemException;
 import java.util.List;
 
 public interface CategoryService {
-    List<CategoryDto> getAllCategories();
+    List<CategoryDto> getAllCategories() throws SystemException;
 
     CategoryDto createCategory(CategoryDto categoryDto) throws SystemException;
 

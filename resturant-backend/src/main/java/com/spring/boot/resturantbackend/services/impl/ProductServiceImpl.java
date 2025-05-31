@@ -29,6 +29,9 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponseVm getAllProducts(int page, int size) throws SystemException {
         Pageable pageable = getPageable(page, size);
         Page<Product> result = productRepo.findAllByOrderByIdAsc(pageable);
+        if (result.isEmpty()) {
+            throw new SystemException("products.not.found");
+        }
         return new ProductResponseVm(result.getContent().stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList(),
                 result.getTotalElements());
     }
@@ -40,6 +43,9 @@ public class ProductServiceImpl implements ProductService {
         }
         Pageable pageable = getPageable(page, size);
         Page<Product> result = productRepo.findAllProductsByCategoryIdByOrderByIdAsc(id, pageable);
+        if (result.isEmpty()) {
+            throw new SystemException("products.not.found");
+        }
         return new ProductResponseVm(result.getContent().stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList(),
                 result.getTotalElements());
     }
@@ -134,7 +140,7 @@ public class ProductServiceImpl implements ProductService {
             }
             Optional<Product> result = productRepo.findById(id);
             if (result.isEmpty()) {
-                throw new SystemException("product.not.found");
+                throw new SystemException("products.not.found");
             }
             return ProductMapper.PRODUCT_MAPPER.toProductDto(result.get());
         } catch (Exception e) {
@@ -149,8 +155,8 @@ public class ProductServiceImpl implements ProductService {
         }
         Pageable pageable = getPageable(page, size);
         Page<Product> result = productRepo.getAllProductsByKeyByOrderByIdAsc(key, pageable);
-        if (result.getContent().isEmpty()) {
-            throw new SystemException("product.not.found");
+        if (result.isEmpty()) {
+            throw new SystemException("products.not.found");
         }
         return new ProductResponseVm(result.getContent().stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList(),
                 result.getTotalElements());
@@ -164,8 +170,8 @@ public class ProductServiceImpl implements ProductService {
         categoryService.getCategoryById(categoryId);
         Pageable pageable = getPageable(page, size);
         Page<Product> result = productRepo.getAllProductsByKeyByCategoryIdByOrderByIdAsc(categoryId, key, pageable);
-        if (result.getContent().isEmpty()) {
-            throw new SystemException("product.not.found");
+        if (result.isEmpty()) {
+            throw new SystemException("products.not.found");
         }
         return new ProductResponseVm(result.getContent().stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList(),
                 result.getTotalElements());

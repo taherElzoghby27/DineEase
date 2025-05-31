@@ -5,6 +5,7 @@ import com.spring.boot.resturantbackend.mappers.ChefMapper;
 import com.spring.boot.resturantbackend.models.Chef;
 import com.spring.boot.resturantbackend.repositories.ChefRepo;
 import com.spring.boot.resturantbackend.services.ChefService;
+import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,11 @@ public class ChefServiceImpl implements ChefService {
     private ChefRepo chefRepo;
 
     @Override
-    public List<ChefDto> getAllChefs() {
+    public List<ChefDto> getAllChefs() throws SystemException {
         List<Chef> chefsList = chefRepo.findAllByOrderByIdAsc();
+        if (chefsList.isEmpty()) {
+            throw new SystemException("chefs.not.found");
+        }
         return chefsList.stream().map(ChefMapper.CHEF_MAPPER::toChefDto).toList();
     }
 }

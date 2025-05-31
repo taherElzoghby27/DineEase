@@ -20,6 +20,7 @@ public class OrderServiceImpl implements OrderService {
         if (Objects.nonNull(requestOrderVm.getId())) {
             throw new SystemException("id.must_be.null");
         }
+
         return new ResponseOrderVm();
     }
 }

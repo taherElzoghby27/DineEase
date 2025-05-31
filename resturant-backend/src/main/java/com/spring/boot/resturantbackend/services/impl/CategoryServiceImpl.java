@@ -20,8 +20,11 @@ public class CategoryServiceImpl implements CategoryService {
 
 
     @Override
-    public List<CategoryDto> getAllCategories() {
+    public List<CategoryDto> getAllCategories() throws SystemException {
         List<Category> categories = categoryRepo.findAllByOrderByNameAsc();
+        if (categories.isEmpty()) {
+            throw new SystemException("error.empty.list.category");
+        }
         return categories.stream().map(CategoryMapper.CATEGORY_MAPPER::toCategoryDto).toList();
     }
 
