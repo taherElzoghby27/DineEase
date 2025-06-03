@@ -1,13 +1,16 @@
 import {Injectable} from '@angular/core';
 import {CardOrder} from '../model/card-order';
+import {BehaviorSubject, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CardService {
-  orders: CardOrder[];
-  totalPrice: number;
-  totalOrders: number;
+  orders: CardOrder[] = [];
+  //  subject with attributes
+  // obserable with functions
+  totalPrice: Subject<number> = new BehaviorSubject<number>(0);
+  totalOrders: Subject<number> = new BehaviorSubject<number>(0);
 
   constructor() {
   }
@@ -20,28 +23,46 @@ export class CardService {
     }
     isExisted = existedOrder !== undefined;
     if (isExisted) {
-      this.updateOrder(existedOrder, true);
-    } else {
       this.addOrder(order);
+    } else {
+      this.orders.push(order);
     }
+    this.calculateTotals();
   }
 
   addOrder(order: CardOrder): void {
-    this.orders.push(order);
-    this.totalOrders++;
+    order.quantity++;
+    order.totalPrice += order.price;
+    this.calculateTotals();
   }
 
-  updateOrder(order: CardOrder, add: boolean): void {
-    if (add) {
-      order.quantity++;
-      this.totalPrice += order.price;
-    } else {
-      order.quantity--;
-      this.totalPrice -= order.price;
+  minusOrder(order: CardOrder): void {
+    if (order.quantity === 1) {
+      return;
     }
+    order.quantity--;
+    order.totalPrice -= order.price;
+    this.calculateTotals();
   }
 
   removeOrder(order: CardOrder): void {
+    const index = this.orders.findIndex(cardOrder => cardOrder.id === order.id);
+    if (index > -1) {
+      this.orders.splice(index, 1);
+    }
+    this.calculateTotals();
+  }
+
+  calculateTotals(): void {
+    let totalElementSize = 0;
+    let totalElementPrice = 0;
+
+    for (const temp of this.orders) {
+      totalElementSize += temp.quantity;
+      totalElementPrice += temp.quantity * temp.price;
+    }
+    this.totalOrders.next(totalElementSize);
+    this.totalPrice.next(totalElementPrice);
   }
 
 }

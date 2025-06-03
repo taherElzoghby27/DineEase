@@ -19,7 +19,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping("/all-categories")
-    public ResponseEntity<List<CategoryDto>> getAllCategories() {
+    public ResponseEntity<List<CategoryDto>> getAllCategories() throws SystemException {
         return ResponseEntity.ok(categoryService.getAllCategories());
     }
 

@@ -18,8 +18,8 @@ export class CardComponent implements OnInit {
 
   ngOnInit(): void {
     this.orders = this.cardService.orders;
-    this.totalPrice = this.cardService.totalPrice;
-    this.totalOrders = this.cardService.totalOrders;
+    this.cardService.totalPrice.subscribe(totalPrice => this.totalPrice = totalPrice);
+    this.cardService.totalOrders.subscribe(totalOrders => this.totalOrders = totalOrders);
   }
 
 }

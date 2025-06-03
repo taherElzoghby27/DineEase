@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ProductService} from '../../../service/product.service';
 import {Product} from '../../../model/product';
 import {ActivatedRoute} from '@angular/router';
+import {CardOrder} from '../../../model/card-order';
+import {CardService} from '../../../service/card.service';
 
 @Component({
   selector: 'app-products',
@@ -15,7 +17,7 @@ export class ProductsComponent implements OnInit {
   collectionSize = 0;
   maxSize = 3;
 
-  constructor(private service: ProductService, private activatedRoute: ActivatedRoute) {
+  constructor(private service: ProductService, private activatedRoute: ActivatedRoute, private cardService: CardService) {
   }
 
   ngOnInit(): void {
@@ -75,6 +77,11 @@ export class ProductsComponent implements OnInit {
   changeSizeOfItems(event: Event): void {
     this.size = +(event.target as HTMLInputElement).value;
     this.handleAllActions(this.page);
+  }
+
+  addToCard(product: Product): void {
+    const order: CardOrder = new CardOrder(product);
+    this.cardService.addProductOrder(order);
   }
 
 }
