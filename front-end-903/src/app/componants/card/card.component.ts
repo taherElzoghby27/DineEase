@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {CardOrder} from '../../../model/card-order';
+import {CardService} from '../../../service/card.service';
 
 @Component({
   selector: 'app-card',
@@ -6,6 +8,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./card.component.css']
 })
 
-export class CardComponent {
+export class CardComponent implements OnInit {
+  constructor(private cardService: CardService) {
+  }
+
+  orders: CardOrder[];
+  totalPrice: number;
+  totalOrders: number;
+
+  ngOnInit(): void {
+    this.orders = this.cardService.orders;
+    this.totalPrice = this.cardService.totalPrice;
+    this.totalOrders = this.cardService.totalOrders;
+  }
 
 }

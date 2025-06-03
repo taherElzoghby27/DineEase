@@ -2,6 +2,7 @@ package com.spring.boot.resturantbackend.controllers;
 
 import com.spring.boot.resturantbackend.dto.ChefDto;
 import com.spring.boot.resturantbackend.services.ChefService;
+import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,7 +20,7 @@ public class ChefController {
     private ChefService chefService;
 
     @GetMapping("/all-chefs")
-    public ResponseEntity<List<ChefDto>> getAllChefs() {
+    public ResponseEntity<List<ChefDto>> getAllChefs() throws SystemException {
         return ResponseEntity.ok(chefService.getAllChefs());
     }
 }
