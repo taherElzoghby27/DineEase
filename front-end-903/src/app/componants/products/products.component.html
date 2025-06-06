@@ -15,10 +15,12 @@
           </div>
         </div>
       </div>
-      <div *ngIf="products.length === 0||collectionSize===0" class="d-flex justify-content-center align-items-center"
-           style="height: 200px;">
-        <h5 class="text-muted">No products available.</h5>
+      <div *ngIf="isError" class="d-flex flex-column justify-content-center align-items-center text-center" style="height: 200px;">
+        <i class="bi bi-exclamation-triangle text-danger mb-3" style="font-size: 2rem;"></i>
+        <h5 class="text-muted mb-2">{{ messageEn }}</h5>
+        <h5 class="text-muted">{{ messageAr }}</h5>
       </div>
+
       <div *ngIf="products.length>0" class="col-md-9 pag" style="padding-left: 30%">
         <ngb-pagination
           [(page)]=page

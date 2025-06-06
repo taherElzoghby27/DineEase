@@ -16,6 +16,9 @@ export class ProductsComponent implements OnInit {
   size = 10;
   collectionSize = 0;
   maxSize = 3;
+  messageAr = '';
+  messageEn = '';
+  isError = false;
 
   constructor(private service: ProductService, private activatedRoute: ActivatedRoute, private cardService: CardService) {
   }
@@ -46,6 +49,12 @@ export class ProductsComponent implements OnInit {
     this.service.getAllProducts(pageNumber, this.size).subscribe(response => {
       this.products = response.products;
       this.collectionSize = response.totalProducts;
+    }, errors => {
+      this.products = [];
+      this.collectionSize = 0;
+      this.messageAr = errors.error.bundleMessage.message_ar;
+      this.messageEn = errors.error.bundleMessage.message_en;
+      this.isError = true;
     });
   }
 
@@ -53,6 +62,12 @@ export class ProductsComponent implements OnInit {
     this.service.getProductsByCategoryId(id, pageNumber, this.size).subscribe(response => {
       this.products = response.products;
       this.collectionSize = response.totalProducts;
+    }, errors => {
+      this.products = [];
+      this.collectionSize = 0;
+      this.messageAr = errors.error.bundleMessage.message_ar;
+      this.messageEn = errors.error.bundleMessage.message_en;
+      this.isError = true;
     });
   }
 
@@ -60,6 +75,12 @@ export class ProductsComponent implements OnInit {
     this.service.getProductsByKey(key, pageNumber, this.size).subscribe(response => {
       this.products = response.products;
       this.collectionSize = response.totalProducts;
+    }, errors => {
+      this.products = [];
+      this.collectionSize = 0;
+      this.messageAr = errors.error.bundleMessage.message_ar;
+      this.messageEn = errors.error.bundleMessage.message_en;
+      this.isError = true;
     });
   }
 
@@ -67,6 +88,12 @@ export class ProductsComponent implements OnInit {
     this.service.searchByCategoryIdAndKey(id, key, pageNumber, this.size).subscribe(response => {
       this.products = response.products;
       this.collectionSize = response.totalProducts;
+    }, errors => {
+      this.products = [];
+      this.collectionSize = 0;
+      this.messageAr = errors.error.bundleMessage.message_ar;
+      this.messageEn = errors.error.bundleMessage.message_en;
+      this.isError = true;
     });
   }
 
