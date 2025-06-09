@@ -13,6 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 public class RoleDto {
     private Long id;
-    private String role;
+    private String code;
     private List<UserDto> accounts;
 }

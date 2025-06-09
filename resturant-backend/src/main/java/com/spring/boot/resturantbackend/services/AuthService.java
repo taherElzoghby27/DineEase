@@ -1,6 +1,11 @@
 package com.spring.boot.resturantbackend.services;
 
+import com.spring.boot.resturantbackend.vm.Security.UserAuthRequestVm;
+import com.spring.boot.resturantbackend.vm.Security.UserAuthResponseVm;
+import jakarta.transaction.SystemException;
+
 public interface AuthService {
-    signUp();
-    login();
+    UserAuthResponseVm signUp(UserAuthRequestVm userAuthRequestVm) throws SystemException;
+
+    UserAuthResponseVm login(UserAuthRequestVm userAuthRequestVm) throws SystemException;
 }

@@ -41,7 +41,7 @@ public class TokenHandler {
         Date now = new Date();
         this.jwtBuilder.setIssuedAt(now);
         this.jwtBuilder.setExpiration(createExpirationDate(now));
-        this.jwtBuilder.claim("phoneNumber", userDto.getPhoneNumber());
+        this.jwtBuilder.claim("phoneNumber", userDto.getUserDetailsDto().getPhoneNumber());
         return this.jwtBuilder.compact();
     }
 

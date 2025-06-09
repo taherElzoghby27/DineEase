@@ -15,4 +15,6 @@ public interface RoleMapper {
     RoleEntity toRole(RoleDto roleDto);
 
     RoleDto toRoleDto(RoleEntity role);
+
+    RoleDto toRoleDto(RoleDtoVm roleDtoVm);
 }

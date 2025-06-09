@@ -11,9 +11,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class RoleDtoVm {
     private Long id;
-    private String role;
+    private String code;
 
-    public RoleDtoVm(String role) {
-        this.role = role;
+    public RoleDtoVm(String code) {
+        this.code = code;
     }
 }

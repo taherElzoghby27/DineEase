@@ -1,5 +1,6 @@
-package com.spring.boot.resturantbackend.dto.security;
+package com.spring.boot.resturantbackend.vm.Security;
 
+import com.spring.boot.resturantbackend.dto.security.UserDetailsDto;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -8,20 +9,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-public class UserDto {
+public class UserAuthRequestVm {
     private Long id;
     @NotEmpty(message = "not_empty.username")
     @Size(min = 7, message = "size.username")
     private String username;
-    @Size(min = 1, max = 1, message = "error.enabled")
-    private String enabled;
-    private List<RoleDto> roles;
     private UserDetailsDto userDetailsDto;
     @Pattern(
             regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^a-zA-Z\\d]).{7,}$",

@@ -2,7 +2,6 @@ package com.spring.boot.resturantbackend.models.security;
 
 import com.spring.boot.resturantbackend.models.ContactInfo;
 import com.spring.boot.resturantbackend.models.Order;
-import com.spring.boot.resturantbackend.models.UserDetails;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,11 +23,7 @@ public class UserEntity {
     @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false)
-    private String phoneNumber;
-    @Column(nullable = false)
     private String password;
-    @Column(nullable = false)
-    private int age;
     @OneToOne(mappedBy = "userEntity")
     private UserDetails userDetails;
     @ManyToMany(mappedBy = "users")
