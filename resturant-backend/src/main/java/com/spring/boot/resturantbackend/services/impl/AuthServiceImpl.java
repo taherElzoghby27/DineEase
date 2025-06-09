@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -43,6 +44,9 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public UserAuthResponseVm login(UserAuthRequestVm userAuthRequestVm) throws SystemException {
         UserDto userDto = accountService.getAccountByUsername(userAuthRequestVm.getUsername());
+        if (Objects.isNull(userDto)) {
+            throw new SystemException("not_found.account");
+        }
         if (!passwordEncoder.matches(userAuthRequestVm.getPassword(), userDto.getPassword())) {
             throw new SystemException("error.invalid.credentials");
         }

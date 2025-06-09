@@ -29,7 +29,7 @@ public class AuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             //1- get token from headers
-            String token = request.getParameter("Authorization");
+            String token = request.getHeader("Authorization");
             //2- check token
             if (Objects.isNull(token) || !token.startsWith("Bearer ")) {
                 response.reset();

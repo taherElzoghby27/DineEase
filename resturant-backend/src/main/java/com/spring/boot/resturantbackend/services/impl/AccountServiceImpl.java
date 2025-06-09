@@ -97,9 +97,7 @@ public class AccountServiceImpl implements AccountService {
             throw new SystemException("not_empty.name");
         }
         Optional<UserEntity> result = accountRepo.findByUsername(username);
-        if (result.isEmpty()) {
-            throw new SystemException("not_found.account");
-        }
-        return UserMapper.USER_MAPPER.toUserDto(result.get());
+        System.out.println("roles : "+result.get().getRoles());
+        return result.map(UserMapper.USER_MAPPER::toUserDto).orElse(null);
     }
 }

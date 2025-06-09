@@ -1,6 +1,4 @@
 package com.spring.boot.resturantbackend.vm.Security;
-
-import com.spring.boot.resturantbackend.dto.security.UserDetailsDto;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -18,7 +16,6 @@ public class UserAuthRequestVm {
     @NotEmpty(message = "not_empty.username")
     @Size(min = 7, message = "size.username")
     private String username;
-    private UserDetailsDto userDetailsDto;
     @Pattern(
             regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^a-zA-Z\\d]).{7,}$",
             message = "error.password"

@@ -26,14 +26,11 @@ public class UserEntity {
     private String password;
     @OneToOne(mappedBy = "userEntity")
     private UserDetails userDetails;
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
     private List<RoleEntity> roles;
     @OneToMany(mappedBy = "user")
     private List<ContactInfo> contacts;
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private List<AuthoritiesRestaurant> authorities;
-    @Column(nullable = false, length = 1)
     private String enabled;
 }
