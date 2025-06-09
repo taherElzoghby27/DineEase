@@ -7,6 +7,7 @@ import com.spring.boot.resturantbackend.repositories.AccountRepo;
 import com.spring.boot.resturantbackend.services.AccountService;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,8 @@ import java.util.stream.Collectors;
 public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountRepo accountRepo;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<UserDto> getAccounts() throws SystemException {
@@ -37,6 +40,8 @@ public class AccountServiceImpl implements AccountService {
             throw new SystemException("user.exists");
         }
         UserEntity user = UserMapper.USER_MAPPER.toUserEntity(userDto);
+        //encode password
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user = accountRepo.save(user);
         return UserMapper.USER_MAPPER.toUserDto(user);
     }
