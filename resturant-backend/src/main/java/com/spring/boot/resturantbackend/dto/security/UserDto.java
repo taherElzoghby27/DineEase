@@ -1,5 +1,4 @@
 package com.spring.boot.resturantbackend.dto.security;
-
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -7,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,6 +18,8 @@ public class UserDto {
     @NotEmpty(message = "not_empty.username")
     @Size(min = 7, message = "size.username")
     private String username;
+    @NotEmpty(message = "not_empty.phone_number")
+    private String phoneNumber;
     @Size(min = 16, max = 80, message = "error.age")
     private int age;
     @Pattern(
@@ -26,4 +29,5 @@ public class UserDto {
     private String password;
     @Size(min = 1, max = 1, message = "error.enabled")
     private String enabled;
+    private List<RoleDto> roles;
 }

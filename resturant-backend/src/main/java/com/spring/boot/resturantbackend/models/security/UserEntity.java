@@ -2,7 +2,6 @@ package com.spring.boot.resturantbackend.models.security;
 
 import com.spring.boot.resturantbackend.models.ContactInfo;
 import com.spring.boot.resturantbackend.models.Order;
-import com.spring.boot.resturantbackend.models.RoleEntity;
 import com.spring.boot.resturantbackend.models.UserDetails;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,6 +23,8 @@ public class UserEntity {
     private Long id;
     @Column(nullable = false, unique = true)
     private String username;
+    @Column(nullable = false)
+    private String phoneNumber;
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)

@@ -1,6 +1,5 @@
-package com.spring.boot.resturantbackend.models;
+package com.spring.boot.resturantbackend.models.security;
 
-import com.spring.boot.resturantbackend.models.security.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
