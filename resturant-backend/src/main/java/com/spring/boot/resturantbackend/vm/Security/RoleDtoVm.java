@@ -1,4 +1,4 @@
-package com.spring.boot.resturantbackend.vm;
+package com.spring.boot.resturantbackend.vm.Security;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

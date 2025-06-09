@@ -1,7 +1,7 @@
-package com.spring.boot.resturantbackend.controllers;
+package com.spring.boot.resturantbackend.controllers.security;
 
 import com.spring.boot.resturantbackend.dto.ExceptionDto;
-import com.spring.boot.resturantbackend.services.AuthService;
+import com.spring.boot.resturantbackend.services.security.AuthService;
 import com.spring.boot.resturantbackend.vm.Security.UserAuthRequestVm;
 import com.spring.boot.resturantbackend.vm.Security.UserAuthResponseVm;
 import io.swagger.v3.oas.annotations.Operation;

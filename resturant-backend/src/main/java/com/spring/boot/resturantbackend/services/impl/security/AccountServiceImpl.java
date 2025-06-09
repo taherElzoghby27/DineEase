@@ -1,12 +1,12 @@
-package com.spring.boot.resturantbackend.services.impl;
+package com.spring.boot.resturantbackend.services.impl.security;
 
 import com.spring.boot.resturantbackend.dto.security.UserDto;
-import com.spring.boot.resturantbackend.mappers.UserMapper;
+import com.spring.boot.resturantbackend.mappers.security.UserMapper;
 import com.spring.boot.resturantbackend.models.security.RoleEntity;
 import com.spring.boot.resturantbackend.models.security.UserEntity;
-import com.spring.boot.resturantbackend.repositories.AccountRepo;
-import com.spring.boot.resturantbackend.services.AccountService;
-import com.spring.boot.resturantbackend.services.RoleService;
+import com.spring.boot.resturantbackend.repositories.security.AccountRepo;
+import com.spring.boot.resturantbackend.services.security.AccountService;
+import com.spring.boot.resturantbackend.services.security.RoleService;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

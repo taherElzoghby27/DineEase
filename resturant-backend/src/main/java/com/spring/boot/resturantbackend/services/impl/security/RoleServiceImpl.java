@@ -1,11 +1,11 @@
-package com.spring.boot.resturantbackend.services.impl;
+package com.spring.boot.resturantbackend.services.impl.security;
 
 import com.spring.boot.resturantbackend.dto.security.RoleDto;
-import com.spring.boot.resturantbackend.mappers.RoleMapper;
+import com.spring.boot.resturantbackend.mappers.security.RoleMapper;
 import com.spring.boot.resturantbackend.models.security.RoleEntity;
-import com.spring.boot.resturantbackend.repositories.RoleRepo;
-import com.spring.boot.resturantbackend.services.RoleService;
-import com.spring.boot.resturantbackend.vm.RoleDtoVm;
+import com.spring.boot.resturantbackend.repositories.security.RoleRepo;
+import com.spring.boot.resturantbackend.services.security.RoleService;
+import com.spring.boot.resturantbackend.vm.Security.RoleDtoVm;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

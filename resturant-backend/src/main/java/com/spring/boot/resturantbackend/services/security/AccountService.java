@@ -1,4 +1,4 @@
-package com.spring.boot.resturantbackend.services;
+package com.spring.boot.resturantbackend.services.security;
 
 import com.spring.boot.resturantbackend.dto.security.UserDto;
 import jakarta.transaction.SystemException;

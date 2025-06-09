@@ -1,5 +1,6 @@
 package com.spring.boot.resturantbackend.dto.security;
 
+import com.spring.boot.resturantbackend.dto.UserDetailsDto;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;

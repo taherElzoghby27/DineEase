@@ -1,8 +1,8 @@
-package com.spring.boot.resturantbackend.services;
+package com.spring.boot.resturantbackend.services.security;
 
 import com.spring.boot.resturantbackend.dto.security.RoleDto;
 import com.spring.boot.resturantbackend.models.security.RoleEntity;
-import com.spring.boot.resturantbackend.vm.RoleDtoVm;
+import com.spring.boot.resturantbackend.vm.Security.RoleDtoVm;
 
 import java.util.List;
 

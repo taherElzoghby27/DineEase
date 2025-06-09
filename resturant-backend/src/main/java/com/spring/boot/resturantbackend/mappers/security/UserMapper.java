@@ -1,4 +1,4 @@
-package com.spring.boot.resturantbackend.mappers;
+package com.spring.boot.resturantbackend.mappers.security;
 
 import com.spring.boot.resturantbackend.dto.security.UserDto;
 import com.spring.boot.resturantbackend.models.security.UserEntity;
