@@ -2,9 +2,11 @@ package com.spring.boot.resturantbackend.services.impl;
 
 import com.spring.boot.resturantbackend.dto.security.UserDto;
 import com.spring.boot.resturantbackend.mappers.UserMapper;
+import com.spring.boot.resturantbackend.models.security.RoleEntity;
 import com.spring.boot.resturantbackend.models.security.UserEntity;
 import com.spring.boot.resturantbackend.repositories.AccountRepo;
 import com.spring.boot.resturantbackend.services.AccountService;
+import com.spring.boot.resturantbackend.services.RoleService;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +23,8 @@ public class AccountServiceImpl implements AccountService {
     private AccountRepo accountRepo;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private RoleService roleService;
 
     @Override
     public List<UserDto> getAccounts() throws SystemException {
@@ -43,6 +47,11 @@ public class AccountServiceImpl implements AccountService {
         //encode password
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user = accountRepo.save(user);
+        //add roles to user to make relation
+        UserEntity finalUser = user;
+        List<RoleEntity> roles = user.getRoles();
+        roles.forEach(role -> role.setUsers(List.of(finalUser)));
+        roleService.update(roles);
         return UserMapper.USER_MAPPER.toUserDto(user);
     }
 
