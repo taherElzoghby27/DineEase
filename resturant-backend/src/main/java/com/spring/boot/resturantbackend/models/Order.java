@@ -1,6 +1,6 @@
 package com.spring.boot.resturantbackend.models;
 
-import com.spring.boot.resturantbackend.models.security.UserEntity;
+import com.spring.boot.resturantbackend.models.security.Users;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,5 +29,5 @@ public class Order {
     List<Product> products;
     @ManyToOne
     @JoinColumn(unique = true, nullable = false)
-    private UserEntity user;
+    private Users users;
 }

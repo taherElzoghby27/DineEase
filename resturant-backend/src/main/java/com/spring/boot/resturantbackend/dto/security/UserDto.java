@@ -23,7 +23,7 @@ public class UserDto {
     @Size(min = 1, max = 1, message = "error.enabled")
     private String enabled;
     private List<RoleDto> roles;
-    private UserDetailsDto userDetailsDto;
+    private UserDetailsDto userDetails;
     @Pattern(
             regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^a-zA-Z\\d]).{7,}$",
             message = "error.password"

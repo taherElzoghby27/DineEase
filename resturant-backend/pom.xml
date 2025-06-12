@@ -141,8 +141,9 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>10.17.0</version>
                 <configuration>
-                    <url>jdbc:oracle:thin:@//localhost:1521/orcl</url>
                     <user>system</user>
+                    <url>jdbc:oracle:thin:@//localhost:1521/orcl</url>
+                    <driver>oracle.jdbc.OracleDriver</driver>
                     <password>hr</password>
                     <schemas>
                         <schema>hr</schema>

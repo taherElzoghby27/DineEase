@@ -23,5 +23,5 @@ public class UserDetails {
     @Column(nullable = false)
     private String address;
     @OneToOne
-    private UserEntity userEntity;
+    private Users users;
 }

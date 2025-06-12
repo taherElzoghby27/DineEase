@@ -2,10 +2,9 @@ package com.spring.boot.resturantbackend.services.impl.security;
 
 import com.spring.boot.resturantbackend.dto.security.RoleDto;
 import com.spring.boot.resturantbackend.mappers.security.RoleMapper;
-import com.spring.boot.resturantbackend.models.security.RoleEntity;
+import com.spring.boot.resturantbackend.models.security.Role;
 import com.spring.boot.resturantbackend.repositories.security.RoleRepo;
 import com.spring.boot.resturantbackend.services.security.RoleService;
-import com.spring.boot.resturantbackend.vm.Security.RoleDtoVm;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,22 +18,22 @@ public class RoleServiceImpl implements RoleService {
     private RoleRepo roleRepo;
 
     @Override
-    public RoleDtoVm findByRole(String role) {
+    public RoleDto findByRole(String role) {
         try {
-            Optional<RoleEntity> roleResult = roleRepo.findByCode(role);
+            Optional<Role> roleResult = roleRepo.findByCode(role);
             if (roleResult.isEmpty()) {
                 throw new SystemException("error.role.not.found");
             }
-            return RoleMapper.ROLE_MAPPER.toRoleDtoVm(roleResult.get());
+            return RoleMapper.ROLE_MAPPER.toRoleDto(roleResult.get());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public List<RoleDto> update(List<RoleEntity> roles) {
+    public List<RoleDto> update(List<Role> roles) {
         try {
-            List<RoleEntity> rolesResult = roleRepo.saveAll(roles);
+            List<Role> rolesResult = roleRepo.saveAll(roles);
             if (rolesResult.isEmpty()) {
                 throw new SystemException("error.role.not.found");
             }
