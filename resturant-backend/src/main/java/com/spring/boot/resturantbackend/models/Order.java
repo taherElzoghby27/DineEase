@@ -25,7 +25,13 @@ public class Order {
     private double totalPrice;
     @Column(nullable = false)
     private double totalNumber;
-    @ManyToMany(mappedBy = "orders")
+    @ManyToMany
+    @JoinTable(
+            schema = "hr",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"order_id", "product_id"})
+    )
     List<Product> products;
     @ManyToOne
     @JoinColumn(unique = true, nullable = false)
