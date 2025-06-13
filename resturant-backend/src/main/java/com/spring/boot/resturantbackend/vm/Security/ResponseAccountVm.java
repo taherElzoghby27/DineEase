@@ -1,4 +1,5 @@
 package com.spring.boot.resturantbackend.vm.Security;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,8 +9,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class UserAuthResponseVm {
+public class ResponseAccountVm {
     private Long id;
     private String username;
-    private String token;
+    private String enabled;
 }

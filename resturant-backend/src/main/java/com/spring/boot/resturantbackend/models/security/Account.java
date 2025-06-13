@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Users {
+public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,20 +25,20 @@ public class Users {
     private String username;
     @Column(nullable = false)
     private String password;
-    @OneToOne(mappedBy = "users")
-    private UserDetails userDetails;
+    @OneToOne(mappedBy = "account")
+    private AccountDetails accountDetails;
     @Getter
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             schema = "hr",
-            joinColumns = @JoinColumn(name = "user_id"),
+            joinColumns = @JoinColumn(name = "account_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"),
-            uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "role_id"})
+            uniqueConstraints = @UniqueConstraint(columnNames = {"account_id", "role_id"})
     )
     private List<Role> roles = new ArrayList<>();
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "account")
     private List<ContactInfo> contacts;
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "account")
     private List<Order> orders;
     private String enabled;
 }

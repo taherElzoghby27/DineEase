@@ -14,5 +14,5 @@ import java.util.List;
 public class RoleDto {
     private Long id;
     private String code;
-    private List<UserDto> roles;
+    private List<AccountDto> roles;
 }

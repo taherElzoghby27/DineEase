@@ -8,6 +8,7 @@ import com.spring.boot.resturantbackend.services.security.RoleService;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 
 @Service
@@ -24,7 +25,7 @@ public class RoleServiceImpl implements RoleService {
             }
             return RoleMapper.ROLE_MAPPER.toRoleDto(roleResult.get());
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 }

@@ -21,5 +21,5 @@ public class Role {
     @Column(nullable = false)
     private String code;
     @ManyToMany(mappedBy = "roles")
-    private List<Users> users;
+    private List<Account> accounts;
 }

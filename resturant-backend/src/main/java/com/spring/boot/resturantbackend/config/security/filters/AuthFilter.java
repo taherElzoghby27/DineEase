@@ -1,7 +1,7 @@
 package com.spring.boot.resturantbackend.config.security.filters;
 
 import com.spring.boot.resturantbackend.config.security.TokenHandler;
-import com.spring.boot.resturantbackend.dto.security.UserDto;
+import com.spring.boot.resturantbackend.dto.security.AccountDto;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,7 +38,7 @@ public class AuthFilter extends OncePerRequestFilter {
             }
             token = token.substring(7);
             //3- validate token
-            UserDto userValidated = null;
+            AccountDto userValidated = null;
             userValidated = tokenHandler.validateToken(token);
             if (Objects.isNull(userValidated)) {
                 response.reset();
