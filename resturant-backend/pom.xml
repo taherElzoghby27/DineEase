@@ -146,7 +146,7 @@
                     <driver>oracle.jdbc.OracleDriver</driver>
                     <password>hr</password>
                     <schemas>
-                        <schema>hr</schema>
+                        <schema>HR</schema>
                     </schemas>
                 </configuration>
             </plugin>

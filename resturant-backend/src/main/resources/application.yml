@@ -1,7 +1,7 @@
 spring:
   flyway:
-    schemas: hr
-    default-schema: hr
+    schemas: HR
+    default-schema: HR
     enabled: true
     locations: classpath:db/migration
     baseline-on-migrate: true
