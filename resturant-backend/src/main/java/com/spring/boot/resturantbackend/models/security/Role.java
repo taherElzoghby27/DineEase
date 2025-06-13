@@ -19,7 +19,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String code;
+    private String role;
     @ManyToMany(mappedBy = "roles")
     private List<Account> accounts;
 }

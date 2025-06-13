@@ -19,7 +19,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleDto findByRole(String role) {
         try {
-            Optional<Role> roleResult = roleRepo.findByCode(role);
+            Optional<Role> roleResult = roleRepo.findByRole(role);
             if (roleResult.isEmpty()) {
                 throw new SystemException("error.role.not.found");
             }
