@@ -1,6 +1,5 @@
 package com.spring.boot.resturantbackend.services.impl.security;
 
-import com.spring.boot.resturantbackend.dto.security.RoleDto;
 import com.spring.boot.resturantbackend.dto.security.UserDto;
 import com.spring.boot.resturantbackend.mappers.security.RoleMapper;
 import com.spring.boot.resturantbackend.mappers.security.UserMapper;
@@ -41,18 +40,19 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public UserDto createAccount(UserDto userDto) throws SystemException {
-        if (Objects.nonNull(userDto.getId())) {
-            throw new SystemException("id.must_be.null");
-        }
-        if (Objects.nonNull(getAccountByUsername(userDto.getUsername()))) {
-            throw new SystemException("users.exists");
-        }
+        validateCreateAccount(userDto);
         //enable account
         userDto.setEnabled("1");
         Users user = UserMapper.USER_MAPPER.toUserEntity(userDto);
         //encode password
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         //make relation between user and role
+        initRoleToUser(user);
+        user = accountRepo.save(user);
+        return UserMapper.USER_MAPPER.toUserDto(user);
+    }
+
+    private void initRoleToUser(Users user) {
         Role role = RoleMapper.ROLE_MAPPER.toRole(roleService.findByRole(RoleEnum.USER.toString()));
         List<Role> roles = user.getRoles();
         if (Objects.isNull(roles)) {
@@ -60,31 +60,37 @@ public class AccountServiceImpl implements AccountService {
         }
         roles.add(role);
         user.setRoles(roles);
-        user = accountRepo.save(user);
-        return UserMapper.USER_MAPPER.toUserDto(user);
+    }
+
+    private void validateCreateAccount(UserDto userDto) throws SystemException {
+        if (Objects.nonNull(userDto.getId())) {
+            throw new SystemException("id.must_be.null");
+        }
+        if (Objects.nonNull(getAccountByUsername(userDto.getUsername()))) {
+            throw new SystemException("users.exists");
+        }
     }
 
     @Override
     public UserDto updateAccount(UserDto userDto) throws SystemException {
-        if (Objects.isNull(userDto.getId())) {
-            throw new SystemException("id.must_be.not_null");
-        }
-        if (Objects.isNull(getAccountById(userDto.getId()))) {
-            throw new SystemException("not_found.account");
-        }
+        validateUpdateAccount(userDto.getId());
         Users users = UserMapper.USER_MAPPER.toUserEntity(userDto);
         users = accountRepo.save(users);
         return UserMapper.USER_MAPPER.toUserDto(users);
     }
 
-    @Override
-    public void deleteAccount(Long id) throws SystemException {
+    private void validateUpdateAccount(Long id) throws SystemException {
         if (Objects.isNull(id)) {
             throw new SystemException("id.must_be.not_null");
         }
         if (Objects.isNull(getAccountById(id))) {
             throw new SystemException("not_found.account");
         }
+    }
+
+    @Override
+    public void deleteAccount(Long id) throws SystemException {
+        validateUpdateAccount(id);
         accountRepo.deleteById(id);
     }
 

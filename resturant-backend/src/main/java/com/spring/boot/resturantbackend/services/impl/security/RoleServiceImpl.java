@@ -8,8 +8,6 @@ import com.spring.boot.resturantbackend.services.security.RoleService;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,19 +23,6 @@ public class RoleServiceImpl implements RoleService {
                 throw new SystemException("error.role.not.found");
             }
             return RoleMapper.ROLE_MAPPER.toRoleDto(roleResult.get());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public List<RoleDto> update(List<Role> roles) {
-        try {
-            List<Role> rolesResult = roleRepo.saveAll(roles);
-            if (rolesResult.isEmpty()) {
-                throw new SystemException("error.role.not.found");
-            }
-            return roles.stream().map(RoleMapper.ROLE_MAPPER::toRoleDto).toList();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
