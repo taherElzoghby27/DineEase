@@ -75,7 +75,7 @@ public class AccountServiceImpl implements AccountService {
             throw new SystemException("id.must_be.null");
         }
         if (Objects.nonNull(getAccountByUsername(accountDto.getUsername()))) {
-            throw new SystemException("users.exists");
+            throw new SystemException("account.exists");
         }
     }
 
