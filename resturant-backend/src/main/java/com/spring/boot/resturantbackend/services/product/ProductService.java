@@ -1,4 +1,4 @@
-package com.spring.boot.resturantbackend.services;
+package com.spring.boot.resturantbackend.services.product;
 
 import com.spring.boot.resturantbackend.controllers.vm.ProductResponseVm;
 import com.spring.boot.resturantbackend.dto.ProductDto;

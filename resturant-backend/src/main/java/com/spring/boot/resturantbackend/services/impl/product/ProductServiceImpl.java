@@ -1,4 +1,4 @@
-package com.spring.boot.resturantbackend.services.impl;
+package com.spring.boot.resturantbackend.services.impl.product;
 
 import com.spring.boot.resturantbackend.controllers.vm.ProductResponseVm;
 import com.spring.boot.resturantbackend.dto.ProductDto;
@@ -6,7 +6,7 @@ import com.spring.boot.resturantbackend.mappers.ProductMapper;
 import com.spring.boot.resturantbackend.models.product.Product;
 import com.spring.boot.resturantbackend.repositories.product.ProductRepo;
 import com.spring.boot.resturantbackend.services.CategoryService;
-import com.spring.boot.resturantbackend.services.ProductService;
+import com.spring.boot.resturantbackend.services.product.ProductService;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

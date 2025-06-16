@@ -25,4 +25,5 @@ public class ProductDto {
     private String description;
     private Double price;
     private CategoryVm category;
+    private ProductDetailsDto productDetails;
 }
