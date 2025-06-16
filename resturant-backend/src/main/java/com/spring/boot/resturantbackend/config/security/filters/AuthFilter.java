@@ -47,7 +47,7 @@ public class AuthFilter extends OncePerRequestFilter {
             }
             //4- get roles
             List<SimpleGrantedAuthority> roles = userValidated.getRoles().stream().map(
-                    role -> new SimpleGrantedAuthority("ROLE_" + role.getCode())
+                    role -> new SimpleGrantedAuthority("ROLE_" + role.getRole())
             ).toList();
             //5- encapsulate user data , used to store details about an authenticated user after authentication is complete.
             //Stored in the SecurityContextHolder to represent the authenticated user for the duration of the request.

@@ -46,7 +46,7 @@ public class ChefController {
             ),
     })
     @GetMapping("/all-chefs")
-    public ResponseEntity<List<ChefDto>> getAllChefs() throws SystemException {
+    public ResponseEntity<List<ChefDto>> getAllChefs() {
         return ResponseEntity.ok(chefService.getAllChefs());
     }
 }

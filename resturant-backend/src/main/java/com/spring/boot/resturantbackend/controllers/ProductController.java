@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,8 +42,7 @@ public class ProductController {
             ),
     })
     @GetMapping("/all-products")
-    public ResponseEntity<ProductResponseVm> getAllProducts(@RequestParam int page, @RequestParam int size)
-            throws SystemException {
+    public ResponseEntity<ProductResponseVm> getAllProducts(@RequestParam int page, @RequestParam int size) {
         return ResponseEntity.ok(productService.getAllProducts(page, size));
     }
 
@@ -72,8 +70,7 @@ public class ProductController {
             ),
     })
     @GetMapping("/all-products/{id}")
-    public ResponseEntity<ProductResponseVm> getAllProductsByCategoryId(@PathVariable Long id, @RequestParam int page, @RequestParam int size)
-            throws SystemException {
+    public ResponseEntity<ProductResponseVm> getAllProductsByCategoryId(@PathVariable Long id, @RequestParam int page, @RequestParam int size) {
         return ResponseEntity.ok(productService.getAllProductsByCategoryId(id, page, size));
     }
 
@@ -102,8 +99,7 @@ public class ProductController {
             ),
     })
     @GetMapping("/all-products-by-key")
-    public ResponseEntity<ProductResponseVm> getAllProductsByKey(@RequestParam String key, @RequestParam int page, @RequestParam int size)
-            throws SystemException {
+    public ResponseEntity<ProductResponseVm> getAllProductsByKey(@RequestParam String key, @RequestParam int page, @RequestParam int size) {
         return ResponseEntity.ok(productService.getAllProductsByKey(key, page, size));
     }
 
@@ -136,8 +132,7 @@ public class ProductController {
             @RequestParam String key,
             @RequestParam int page,
             @RequestParam int size
-    )
-            throws SystemException {
+    ) {
         return ResponseEntity.ok(productService.getAllProductsByCategoryIdAndKey(categoryId, key, page, size));
     }
 }

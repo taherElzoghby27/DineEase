@@ -14,11 +14,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ExceptionHandling {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionDto> handleException(Exception exception) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                new ExceptionDto(
-                        BundleTranslationService.getBundleMessageWithArAndEn(exception.getMessage())
-                )
-        );
+        try {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new ExceptionDto(BundleTranslationService.getBundleMessageWithArAndEn(exception.getMessage()))
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new ExceptionDto(
+                            new BundleMessage(e.getMessage())
+                    )
+            );
+        }
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
