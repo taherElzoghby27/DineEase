@@ -32,6 +32,6 @@ public class Product {
     private Category category;
     @ManyToMany(mappedBy = "products")
     private List<Order> orders;
-    @OneToOne(mappedBy = "product")
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
     private ProductDetails productDetails;
 }

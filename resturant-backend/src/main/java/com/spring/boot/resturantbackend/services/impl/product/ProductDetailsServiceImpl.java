@@ -2,6 +2,7 @@ package com.spring.boot.resturantbackend.services.impl.product;
 
 import com.spring.boot.resturantbackend.dto.product.ProductDetailsDto;
 import com.spring.boot.resturantbackend.mappers.ProductMapper;
+import com.spring.boot.resturantbackend.models.product.Product;
 import com.spring.boot.resturantbackend.models.product.ProductDetails;
 import com.spring.boot.resturantbackend.repositories.product.ProductDetailsRepo;
 import com.spring.boot.resturantbackend.services.product.ProductDetailsService;
@@ -50,7 +51,10 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
             if (result.isEmpty()) {
                 throw new SystemException("product_details.not.found");
             }
-            return ProductMapper.PRODUCT_MAPPER.toProductDetailsDto(result.get());
+            ProductDetails productDetails = result.get();
+            ProductDetailsDto productDetailsDto = ProductMapper.PRODUCT_MAPPER.toProductDetailsDto(result.get());
+            productDetailsDto.setProduct_id(productDetails.getProduct().getId());
+            return productDetailsDto;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -71,19 +75,6 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
             );
             productDetails = productDetailsRepo.save(productDetails);
             return ProductMapper.PRODUCT_MAPPER.toProductDetailsDto(productDetails);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-
-    @Override
-    public void deleteProductDetailsByProductId(Long id) {
-        try {
-            if (Objects.isNull(id)) {
-                throw new SystemException("id.must_be.not_null");
-            }
-            ProductDetailsDto productDetailsDto = getProductDetailsByProductId(id);
-            productDetailsRepo.deleteById(productDetailsDto.getId());
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
