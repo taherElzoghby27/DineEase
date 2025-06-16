@@ -8,4 +8,6 @@ public interface ProductDetailsService {
     ProductDetailsDto getProductDetailsByProductId(Long id);
 
     ProductDetailsDto updateProductDetails(ProductDetailsDto productDetails);
+
+    void deleteProductDetailsByProductId(Long id);
 }

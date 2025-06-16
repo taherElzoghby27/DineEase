@@ -75,4 +75,17 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    @Override
+    public void deleteProductDetailsByProductId(Long id) {
+        try {
+            if (Objects.isNull(id)) {
+                throw new SystemException("id.must_be.not_null");
+            }
+            ProductDetailsDto productDetailsDto = getProductDetailsByProductId(id);
+            productDetailsRepo.deleteById(productDetailsDto.getId());
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }
