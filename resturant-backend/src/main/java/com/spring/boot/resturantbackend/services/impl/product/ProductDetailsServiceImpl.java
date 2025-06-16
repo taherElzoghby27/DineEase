@@ -30,7 +30,7 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
             //set product to product details
             productDetails.setProduct(
                     ProductMapper.PRODUCT_MAPPER.toProduct(
-                            productService.getProductById(productDetails.getId())
+                            productService.getProductById(productDetailsDto.getProduct_id())
                     )
             );
             productDetails = productDetailsRepo.save(productDetails);
@@ -66,7 +66,7 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
             //set product to product details
             productDetails.setProduct(
                     ProductMapper.PRODUCT_MAPPER.toProduct(
-                            productService.getProductById(productDetails.getId())
+                            productService.getProductById(productDetailsDto.getProduct_id())
                     )
             );
             productDetails = productDetailsRepo.save(productDetails);
