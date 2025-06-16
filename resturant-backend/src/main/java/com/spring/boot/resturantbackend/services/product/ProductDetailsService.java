@@ -1,5 +1,7 @@
 package com.spring.boot.resturantbackend.services.product;
 
+import com.spring.boot.resturantbackend.dto.ProductDetailsDto;
+
 public interface ProductDetailsService {
-    addProductDetailsToProduct();
+    ProductDetailsDto addProductDetailsToProduct(ProductDetailsDto productDetails);
 }
