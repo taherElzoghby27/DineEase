@@ -1,6 +1,6 @@
 package com.spring.boot.resturantbackend.controllers.vm;
 
-import com.spring.boot.resturantbackend.dto.ProductDto;
+import com.spring.boot.resturantbackend.dto.product.ProductDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

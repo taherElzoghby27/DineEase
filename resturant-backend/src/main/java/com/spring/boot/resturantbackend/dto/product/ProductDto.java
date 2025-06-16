@@ -1,4 +1,4 @@
-package com.spring.boot.resturantbackend.dto;
+package com.spring.boot.resturantbackend.dto.product;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.spring.boot.resturantbackend.vm.CategoryVm;

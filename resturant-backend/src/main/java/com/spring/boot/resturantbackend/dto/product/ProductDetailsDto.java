@@ -1,4 +1,4 @@
-package com.spring.boot.resturantbackend.dto;
+package com.spring.boot.resturantbackend.dto.product;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -15,5 +15,5 @@ public class ProductDetailsDto {
     private Long id;
     private String preparationTime;
     private String productCode;
-    private ProductDto product;
+    private Long product_id;
 }

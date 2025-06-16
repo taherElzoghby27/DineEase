@@ -1,4 +1,4 @@
-package com.spring.boot.resturantbackend.controllers;
+package com.spring.boot.resturantbackend.controllers.product;
 
 import com.spring.boot.resturantbackend.controllers.vm.ProductResponseVm;
 import com.spring.boot.resturantbackend.dto.ExceptionDto;
