@@ -1,5 +1,6 @@
 package com.spring.boot.resturantbackend.models;
 
+import com.spring.boot.resturantbackend.models.product.Product;
 import com.spring.boot.resturantbackend.models.security.Account;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

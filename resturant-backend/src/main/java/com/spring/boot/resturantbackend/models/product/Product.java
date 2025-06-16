@@ -1,5 +1,7 @@
-package com.spring.boot.resturantbackend.models;
+package com.spring.boot.resturantbackend.models.product;
 
+import com.spring.boot.resturantbackend.models.Category;
+import com.spring.boot.resturantbackend.models.Order;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,4 +32,6 @@ public class Product {
     private Category category;
     @ManyToMany(mappedBy = "products")
     private List<Order> orders;
+    @OneToOne(mappedBy = "product")
+    private ProductDetails productDetails;
 }

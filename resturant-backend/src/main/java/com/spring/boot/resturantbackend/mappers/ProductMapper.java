@@ -1,7 +1,7 @@
 package com.spring.boot.resturantbackend.mappers;
 
 import com.spring.boot.resturantbackend.dto.ProductDto;
-import com.spring.boot.resturantbackend.models.Product;
+import com.spring.boot.resturantbackend.models.product.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
