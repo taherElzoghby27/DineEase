@@ -40,7 +40,7 @@ public class AuthFilter extends OncePerRequestFilter {
             //3- validate token
             AccountDto userValidated = null;
             userValidated = tokenHandler.validateToken(token);
-            if (Objects.isNull(userValidated)) {
+            if (Objects.isNull(userValidated) || userValidated.getEnabled().equals("0")) {
                 response.reset();
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 return;
