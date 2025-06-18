@@ -21,7 +21,6 @@ import java.net.URI;
 @Tag(name = "Auth Controller", description = "Sign up, login")
 @RequestMapping("/auth")
 @RestController
-@CrossOrigin("http://localhost:4200")
 public class AuthController {
     @Autowired
     private AuthService authService;
