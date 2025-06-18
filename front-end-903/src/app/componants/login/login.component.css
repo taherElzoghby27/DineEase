@@ -68,3 +68,38 @@ button[disabled] {
 .signup-link a:hover {
   text-decoration: underline;
 }
+
+.error-message {
+  display: flex;
+  align-items: flex-start;
+  background-color: #ffe6e6;
+  border: 1px solid #ff4d4d;
+  color: #a94442;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 10px 0;
+  font-family: Arial, sans-serif;
+}
+
+.error-icon {
+  font-size: 24px;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.error-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.error-ar {
+  font-weight: bold;
+  direction: rtl;
+  text-align: right;
+}
+
+.error-en {
+  font-style: italic;
+  direction: ltr;
+}

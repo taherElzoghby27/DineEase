@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {RequestSignupModel} from '../model/request-signup-model';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {RequestLoginModel} from '../model/request-login-model';
@@ -15,10 +15,9 @@ export class AuthService {
   }
 
   signUp(requestSignUpModel: RequestSignupModel): Observable<any> {
-    const params = new HttpParams()
-      .set('username', requestSignUpModel.username)
-      .set('password', requestSignUpModel.password);
-    return this.http.post<any>(`${this.baseUrl}sign-up`, {params}).pipe(
+    const username = requestSignUpModel.username;
+    const password = requestSignUpModel.password;
+    return this.http.post<any>(`${this.baseUrl}sign-up`, {username, password}).pipe(
       map(response => {
         console.log(`ss  ${response}`);
         return response;
@@ -27,10 +26,9 @@ export class AuthService {
   }
 
   login(requestLoginModel: RequestLoginModel): Observable<any> {
-    const params = new HttpParams()
-      .set('username', requestLoginModel.username)
-      .set('password', requestLoginModel.password);
-    return this.http.post<any>(`${this.baseUrl}login`, {params}).pipe(
+    const username = requestLoginModel.username;
+    const password = requestLoginModel.password;
+    return this.http.post<any>(`${this.baseUrl}login`, {username, password}).pipe(
       map(response => response)
     );
   }
