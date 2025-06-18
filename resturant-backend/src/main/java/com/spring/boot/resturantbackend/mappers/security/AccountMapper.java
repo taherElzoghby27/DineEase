@@ -1,10 +1,10 @@
 package com.spring.boot.resturantbackend.mappers.security;
-
 import com.spring.boot.resturantbackend.dto.security.AccountDto;
 import com.spring.boot.resturantbackend.models.security.Account;
 import com.spring.boot.resturantbackend.vm.Security.AccountAuthRequestVm;
 import com.spring.boot.resturantbackend.vm.Security.AccountAuthResponseVm;
 import org.mapstruct.Mapper;
+import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
@@ -19,4 +19,8 @@ public interface AccountMapper {
 
     AccountAuthResponseVm toAccountResponseVm(AccountDto accountDto);
 
+    @Named("accountToId")
+    default Long accountToId(Account account) {
+        return account != null ? account.getId() : null;
+    }
 }

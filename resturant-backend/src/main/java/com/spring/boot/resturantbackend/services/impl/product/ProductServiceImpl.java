@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -198,6 +199,25 @@ public class ProductServiceImpl implements ProductService {
         } catch (SystemException e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    @Override
+    public List<ProductDto> getProductsByListOfId(List<Long> productIds) {
+        try {
+            List<Product> products = productRepo.findAllById(productIds);
+            if (products.isEmpty()) {
+                throw new SystemException("products.not.found");
+            }
+            return products.stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList();
+        } catch (SystemException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Product> listOfIdsToListOfProducts(List<Long> ids) {
+        List<ProductDto> productsDto = getProductsByListOfId(ids);
+        return productsDto.stream().map(ProductMapper.PRODUCT_MAPPER::toProduct).toList();
     }
 
     private static Pageable getPageable(int page, int size) {

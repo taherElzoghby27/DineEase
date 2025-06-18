@@ -1,20 +1,21 @@
-package com.spring.boot.resturantbackend.vm;
+package com.spring.boot.resturantbackend.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.spring.boot.resturantbackend.dto.product.ProductDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class ResponseOrderVm {
+public class OrderDto {
     private Long id;
     private Long accountId;
-    private String code;
     private double totalPrice;
     private Long totalNumber;
+    List<ProductDto> products;
 }

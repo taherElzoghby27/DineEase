@@ -141,4 +141,8 @@ public class AccountServiceImpl implements AccountService {
             throw new RuntimeException(e.getMessage());
         }
     }
+    @Override
+    public Account idToAccount(Long id) {
+        return id != null ? AccountMapper.ACCOUNT_MAPPER.toAccount(getAccountById(id)) : null;
+    }
 }

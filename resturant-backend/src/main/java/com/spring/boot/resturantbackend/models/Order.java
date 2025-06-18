@@ -11,7 +11,7 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
-@Table(schema = "hr", name = "Order_Entity")
+@Table(schema = "hr", name = "Order_table")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -20,21 +20,19 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
     private String code;
     @Column(nullable = false)
     private double totalPrice;
     @Column(nullable = false)
-    private double totalNumber;
+    private Long totalNumber;
     @ManyToMany
     @JoinTable(
             schema = "hr",
             joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"),
-            uniqueConstraints = @UniqueConstraint(columnNames = {"order_id", "product_id"})
+            inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     List<Product> products;
     @ManyToOne
-    @JoinColumn(unique = true, nullable = false)
+    @JoinColumn(nullable = false)
     private Account account;
 }

@@ -2,6 +2,7 @@ package com.spring.boot.resturantbackend.services.product;
 
 import com.spring.boot.resturantbackend.controllers.vm.ProductResponseVm;
 import com.spring.boot.resturantbackend.dto.product.ProductDto;
+import com.spring.boot.resturantbackend.models.product.Product;
 
 import java.util.List;
 
@@ -27,4 +28,8 @@ public interface ProductService {
     ProductResponseVm getAllProductsByKey(String key, int page, int size);
 
     ProductResponseVm getAllProductsByCategoryIdAndKey(Long categoryId, String key, int page, int size);
+
+    List<ProductDto> getProductsByListOfId(List<Long> productIds);
+
+    List<Product> listOfIdsToListOfProducts(List<Long> ids);
 }
