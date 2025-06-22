@@ -14,7 +14,7 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
 
-  isUserLogin(): boolean {
+  isLogin(): boolean {
     return sessionStorage.getItem('token') !== null || sessionStorage.getItem('token') !== undefined;
   }
 
