@@ -12,11 +12,12 @@ import {ChefsComponent} from './componants/chefs/chefs.component';
 import {ContactInfoComponent} from './componants/contact-info/contact-info.component';
 import {APP_BASE_HREF} from '@angular/common';
 import {PanelComponent} from './componants/panel/panel.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
 import {LoginComponent} from './componants/login/login.component';
 import {SignUpComponent} from './componants/sign-up/sign-up.component';
 import {FormsModule} from '@angular/forms';
+import {AuthInterceptor} from '../service/interceptors/auth-interceptors.service';
 
 // http://localhost:4200/
 export const routes: Routes = [
@@ -58,14 +59,20 @@ export const routes: Routes = [
     LoginComponent,
     SignUpComponent
   ],
-    imports: [
-        RouterModule.forRoot(routes),
-        BrowserModule,
-        HttpClientModule,
-        NgbPaginationModule,
-        FormsModule
-    ],
-  providers: [{provide: APP_BASE_HREF, useValue: '/'}],
+  imports: [
+    RouterModule.forRoot(routes),
+    BrowserModule,
+    HttpClientModule,
+    NgbPaginationModule,
+    FormsModule
+  ],
+  providers: [
+    {provide: APP_BASE_HREF, useValue: '/'},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }],
   bootstrap: [
     AppComponent
   ]
