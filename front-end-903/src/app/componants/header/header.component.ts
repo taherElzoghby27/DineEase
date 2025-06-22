@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {AuthService} from '../../../service/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +8,7 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthService) {
   }
 
   search(key: string): void {
@@ -20,5 +21,18 @@ export class HeaderComponent {
         this.router.navigateByUrl(`/search/${key}`);
       }
     });
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigateByUrl(`/login`);
+  }
+
+  isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
+  isLogin(): boolean {
+    return this.authService.isLogin();
   }
 }

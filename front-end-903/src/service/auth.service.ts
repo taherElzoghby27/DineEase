@@ -15,7 +15,7 @@ export class AuthService {
   }
 
   isLogin(): boolean {
-    return sessionStorage.getItem('token') !== null || sessionStorage.getItem('token') !== undefined;
+    return sessionStorage.getItem('token') !== null && sessionStorage.getItem('token') !== undefined;
   }
 
   isAdmin(): boolean {

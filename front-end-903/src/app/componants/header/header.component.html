@@ -1,47 +1,66 @@
 <!-- Navbar & Hero Start -->
-<div class="container-xxl position-relative p-0">
+<div *ngIf="isLogin()" class="container-xxl position-relative p-0">
+
+  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
     <a routerLink="/products" class="navbar-brand p-0">
-      <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Restorant</h1>
-      <!-- <img src="img/logo.png" alt="Logo"> -->
+      <h1 class="text-primary m-0">
+        <i class="fa fa-utensils me-3"></i>Restorant
+      </h1>
+      <!-- Optional logo: <img src="img/logo.png" alt="Logo"> -->
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="fa fa-bars"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarCollapse">
-      <input class="form-control" type="search" placeholder="Search" aria-label="Search" #key
-             (input)="search(key.value)">
-      <!--      <button class="btn btn-outline-success" type="submit" (click)="search(key.value)">Search</button>-->
+
+      <!-- Search Input -->
+      <div class="d-flex align-items-center me-auto">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+          #key
+          (input)="search(key.value)"
+        />
+      </div>
+
+      <!-- Navigation Links -->
       <div class="navbar-nav ms-auto py-0 pe-4">
-        <div class="nav-item nav-link active"><a routerLink="/contact-info">Contact</a></div>
-        <div class="nav-item nav-link active"></div>
-        <div class="nav-item nav-link active"><a routerLink="/chefs">Team</a></div>
-        <div class="nav-item nav-link active"></div>
-        <div class="nav-item nav-link active"><a routerLink="/panel">Panel</a></div>
-        <div class="nav-item nav-link active"></div>
 
+        <a class="nav-item nav-link active" (click)="logout()" style="cursor: pointer;">Logout</a>
+        <a class="nav-item nav-link" routerLink="/contact-info">Contact</a>
+        <a class="nav-item nav-link" routerLink="/chefs">Team</a>
+        <a class="nav-item nav-link" routerLink="/panel">Panel</a>
 
+        <!-- Category Dropdown -->
         <div class="nav-item dropdown">
           <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Category</a>
           <div class="dropdown-menu m-0">
-            <a href="booking.html" class="dropdown-item">ALL</a>
-            <a href="team.html" class="dropdown-item">Breakfast</a>
-            <a href="testimonial.html" class="dropdown-item">Launch</a>
-            <a href="testimonial.html" class="dropdown-item">Dinner</a>
-            <a href="testimonial.html" class="dropdown-item">Ice Cream</a>
-            <a href="testimonial.html" class="dropdown-item">Coffee</a>
-            <a href="testimonial.html" class="dropdown-item">Cake</a>
+            <a routerLink="/products" class="dropdown-item">All</a>
+            <a routerLink="/category/breakfast" class="dropdown-item">Breakfast</a>
+            <a routerLink="/category/lunch" class="dropdown-item">Lunch</a>
+            <a routerLink="/category/dinner" class="dropdown-item">Dinner</a>
+            <a routerLink="/category/ice-cream" class="dropdown-item">Ice Cream</a>
+            <a routerLink="/category/coffee" class="dropdown-item">Coffee</a>
+            <a routerLink="/category/cake" class="dropdown-item">Cake</a>
           </div>
         </div>
-        <!--<a href="contact.html" class="nav-item nav-link">Contact</a>-->
       </div>
 
-
+      <!-- Cart Component -->
+      <app-card></app-card>
     </div>
-    <app-card></app-card>
   </nav>
 
+  <!-- Hero Section -->
   <div class="container-xxl py-5 bg-dark hero-header mb-5">
+    <!-- Optional hero content can go here -->
   </div>
+
 </div>
 <!-- Navbar & Hero End -->
