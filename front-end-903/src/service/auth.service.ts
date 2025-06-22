@@ -14,6 +14,19 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
 
+  isUserLogin(): boolean {
+    return sessionStorage.getItem('token') !== null || sessionStorage.getItem('token') !== undefined;
+  }
+
+  isAdmin(): boolean {
+    const roles = sessionStorage.getItem('roles');
+    return roles && roles.includes('ADMIN');
+  }
+
+  logout(): void {
+    sessionStorage.removeItem('token');
+  }
+
   signUp(requestSignUpModel: RequestSignupModel): Observable<any> {
     const username = requestSignUpModel.username;
     const password = requestSignUpModel.password;
