@@ -18,23 +18,25 @@ import {LoginComponent} from './componants/login/login.component';
 import {SignUpComponent} from './componants/sign-up/sign-up.component';
 import {FormsModule} from '@angular/forms';
 import {AuthInterceptor} from '../service/interceptors/auth-interceptors.service';
+import {LoginSignupGuard} from '../service/activitor/login-signup.guard';
+import {AuthGuard} from '../service/activitor/auth.guard';
 
 // http://localhost:4200/
 export const routes: Routes = [
-  {path: 'login', component: LoginComponent},
-  {path: 'sign-up', component: SignUpComponent},
+  {path: 'login', component: LoginComponent, canActivate: [LoginSignupGuard]},
+  {path: 'sign-up', component: SignUpComponent, canActivate: [LoginSignupGuard]},
   // http://localhost:4200/products
-  {path: 'products', component: ProductsComponent},
-  {path: 'category/:id', component: ProductsComponent},
-  {path: 'search/:key', component: ProductsComponent},
-  {path: 'category/:id/search/:key', component: ProductsComponent},
+  {path: 'products', component: ProductsComponent, canActivate: [AuthGuard]},
+  {path: 'category/:id', component: ProductsComponent, canActivate: [AuthGuard]},
+  {path: 'search/:key', component: ProductsComponent, canActivate: [AuthGuard]},
+  {path: 'category/:id/search/:key', component: ProductsComponent, canActivate: [AuthGuard]},
   // http://localhost:4200/cardDetails
-  {path: 'cardDetails', component: CardDetailsComponent},
+  {path: 'cardDetails', component: CardDetailsComponent, canActivate: [AuthGuard]},
   // http://localhost:4200/cardDetails
-  {path: 'contact-info', component: ContactInfoComponent},
+  {path: 'contact-info', component: ContactInfoComponent, canActivate: [AuthGuard]},
   // http://localhost:4200/chefs
-  {path: 'chefs', component: ChefsComponent},
-  {path: 'panel', component: PanelComponent},
+  {path: 'chefs', component: ChefsComponent, canActivate: [AuthGuard]},
+  {path: 'panel', component: PanelComponent, canActivate: [AuthGuard]},
   // http://localhost:4200/
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: '**', redirectTo: '/login', pathMatch: 'full'}

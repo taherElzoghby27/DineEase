@@ -13,7 +13,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.authService.isLogin()) {
-      request.clone({
+      console.log('login');
+      request = request.clone({
         setHeaders: {
           Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         }
