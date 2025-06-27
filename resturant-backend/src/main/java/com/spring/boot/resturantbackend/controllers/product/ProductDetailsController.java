@@ -19,7 +19,6 @@ import java.net.URI;
 @Tag(name = "Product Details Controller", description = "Product Details Operations")
 @RestController
 @RequestMapping("/product-details")
-@CrossOrigin("http://localhost:4200")
 public class ProductDetailsController {
     @Autowired
     private ProductDetailsService productDetailsService;
@@ -42,8 +41,8 @@ public class ProductDetailsController {
                             schema = @Schema(implementation = ExceptionDto.class))
             )
             ,})
-    @PostMapping("/add-product-details-to-product")
-    public ResponseEntity<ProductDetailsDto> addProductDetails(@RequestBody @Valid ProductDetailsDto productDetailsDto) {
+    @PostMapping("/add-product-details")
+    public ResponseEntity<ProductDetailsDto> addProductDetails(@Valid @RequestBody ProductDetailsDto productDetailsDto) {
         return ResponseEntity.created(
                 URI.create("/add-product-details-to-product")
         ).body(

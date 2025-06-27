@@ -52,7 +52,7 @@ public class ProductServiceImpl implements ProductService {
             Pageable pageable = getPageable(page, size);
             Page<Product> result = productRepo.findAllProductsByCategoryIdByOrderByIdAsc(id, pageable);
             if (result.isEmpty()) {
-                throw new SystemException("products.not.found");
+                throw new SystemException("products.category.not.found");
             }
             return new ProductResponseVm(
                     result.getContent().stream().map(ProductMapper.PRODUCT_MAPPER::toProductDto).toList(),
