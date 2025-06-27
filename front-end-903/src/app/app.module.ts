@@ -20,6 +20,10 @@ import {FormsModule} from '@angular/forms';
 import {AuthInterceptor} from '../service/interceptors/auth-interceptors.service';
 import {LoginSignupGuard} from '../service/activitor/login-signup.guard';
 import {AuthGuard} from '../service/activitor/auth.guard';
+import { ProductDetailDialogComponent } from './componants/product-detail-dialog/product-detail-dialog.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
 
 // http://localhost:4200/
 export const routes: Routes = [
@@ -59,14 +63,18 @@ export const routes: Routes = [
     ContactInfoComponent,
     PanelComponent,
     LoginComponent,
-    SignUpComponent
+    SignUpComponent,
+    ProductDetailDialogComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,
     HttpClientModule,
     NgbPaginationModule,
-    FormsModule
+    FormsModule,
+    NoopAnimationsModule,
+    MatDialogModule,
+    MatButtonModule,
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue: '/'},

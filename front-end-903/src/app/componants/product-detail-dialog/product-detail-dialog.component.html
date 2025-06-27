@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>{{ this.product.name }}</h2>
+
+<mat-dialog-content class="dialog-content">
+  <img
+    src="assets/img/{{product.imagePath}}"
+    class="product-image mb-3" alt="product image">
+
+  <p><strong>Description: </strong>{{ this.product.description }}</p>
+  <p><strong>Price: </strong>{{ this.product.price }}</p>
+  <div *ngIf="product?.productDetails?.preparationTime != null && product?.productDetails?.productCode != null">
+    <p><strong>Preparation Time:</strong> {{ product.productDetails.preparationTime }} min</p>
+    <p><strong>Product Code:</strong> {{ product.productDetails.productCode }}</p>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

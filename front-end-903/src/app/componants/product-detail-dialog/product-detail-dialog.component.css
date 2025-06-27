@@ -1,0 +1,47 @@
+/* Global style: styles.css */
+.custom-dialog-container {
+  background: #fefefe;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+}
+
+/* Style inner elements */
+.custom-dialog-container h2[mat-dialog-title] {
+  font-size: 24px;
+  color: #343a40;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.custom-dialog-container mat-dialog-content {
+  font-size: 16px;
+  color: #555;
+}
+
+.custom-dialog-container mat-dialog-content img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.custom-dialog-container mat-dialog-actions {
+  padding-top: 20px;
+}
+.dialog-content {
+  font-size: 15px;
+  color: #444;
+}
+
+.product-image {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+mat-dialog-content p {
+  margin: 10px 0;
+}

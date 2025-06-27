@@ -4,6 +4,8 @@ import {Product} from '../../../model/product';
 import {ActivatedRoute} from '@angular/router';
 import {CardOrder} from '../../../model/card-order';
 import {CardService} from '../../../service/card.service';
+import {MatDialog} from '@angular/material/dialog';
+import {ProductDetailDialogComponent} from '../product-detail-dialog/product-detail-dialog.component';
 
 @Component({
   selector: 'app-products',
@@ -20,7 +22,8 @@ export class ProductsComponent implements OnInit {
   messageEn = '';
   isError = false;
 
-  constructor(private service: ProductService, private activatedRoute: ActivatedRoute, private cardService: CardService) {
+  constructor(private service: ProductService, private activatedRoute: ActivatedRoute, private cardService: CardService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -111,4 +114,11 @@ export class ProductsComponent implements OnInit {
     this.cardService.addProductOrder(order);
   }
 
+  showProductDetails(product: any): void {
+    this.dialog.open(ProductDetailDialogComponent, {
+      width: '500px',
+      data: {product},
+      panelClass: 'custom-dialog-container'
+    });
+  }
 }
