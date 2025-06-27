@@ -28,6 +28,7 @@
 .custom-dialog-container mat-dialog-actions {
   padding-top: 20px;
 }
+
 .dialog-content {
   font-size: 15px;
   color: #444;
@@ -44,4 +45,14 @@
 
 mat-dialog-content p {
   margin: 10px 0;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+  text-align: center;
+  color: #555;
 }
