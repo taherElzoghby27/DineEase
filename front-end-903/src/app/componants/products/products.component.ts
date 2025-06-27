@@ -114,10 +114,13 @@ export class ProductsComponent implements OnInit {
     this.cardService.addProductOrder(order);
   }
 
-  showProductDetails(product: any): void {
+  showProductDetails(productModel: any, value: string): void {
     this.dialog.open(ProductDetailDialogComponent, {
       width: '500px',
-      data: {product},
+      data: {
+        product: productModel,
+        key: value,
+      },
       panelClass: 'custom-dialog-container'
     });
   }

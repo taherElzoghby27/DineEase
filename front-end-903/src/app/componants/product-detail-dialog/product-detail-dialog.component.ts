@@ -1,7 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {ProductDetailsService} from '../../../service/product-details.service';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Product} from '../../../model/product';
+import {ProductDetailsResponse} from '../../../model/product-details-response';
+import {ActivatedRoute} from '@angular/router';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-product-detail-dialog',
@@ -10,17 +13,35 @@ import {Product} from '../../../model/product';
 })
 export class ProductDetailDialogComponent implements OnInit {
 
-  constructor(private productDetailsService: ProductDetailsService, @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(private productDetailsService: ProductDetailsService,
+              @Inject(MAT_DIALOG_DATA) public data: any,
+              private activatedRoute: ActivatedRoute,
+              private dialogRef: MatDialogRef<ProductDetailDialogComponent>,
+              private snackBar: MatSnackBar) {
   }
 
   isLoading = false;
+  errorBackend = false;
   product: Product;
+  key: string;
+  preparationTime = '';
+  productCode = '';
+  preparationTimeError = '';
+  productCodeError = '';
+  errorMessageAr = '';
+  errorMessageEn = '';
 
   ngOnInit(): void {
-    console.log('init');
-    console.log(this.data.product.id);
-    if (this.data && this.data.product && this.data.product.id) {
-      this.product = this.data.product;
+    this.activatedRoute.params.subscribe(params => this.handleActions());
+  }
+
+  handleActions(): void {
+    if (!this.data || !this.data.key || !this.data.product) {
+      return;
+    }
+    this.product = this.data.product;
+    this.key = this.data.key;
+    if (this.data.key === 'show') {
       this.getProductDetailsByProductId(this.data.product.id);
     }
   }
@@ -31,10 +52,60 @@ export class ProductDetailDialogComponent implements OnInit {
       .subscribe(productDetail => {
         this.isLoading = false;
         this.product.productDetails = productDetail;
-        console.log(this.product.productDetails.preparationTime);
-        console.log(this.product.name);
       }, errors => {
         this.isLoading = false;
       });
+  }
+
+
+  addProductDetails(): void {
+    if (!this.validationAddProductDetails()) {
+      return;
+    }
+    this.isLoading = true;
+    const productDetails = new ProductDetailsResponse(
+      this.preparationTime, this.productCode, this.product.id
+    );
+    this.productDetailsService.addProductDetails(productDetails).subscribe(
+      response => {
+        this.product.productDetails = productDetails;
+        this.errorBackend = false;
+        this.isLoading = false;
+        this.snackBar.open('Success', 'Close', {
+          duration: 3000, // milliseconds
+          verticalPosition: 'top', // or 'bottom'
+          panelClass: ['snackbar-success']
+        });
+        this.dialogRef.close();
+      }
+      , errors => {
+        this.errorBackend = true;
+        this.isLoading = false;
+        this.errorMessageAr = errors.error.bundleMessage.message_ar;
+        this.errorMessageEn = errors.error.bundleMessage.message_en;
+      }
+    );
+  }
+
+  validationAddProductDetails(): boolean {
+    if (!this.preparationTime || this.preparationTime === '') {
+      this.errorBackend = false;
+      this.preparationTimeError = 'preparation time is required';
+      return false;
+    }
+    if (!this.productCode || this.productCode === '') {
+      this.errorBackend = false;
+      this.productCodeError = 'Product code is required';
+      return false;
+    }
+    return true;
+  }
+
+  clearAddProductDetailsError(): void {
+    this.errorBackend = false;
+    this.productCodeError = '';
+    this.preparationTimeError = '';
+    this.errorMessageAr = '';
+    this.errorMessageEn = '';
   }
 }

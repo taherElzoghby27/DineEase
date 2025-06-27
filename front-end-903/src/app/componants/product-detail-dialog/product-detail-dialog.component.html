@@ -10,15 +10,70 @@
 
   <!-- Actual content -->
   <div *ngIf="!isLoading">
-    <img src="assets/img/{{ product.imagePath }}" class="product-image mb-3" alt="product image">
+    <div *ngIf="data.key==='show'">
+      <img src="assets/img/{{ product.imagePath }}" class="product-image mb-3" alt="product image">
 
-    <p><strong>Description:</strong> {{ product.description }}</p>
-    <p><strong>Price:</strong> {{ product.price }}</p>
+      <p><strong>Description:</strong> {{ product.description }}</p>
+      <p><strong>Price:</strong> {{ product.price }}</p>
 
-    <div *ngIf="product?.productDetails?.preparationTime != null && product?.productDetails?.productCode != null">
-      <p><strong>Preparation Time:</strong> {{ product.productDetails.preparationTime }} min</p>
-      <p><strong>Product Code:</strong> {{ product.productDetails.productCode }}</p>
+      <div *ngIf="product?.productDetails?.preparationTime != null && product?.productDetails?.productCode != null">
+        <p><strong>Preparation Time:</strong> {{ product.productDetails.preparationTime }} min</p>
+        <p><strong>Product Code:</strong> {{ product.productDetails.productCode }}</p>
+      </div>
     </div>
+    <div *ngIf="data.key==='add'">
+      <div class="form-container">
+        <div>
+          <h2>Add Product Details</h2>
+
+          <!-- Preparation Time -->
+          <div class="form-group">
+            <label for="preparationTime">Preparation Time (minutes)</label>
+            <input
+              [(ngModel)]="preparationTime"
+              id="preparationTime"
+              name="preparationTime"
+              type="number"
+              required
+              (input)="clearAddProductDetailsError()"
+            />
+            <div class="error" *ngIf="preparationTimeError !== ''">
+              {{ preparationTimeError }}
+            </div>
+          </div>
+
+          <!-- Product Code -->
+          <div class="form-group">
+            <label for="productCode">Product Code</label>
+            <input
+              [(ngModel)]="productCode"
+              id="productCode"
+              name="productCode"
+              type="text"
+              required
+              (input)="clearAddProductDetailsError()"
+            />
+            <div class="error" *ngIf="productCodeError !== ''">
+              {{ productCodeError }}
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" (click)="addProductDetails()">Save</button>
+
+          <!-- Backend Error Display -->
+          <div class="error-message" *ngIf="errorBackend === true">
+            <div class="error-icon">⚠️</div>
+            <div class="error-text">
+              <div class="error-ar">{{ errorMessageAr }}</div>
+              <div class="error-en">{{ errorMessageEn }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 
 </mat-dialog-content>

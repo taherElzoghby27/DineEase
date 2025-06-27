@@ -19,4 +19,14 @@ export class ProductDetailsService {
         map(response => response)
       );
   }
+
+  addProductDetails(productDetailsRequest: ProductDetailsResponse): any {
+    // tslint:disable-next-line:variable-name
+    const {idProduct: product_id, preparationTime, productCode} = productDetailsRequest;
+    return this.http.post<any>(`${this.baseUrl}add-product-details`,
+      {preparationTime, productCode, product_id})
+      .pipe(
+        map(response => response)
+      );
+  }
 }

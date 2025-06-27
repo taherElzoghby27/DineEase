@@ -24,7 +24,8 @@ import { ProductDetailDialogComponent } from './componants/product-detail-dialog
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 // http://localhost:4200/
 export const routes: Routes = [
@@ -77,6 +78,7 @@ export const routes: Routes = [
     MatDialogModule,
     MatButtonModule,
     MatProgressSpinnerModule,
+    MatSnackBarModule
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue: '/'},
