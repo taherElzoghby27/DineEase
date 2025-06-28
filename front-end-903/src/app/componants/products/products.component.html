@@ -22,12 +22,14 @@
                       (click)="showProductDetails(product,'show')" title="View Product">
                 <i class="bi bi-eye"></i>
               </button>
-              <button *ngIf="product.productDetails===undefined" type="button" class="btn btn-outline-primary btn-sm"
+              <button *ngIf="product.productDetails===undefined&&isAdmin()" type="button"
+                      class="btn btn-outline-primary btn-sm"
                       (click)="showProductDetails(product,'Add')"
                       title="Edit Product details">
                 <i class="bi bi-plus-circle"></i>
               </button>
-              <button *ngIf="product.productDetails!==undefined" type="button" class="btn btn-outline-success btn-sm"
+              <button *ngIf="product.productDetails!==undefined&&isAdmin()" type="button"
+                      class="btn btn-outline-success btn-sm"
                       (click)="showProductDetails(product, 'Update')"
                       title="Update Product Details">
                 <i class="bi bi-pencil-square"></i>
@@ -35,7 +37,8 @@
 
 
               <!-- Delete Product Button -->
-              <button type="button" class="btn btn-outline-danger btn-sm" (click)="showProductDetails(product,'Delete')"
+              <button type="button" *ngIf="isAdmin()" class="btn btn-outline-danger btn-sm"
+                      (click)="showProductDetails(product,'Delete')"
                       title="Delete Product">
                 <i class="bi bi-trash"></i>
               </button>

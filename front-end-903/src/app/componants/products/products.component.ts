@@ -6,6 +6,7 @@ import {CardOrder} from '../../../model/card-order';
 import {CardService} from '../../../service/card.service';
 import {MatDialog} from '@angular/material/dialog';
 import {ProductDetailDialogComponent} from '../product-detail-dialog/product-detail-dialog.component';
+import {AuthService} from '../../../service/auth.service';
 
 @Component({
   selector: 'app-products',
@@ -25,7 +26,8 @@ export class ProductsComponent implements OnInit {
   constructor(private service: ProductService,
               private activatedRoute: ActivatedRoute,
               private cardService: CardService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -133,5 +135,9 @@ export class ProductsComponent implements OnInit {
         }
       }
     });
+  }
+
+  isAdmin(): boolean {
+    return this.authService.isAdmin();
   }
 }
