@@ -27,6 +27,8 @@ export class ProductDetailDialogComponent implements OnInit {
   product: Product;
   key: string;
   idProductDetails: number;
+  oldPreparationTime = '';
+  oldProductCode = '';
   preparationTime = '';
   productCode = '';
   preparationTimeError = '';
@@ -49,6 +51,8 @@ export class ProductDetailDialogComponent implements OnInit {
     }
     if (this.data.key === 'Update') {
       this.idProductDetails = this.data.product.productDetails.id;
+      this.oldPreparationTime = this.data.product.productDetails.preparationTime;
+      this.oldProductCode = this.data.product.productDetails.productCode;
       this.preparationTime = this.data.product.productDetails.preparationTime;
       this.productCode = this.data.product.productDetails.productCode;
     }
@@ -116,7 +120,8 @@ export class ProductDetailDialogComponent implements OnInit {
         });
         this.dialogRef.close();
       }
-      , errors => {
+      ,
+      errors => {
         this.errorBackend = true;
         this.isLoading = false;
         this.errorMessageAr = errors.error.bundleMessage.message_ar;
@@ -126,6 +131,14 @@ export class ProductDetailDialogComponent implements OnInit {
   }
 
   validationAddProductDetails(): boolean {
+    if (this.data.key === 'Update') {
+      if (this.oldPreparationTime === this.preparationTime && this.productCode === this.oldProductCode) {
+        this.errorBackend = false;
+        this.preparationTimeError = 'preparation time same as old preparation time';
+        this.productCodeError = 'product code same as old product code';
+        return false;
+      }
+    }
     if (!this.preparationTime || this.preparationTime === '') {
       this.errorBackend = false;
       this.preparationTimeError = 'preparation time is required';
