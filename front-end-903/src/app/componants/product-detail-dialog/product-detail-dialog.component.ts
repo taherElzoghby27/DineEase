@@ -3,7 +3,7 @@ import {ProductDetailsService} from '../../../service/product-details.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Product} from '../../../model/product';
 import {ProductDetailsResponse} from '../../../model/product-details-response';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
@@ -17,13 +17,15 @@ export class ProductDetailDialogComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any,
               private activatedRoute: ActivatedRoute,
               private dialogRef: MatDialogRef<ProductDetailDialogComponent>,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,
+              private router: Router) {
   }
 
   isLoading = false;
   errorBackend = false;
   product: Product;
   key: string;
+  idProductDetails: number;
   preparationTime = '';
   productCode = '';
   preparationTimeError = '';
@@ -41,8 +43,13 @@ export class ProductDetailDialogComponent implements OnInit {
     }
     this.product = this.data.product;
     this.key = this.data.key;
-    if (this.data.key === 'show') {
+    if (this.data.key === 'Show') {
       this.getProductDetailsByProductId(this.data.product.id);
+    }
+    if (this.data.key === 'Update') {
+      this.idProductDetails = this.data.product.productDetails.id;
+      this.preparationTime = this.data.product.productDetails.preparationTime;
+      this.productCode = this.data.product.productDetails.productCode;
     }
   }
 
@@ -64,11 +71,12 @@ export class ProductDetailDialogComponent implements OnInit {
     }
     this.isLoading = true;
     const productDetails = new ProductDetailsResponse(
-      this.preparationTime, this.productCode, this.product.id
+      this.preparationTime, this.productCode, this.product.id, null
     );
     this.productDetailsService.addProductDetails(productDetails).subscribe(
       response => {
         this.product.productDetails = productDetails;
+        this.getProductDetailsByProductId(`${this.product.id}`);
         this.errorBackend = false;
         this.isLoading = false;
         this.snackBar.open('Success', 'Close', {
@@ -77,6 +85,37 @@ export class ProductDetailDialogComponent implements OnInit {
           panelClass: ['snackbar-success']
         });
         this.dialogRef.close();
+        this.router.navigateByUrl('products');
+      }
+      , errors => {
+        this.errorBackend = true;
+        this.isLoading = false;
+        this.errorMessageAr = errors.error.bundleMessage.message_ar;
+        this.errorMessageEn = errors.error.bundleMessage.message_en;
+      }
+    );
+  }
+
+  updateProductDetails(): void {
+    if (!this.validationAddProductDetails()) {
+      return;
+    }
+    this.isLoading = true;
+    const productDetails = new ProductDetailsResponse(
+      this.preparationTime, this.productCode, this.product.id, this.idProductDetails
+    );
+    this.productDetailsService.updateProductDetails(productDetails).subscribe(
+      response => {
+        this.product.productDetails = productDetails;
+        this.errorBackend = false;
+        this.isLoading = false;
+        this.snackBar.open('Success Updated', 'Close', {
+          duration: 3000, // milliseconds
+          verticalPosition: 'top', // or 'bottom'
+          panelClass: ['snackbar-success']
+        });
+        this.dialogRef.close();
+        this.router.navigateByUrl('products');
       }
       , errors => {
         this.errorBackend = true;

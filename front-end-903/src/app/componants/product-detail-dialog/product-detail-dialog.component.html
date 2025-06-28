@@ -21,10 +21,10 @@
         <p><strong>Product Code:</strong> {{ product.productDetails.productCode }}</p>
       </div>
     </div>
-    <div *ngIf="data.key==='add'">
+    <div *ngIf="data.key==='Add'||data.key==='Update'">
       <div class="form-container">
         <div>
-          <h2>Add Product Details</h2>
+          <h2>{{ data.key }} Product Details</h2>
 
           <!-- Preparation Time -->
           <div class="form-group">
@@ -59,7 +59,8 @@
           </div>
 
           <!-- Submit Button -->
-          <button type="submit" (click)="addProductDetails()">Save</button>
+          <button *ngIf="data.key==='Add'" type="submit" (click)="addProductDetails()">Save</button>
+          <button *ngIf="data.key==='Update'" type="submit" (click)="updateProductDetails()">Save</button>
 
           <!-- Backend Error Display -->
           <div class="error-message" *ngIf="errorBackend === true">

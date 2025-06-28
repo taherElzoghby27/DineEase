@@ -22,15 +22,20 @@
                       (click)="showProductDetails(product,'show')" title="View Product">
                 <i class="bi bi-eye"></i>
               </button>
-
-              <!-- if product has details show Edit Product Button else show add details -->
-              <button type="button" class="btn btn-outline-primary btn-sm" (click)="showProductDetails(product,'add')"
+              <button *ngIf="product.productDetails===undefined" type="button" class="btn btn-outline-primary btn-sm"
+                      (click)="showProductDetails(product,'Add')"
                       title="Edit Product details">
+                <i class="bi bi-plus-circle"></i>
+              </button>
+              <button *ngIf="product.productDetails!==undefined" type="button" class="btn btn-outline-success btn-sm"
+                      (click)="showProductDetails(product, 'Update')"
+                      title="Update Product Details">
                 <i class="bi bi-pencil-square"></i>
               </button>
 
+
               <!-- Delete Product Button -->
-              <button type="button" class="btn btn-outline-danger btn-sm" (click)="showProductDetails(product,'show')"
+              <button type="button" class="btn btn-outline-danger btn-sm" (click)="showProductDetails(product,'Show')"
                       title="Delete Product">
                 <i class="bi bi-trash"></i>
               </button>

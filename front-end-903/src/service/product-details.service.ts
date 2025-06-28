@@ -29,4 +29,14 @@ export class ProductDetailsService {
         map(response => response)
       );
   }
+
+  updateProductDetails(productDetailsRequest: ProductDetailsResponse): any {
+    // tslint:disable-next-line:variable-name
+    const {id: id, idProduct: product_id, preparationTime, productCode} = productDetailsRequest;
+    return this.http.put<any>(`${this.baseUrl}update-product-details`,
+      {id, preparationTime, productCode, product_id})
+      .pipe(
+        map(response => response)
+      );
+  }
 }
