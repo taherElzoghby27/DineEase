@@ -135,4 +135,34 @@ public class ProductController {
     ) {
         return ResponseEntity.ok(productService.getAllProductsByCategoryIdAndKey(categoryId, key, page, size));
     }
+
+    @Operation(
+            summary = "delete product by id"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Http Status delete product by id"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Http Status internal server error",
+                    content = @Content(
+                            schema = @Schema(implementation = ExceptionDto.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Http Status Not Found",
+                    content = @Content(
+                            schema = @Schema(implementation = ExceptionDto.class)
+                    )
+            ),
+    })
+    @DeleteMapping("/delete-product")
+    public ResponseEntity<Void> deleteProductById(@RequestParam Long id) {
+        productService.deleteProductById(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
