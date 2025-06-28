@@ -72,13 +72,18 @@
           </div>
         </div>
       </div>
-
     </div>
+    <!-- Delete Confirmation -->
+    <div *ngIf="data.key === 'Delete'">
+      <h3 class="text-danger">Are you sure you want to delete {{ product.name }}?</h3>
+      <div class="confirmation-buttons">
+        <button mat-button class="yes-button" (click)="deleteProduct()">Yes</button>
+        <button mat-button class="no-button" mat-dialog-close>No</button>
+      </div>
+    </div>
+
 
   </div>
 
 </mat-dialog-content>
 
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Close</button>
-</mat-dialog-actions>

@@ -3,8 +3,9 @@ import {ProductDetailsService} from '../../../service/product-details.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Product} from '../../../model/product';
 import {ProductDetailsResponse} from '../../../model/product-details-response';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {ProductService} from '../../../service/product.service';
 
 @Component({
   selector: 'app-product-detail-dialog',
@@ -18,7 +19,7 @@ export class ProductDetailDialogComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private dialogRef: MatDialogRef<ProductDetailDialogComponent>,
               private snackBar: MatSnackBar,
-              private router: Router) {
+              private productService: ProductService) {
   }
 
   isLoading = false;
@@ -85,7 +86,6 @@ export class ProductDetailDialogComponent implements OnInit {
           panelClass: ['snackbar-success']
         });
         this.dialogRef.close();
-        this.router.navigateByUrl('products');
       }
       , errors => {
         this.errorBackend = true;
@@ -115,7 +115,6 @@ export class ProductDetailDialogComponent implements OnInit {
           panelClass: ['snackbar-success']
         });
         this.dialogRef.close();
-        this.router.navigateByUrl('products');
       }
       , errors => {
         this.errorBackend = true;
@@ -140,6 +139,24 @@ export class ProductDetailDialogComponent implements OnInit {
     return true;
   }
 
+  deleteProduct(): void {
+    this.productService.deleteProductById(`${this.product.id}`).subscribe(response => {
+      this.snackBar.open('Success Deleted', 'Close', {
+        duration: 3000, // milliseconds
+        verticalPosition: 'top', // or 'bottom'
+        panelClass: ['snackbar-success']
+      });
+      this.dialogRef.close({deleted: true, id: this.product.id});
+    }, errors => {
+      this.snackBar.open('Failed', 'Close', {
+        duration: 3000, // milliseconds
+        verticalPosition: 'top', // or 'bottom'
+        panelClass: ['snackbar-success']
+      });
+      this.dialogRef.close({deleted: false});
+    });
+  }
+
   clearAddProductDetailsError(): void {
     this.errorBackend = false;
     this.productCodeError = '';
@@ -147,4 +164,5 @@ export class ProductDetailDialogComponent implements OnInit {
     this.errorMessageAr = '';
     this.errorMessageEn = '';
   }
+
 }

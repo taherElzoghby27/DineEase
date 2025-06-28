@@ -22,7 +22,9 @@ export class ProductsComponent implements OnInit {
   messageEn = '';
   isError = false;
 
-  constructor(private service: ProductService, private activatedRoute: ActivatedRoute, private cardService: CardService,
+  constructor(private service: ProductService,
+              private activatedRoute: ActivatedRoute,
+              private cardService: CardService,
               private dialog: MatDialog) {
   }
 
@@ -115,13 +117,21 @@ export class ProductsComponent implements OnInit {
   }
 
   showProductDetails(productModel: any, value: string): void {
-    this.dialog.open(ProductDetailDialogComponent, {
+    const dialogRef = this.dialog.open(ProductDetailDialogComponent, {
       width: '500px',
       data: {
         product: productModel,
         key: value,
       },
       panelClass: 'custom-dialog-container'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result?.deleted) {
+        const index = this.products.findIndex(p => p.id === result.id);
+        if (index > -1) {
+          this.products.splice(index, 1);
+        }
+      }
     });
   }
 }

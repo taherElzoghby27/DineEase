@@ -43,4 +43,11 @@ export class ProductService {
         map(response => response)
       );
   }
+
+  deleteProductById(id: string): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}delete-product?id=${id}`)
+      .pipe(
+        map(response => response)
+      );
+  }
 }
