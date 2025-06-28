@@ -48,13 +48,16 @@ public class AccountServiceImpl implements AccountService {
             validateCreateAccount(accountDto);
             //enable account
             accountDto.setEnabled("1");
-            Account user = AccountMapper.ACCOUNT_MAPPER.toAccount(accountDto);
+            Account account = AccountMapper.ACCOUNT_MAPPER.toAccount(accountDto);
             //encode password
-            user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
+            account.setPassword(passwordEncoder.encode(accountDto.getPassword()));
+            //
+            account.setCreatedBy(account.getUsername());
+            account.setUpdatedBy(account.getUsername());
             //make relation between user and role
-            initRoleToUser(user);
-            user = accountRepo.save(user);
-            return AccountMapper.ACCOUNT_MAPPER.toAccountDto(user);
+            initRoleToUser(account);
+            account = accountRepo.save(account);
+            return AccountMapper.ACCOUNT_MAPPER.toAccountDto(account);
         } catch (SystemException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -141,6 +144,7 @@ public class AccountServiceImpl implements AccountService {
             throw new RuntimeException(e.getMessage());
         }
     }
+
     @Override
     public Account idToAccount(Long id) {
         return id != null ? AccountMapper.ACCOUNT_MAPPER.toAccount(getAccountById(id)) : null;
