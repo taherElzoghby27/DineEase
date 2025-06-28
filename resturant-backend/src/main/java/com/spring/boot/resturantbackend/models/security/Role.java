@@ -1,5 +1,6 @@
 package com.spring.boot.resturantbackend.models.security;
 
+import com.spring.boot.resturantbackend.models.Auditable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Role {
+public class Role extends Auditable<String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

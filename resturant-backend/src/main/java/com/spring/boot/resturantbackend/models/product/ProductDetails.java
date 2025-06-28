@@ -1,5 +1,6 @@
 package com.spring.boot.resturantbackend.models.product;
 
+import com.spring.boot.resturantbackend.models.Auditable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class ProductDetails {
+public class ProductDetails extends Auditable<String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

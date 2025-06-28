@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Category {
+public class Category extends Auditable<String>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

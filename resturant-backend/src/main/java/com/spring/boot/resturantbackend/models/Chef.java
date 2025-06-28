@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Chef {
+public class Chef extends Auditable<String>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

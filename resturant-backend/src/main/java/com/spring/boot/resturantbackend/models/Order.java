@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Order {
+public class Order extends Auditable<String>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
