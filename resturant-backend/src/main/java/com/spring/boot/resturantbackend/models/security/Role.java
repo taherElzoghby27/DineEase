@@ -1,6 +1,6 @@
 package com.spring.boot.resturantbackend.models.security;
 
-import com.spring.boot.resturantbackend.models.Auditable;
+import com.spring.boot.resturantbackend.models.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,10 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Role extends Auditable<String> {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Role extends BaseEntity<String> {
     @Column(nullable = false)
     private String role;
     @ManyToMany(mappedBy = "roles")

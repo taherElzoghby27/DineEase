@@ -1,8 +1,6 @@
 package com.spring.boot.resturantbackend.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
@@ -17,7 +15,10 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 @Setter
 @Getter
-public abstract class Auditable<U> {
+public abstract class BaseEntity<U> {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdDate;

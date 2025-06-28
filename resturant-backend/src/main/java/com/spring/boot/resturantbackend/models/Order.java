@@ -16,10 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Order extends Auditable<String>{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Order extends BaseEntity<String> {
     private String code;
     @Column(nullable = false)
     private double totalPrice;

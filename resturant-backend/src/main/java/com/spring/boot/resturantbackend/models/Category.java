@@ -15,10 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Category extends Auditable<String>{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Category extends BaseEntity<String> {
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
