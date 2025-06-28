@@ -8,6 +8,7 @@ import com.spring.boot.resturantbackend.repositories.product.ProductDetailsRepo;
 import com.spring.boot.resturantbackend.services.product.ProductDetailsService;
 import com.spring.boot.resturantbackend.services.product.ProductService;
 import jakarta.transaction.SystemException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +48,7 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
             if (Objects.isNull(id)) {
                 throw new SystemException("id.must_be.not_null");
             }
-            Optional<ProductDetails> result = productDetailsRepo.findById(id);
+            Optional<ProductDetails> result = productDetailsRepo.findByProductId(id);
             if (result.isEmpty()) {
                 throw new SystemException("product_details.not.found");
             }
@@ -66,7 +67,10 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
             if (Objects.isNull(productDetailsDto.getId())) {
                 throw new SystemException("id.must_be.not_null");
             }
-            ProductDetails productDetails = ProductMapper.PRODUCT_MAPPER.toProductDetails(productDetailsDto);
+            ProductDetailsDto existingProductDetails = getProductDetailsByProductId(productDetailsDto.getProduct_id());
+            existingProductDetails.setPreparationTime(productDetailsDto.getPreparationTime());
+            existingProductDetails.setProductCode(productDetailsDto.getProductCode());
+            ProductDetails productDetails = ProductMapper.PRODUCT_MAPPER.toProductDetails(existingProductDetails);
             //set product to product details
             productDetails.setProduct(
                     ProductMapper.PRODUCT_MAPPER.toProduct(
