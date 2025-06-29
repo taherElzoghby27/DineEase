@@ -27,6 +27,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { OrderDialogComponent } from './componants/order-dialog/order-dialog.component';
+import { AllRequestOrdersComponent } from './componants/all-request-orders/all-request-orders.component';
 
 // http://localhost:4200/
 export const routes: Routes = [
@@ -39,6 +40,7 @@ export const routes: Routes = [
   {path: 'category/:id/search/:key', component: ProductsComponent, canActivate: [AuthGuard]},
   // http://localhost:4200/cardDetails
   {path: 'cardDetails', component: CardDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'allRequestOrders', component: AllRequestOrdersComponent, canActivate: [AuthGuard]},
   // http://localhost:4200/cardDetails
   {path: 'contact-info', component: ContactInfoComponent, canActivate: [AuthGuard]},
   // http://localhost:4200/chefs
@@ -68,7 +70,8 @@ export const routes: Routes = [
     LoginComponent,
     SignUpComponent,
     ProductDetailDialogComponent,
-    OrderDialogComponent
+    OrderDialogComponent,
+    AllRequestOrdersComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

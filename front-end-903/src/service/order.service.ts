@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {RequestOrder} from '../model/request-order';
+import {Observable} from 'rxjs';
+import {RequestOrderResponse} from '../model/request-order-response';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +25,13 @@ export class OrderService {
         totalNumber,
         productsIds
       })
+      .pipe(
+        map(response => response)
+      );
+  }
+
+  getAllRequestOrders(): Observable<RequestOrderResponse[]> {
+    return this.http.get<RequestOrderResponse[]>(`${this.baseUrl}all-request-orders`)
       .pipe(
         map(response => response)
       );

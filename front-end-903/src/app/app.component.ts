@@ -11,7 +11,7 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {
   }
 
-  isCardDetails = false;
+  isProducts = false;
 
   isLogin(): boolean {
     return this.authService.isLogin();
@@ -20,10 +20,10 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.router.events.subscribe(() => {
       const url = this.router.url;
-      if (url.includes('/cardDetails')) {
-        this.isCardDetails = true;
+      if (url.includes('/products')||url.includes('/category')) {
+        this.isProducts = true;
       } else {
-        this.isCardDetails = false;
+        this.isProducts = false;
       }
     });
   }
