@@ -19,7 +19,8 @@ export class ProductDetailDialogComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private dialogRef: MatDialogRef<ProductDetailDialogComponent>,
               private snackBar: MatSnackBar,
-              private productService: ProductService) {
+              private productService: ProductService
+  ) {
   }
 
   isLoading = false;

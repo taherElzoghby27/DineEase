@@ -26,6 +26,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { OrderDialogComponent } from './componants/order-dialog/order-dialog.component';
 
 // http://localhost:4200/
 export const routes: Routes = [
@@ -66,7 +67,8 @@ export const routes: Routes = [
     PanelComponent,
     LoginComponent,
     SignUpComponent,
-    ProductDetailDialogComponent
+    ProductDetailDialogComponent,
+    OrderDialogComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

@@ -39,6 +39,7 @@ export class LoginComponent {
       response => {
         this.errorBackend = false;
         this.resetErrorFields();
+        sessionStorage.setItem('account_id', response.id);
         sessionStorage.setItem('roles', response.roles);
         sessionStorage.setItem('token', response.token);
         sessionStorage.setItem('userName', response.username);

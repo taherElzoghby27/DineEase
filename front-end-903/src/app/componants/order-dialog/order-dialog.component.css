@@ -1,0 +1,179 @@
+/* Global style: styles.css */
+.custom-dialog-container {
+  background: #fefefe;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+}
+
+/* Style inner elements */
+.custom-dialog-container h2[mat-dialog-title] {
+  font-size: 24px;
+  color: #343a40;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.custom-dialog-container mat-dialog-content {
+  font-size: 16px;
+  color: #555;
+}
+
+.custom-dialog-container mat-dialog-content img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.custom-dialog-container mat-dialog-actions {
+  padding-top: 20px;
+}
+
+.dialog-content {
+  font-size: 15px;
+  color: #444;
+}
+
+.product-image {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+mat-dialog-content p {
+  margin: 10px 0;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+  text-align: center;
+  color: #555;
+}
+
+.form-container {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 30px 25px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #444;
+}
+
+input[type="text"],
+input[type="number"] {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  border-color: #3f51b5;
+  outline: none;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #3f51b5;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+  background-color: #303f9f;
+}
+
+.error {
+  margin-top: 5px;
+  font-size: 13px;
+  color: #d32f2f;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+  background-color: #fdecea;
+  padding: 10px;
+  border-radius: 6px;
+  color: #b00020;
+}
+
+.error-icon {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.error-text {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Style for confirmation buttons */
+.confirmation-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.confirmation-buttons button {
+  min-width: 80px;
+  padding: 6px 16px;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+/* Yes Button - Primary style */
+.confirmation-buttons .yes-button {
+  background-color: #d32f2f; /* Red */
+  color: white;
+}
+
+.confirmation-buttons .yes-button:hover {
+  background-color: #b71c1c;
+}
+
+/* No Button - Outline style */
+.confirmation-buttons .no-button {
+  background-color: transparent;
+  border: 1px solid #888;
+  color: #555;
+}
+
+.confirmation-buttons .no-button:hover {
+  background-color: #f2f2f2;
+}
