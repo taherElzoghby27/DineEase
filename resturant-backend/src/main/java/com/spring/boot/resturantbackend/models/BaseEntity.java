@@ -20,14 +20,14 @@ public abstract class BaseEntity<U> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @CreatedDate
-    @Column(updatable = false)
+    @Column(updatable = false)//by jpa not database
     private LocalDateTime createdDate;
 
     @LastModifiedDate
     private LocalDateTime updatedDate;
 
     @CreatedBy
-    @Column(updatable = false)
+    @Column(updatable = false)//by jpa not database
     private U createdBy;
 
     @LastModifiedBy

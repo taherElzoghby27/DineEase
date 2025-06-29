@@ -1,4 +1,4 @@
-package com.spring.boot.resturantbackend.config;
+package com.spring.boot.resturantbackend.config.aware;
 
 import com.spring.boot.resturantbackend.dto.security.AccountDto;
 import org.springframework.data.domain.AuditorAware;
@@ -21,8 +21,7 @@ public class AuditorAwareImpl implements AuditorAware<String> {
             AccountDto acc = (AccountDto) authentication.getPrincipal();
             return Optional.ofNullable(acc.getUsername());
         }
-
         // Fallback user or anonymous actions like sign up
-        return Optional.empty(); // or Optional.of("system") if needed
+        return Optional.empty();
     }
 }
