@@ -17,4 +17,5 @@ public class ResponseOrderVm {
     private String code;
     private double totalPrice;
     private Long totalNumber;
+    private String status;
 }

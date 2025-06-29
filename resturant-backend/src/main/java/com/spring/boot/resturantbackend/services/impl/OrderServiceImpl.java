@@ -14,6 +14,7 @@ import com.spring.boot.resturantbackend.repositories.OrderRepo;
 import com.spring.boot.resturantbackend.services.OrderService;
 import com.spring.boot.resturantbackend.services.product.ProductService;
 import com.spring.boot.resturantbackend.services.security.AccountService;
+import com.spring.boot.resturantbackend.utils.OrderStatus;
 import com.spring.boot.resturantbackend.vm.RequestOrderVm;
 import com.spring.boot.resturantbackend.vm.ResponseOrderVm;
 import jakarta.transaction.SystemException;
@@ -50,6 +51,8 @@ public class OrderServiceImpl implements OrderService {
             order.setAccount(account);
             //set products to order
             order.setProducts(products);
+            //set status for order
+            order.setStatus(OrderStatus.Pending.toString());
             //save order
             order = orderRepo.save(order);
             return OrderMapper.ORDER_MAPPER.toResponseOrderVm(order);

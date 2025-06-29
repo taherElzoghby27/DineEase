@@ -18,6 +18,7 @@ import java.util.List;
 @Getter
 public class Order extends BaseEntity<String> {
     private String code;
+    private String status;
     @Column(nullable = false)
     private double totalPrice;
     @Column(nullable = false)

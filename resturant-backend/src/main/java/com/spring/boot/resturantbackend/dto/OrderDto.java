@@ -17,5 +17,7 @@ public class OrderDto {
     private Long accountId;
     private double totalPrice;
     private Long totalNumber;
-    List<ProductDto> products;
+    private String status;
+    private String code;
+    private List<ProductDto> products;
 }
