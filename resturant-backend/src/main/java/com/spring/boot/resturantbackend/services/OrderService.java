@@ -10,4 +10,5 @@ public interface OrderService {
     ResponseOrderVm requestOrder(RequestOrderVm requestOrderDto);
 
     List<OrderDto> getAllRequestOrders();
+    //getAllRequestOrdersForAdmin();
 }

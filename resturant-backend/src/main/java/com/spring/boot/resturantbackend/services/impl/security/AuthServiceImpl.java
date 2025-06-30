@@ -7,8 +7,10 @@ import com.spring.boot.resturantbackend.services.security.AccountService;
 import com.spring.boot.resturantbackend.services.security.AuthService;
 import com.spring.boot.resturantbackend.vm.Security.AccountAuthRequestVm;
 import com.spring.boot.resturantbackend.vm.Security.AccountAuthResponseVm;
+import com.spring.boot.resturantbackend.vm.Security.ProfileResponseVm;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +47,24 @@ public class AuthServiceImpl implements AuthService {
             AccountAuthResponseVm accountAuthResponseVm = AccountMapper.ACCOUNT_MAPPER.toAccountResponseVm(accountDto);
             accountAuthResponseVm.setToken(tokenHandler.generateToken(accountDto));
             return accountAuthResponseVm;
+        } catch (SystemException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public ProfileResponseVm getProfile() {
+        try {
+            //get account id from context
+            AccountDto accountDto = (AccountDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (Objects.isNull(accountDto.getId())) {
+                throw new SystemException("id.must_be.not_null");
+            }
+            accountDto = accountService.getAccountById(accountDto.getId());
+            if (Objects.isNull(accountDto)) {
+                throw new SystemException("not_found.account");
+            }
+            return AccountMapper.ACCOUNT_MAPPER.toProfileResponseVm(accountDto);
         } catch (SystemException e) {
             throw new RuntimeException(e.getMessage());
         }

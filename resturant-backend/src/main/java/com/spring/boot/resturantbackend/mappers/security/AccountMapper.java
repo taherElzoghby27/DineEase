@@ -5,6 +5,7 @@ import com.spring.boot.resturantbackend.dto.security.RoleDto;
 import com.spring.boot.resturantbackend.models.security.Account;
 import com.spring.boot.resturantbackend.vm.Security.AccountAuthRequestVm;
 import com.spring.boot.resturantbackend.vm.Security.AccountAuthResponseVm;
+import com.spring.boot.resturantbackend.vm.Security.ProfileResponseVm;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -25,6 +26,8 @@ public interface AccountMapper {
 
     @Mapping(source = "roles", target = "roles", qualifiedByName = "rolesDtoToListString")
     AccountAuthResponseVm toAccountResponseVm(AccountDto accountDto);
+
+    ProfileResponseVm toProfileResponseVm(AccountDto accountDto);
 
     @Named("accountToId")
     default Long accountToId(Account account) {
