@@ -1,7 +1,7 @@
 package com.spring.boot.resturantbackend.dto.security;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,10 +13,10 @@ import lombok.Setter;
 @Getter
 public class AccountDetailsDto {
     private Long id;
-    @NotEmpty(message = "not_empty.phone_number")
     private String phoneNumber;
-    @Size(min = 16, max = 80, message = "error.age")
-    private int age;
-    @NotEmpty(message = "not_empty.address")
+    @Min(value = 16, message = "error.age")
+    @Max(value = 80, message = "error.age")
+    private Long age;
     private String address;
+    private Long accountId;
 }

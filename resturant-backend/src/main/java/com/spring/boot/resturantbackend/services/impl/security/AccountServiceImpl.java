@@ -1,14 +1,17 @@
 package com.spring.boot.resturantbackend.services.impl.security;
 
 import com.spring.boot.resturantbackend.dto.security.AccountDto;
+import com.spring.boot.resturantbackend.mappers.security.AccountDetailsMapper;
 import com.spring.boot.resturantbackend.mappers.security.RoleMapper;
 import com.spring.boot.resturantbackend.mappers.security.AccountMapper;
 import com.spring.boot.resturantbackend.models.security.Account;
+import com.spring.boot.resturantbackend.models.security.AccountDetails;
 import com.spring.boot.resturantbackend.models.security.Role;
 import com.spring.boot.resturantbackend.repositories.security.AccountRepo;
 import com.spring.boot.resturantbackend.services.security.AccountService;
 import com.spring.boot.resturantbackend.services.security.RoleService;
 import com.spring.boot.resturantbackend.utils.RoleEnum;
+import com.spring.boot.resturantbackend.vm.Security.UpdateProfileVm;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -83,24 +86,51 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountDto updateAccount(AccountDto accountDto) {
+    public UpdateProfileVm updateAccount(UpdateProfileVm updateProfileVm) {
         try {
-            validateUpdateAccount(accountDto.getId());
+            AccountDto accountDto = validateUpdateAccount(updateProfileVm.getId());
             Account account = AccountMapper.ACCOUNT_MAPPER.toAccount(accountDto);
+            AccountDetails newAccountDetails = AccountDetailsMapper.ACCOUNT_DETAILS_MAPPER.toAccountDetails(
+                    updateProfileVm.getAccountDetails()
+            );
+            AccountDetails oldAccountDetails = account.getAccountDetails();
+            if (Objects.nonNull(oldAccountDetails)) {
+                validateInputsForUpdating(updateProfileVm, oldAccountDetails);
+                oldAccountDetails.setAccount(account);
+                account.setAccountDetails(oldAccountDetails);
+            } else {
+                newAccountDetails.setAccount(account);
+                account.setAccountDetails(newAccountDetails);
+            }
+            account.setUsername(updateProfileVm.getUsername());
             account = accountRepo.save(account);
-            return AccountMapper.ACCOUNT_MAPPER.toAccountDto(account);
+            return AccountMapper.ACCOUNT_MAPPER.toProfileResponseVm(account);
         } catch (SystemException e) {
             throw new RuntimeException(e.getMessage());
         }
     }
 
-    private void validateUpdateAccount(Long id) throws SystemException {
+    private static void validateInputsForUpdating(UpdateProfileVm updateProfileVm, AccountDetails oldAccountDetails) {
+        if (Objects.nonNull(updateProfileVm.getAccountDetails().getPhoneNumber())) {
+            oldAccountDetails.setPhoneNumber(updateProfileVm.getAccountDetails().getPhoneNumber());
+        }
+        if (Objects.nonNull(updateProfileVm.getAccountDetails().getAddress())) {
+            oldAccountDetails.setAddress(updateProfileVm.getAccountDetails().getAddress());
+        }
+        if (Objects.nonNull(updateProfileVm.getAccountDetails().getAge())) {
+            oldAccountDetails.setAge(updateProfileVm.getAccountDetails().getAge());
+        }
+    }
+
+    private AccountDto validateUpdateAccount(Long id) throws SystemException {
         if (Objects.isNull(id)) {
             throw new SystemException("id.must_be.not_null");
         }
-        if (Objects.isNull(getAccountById(id))) {
+        AccountDto accountDto = getAccountById(id);
+        if (Objects.isNull(accountDto)) {
             throw new SystemException("not_found.account");
         }
+        return accountDto;
     }
 
     @Override

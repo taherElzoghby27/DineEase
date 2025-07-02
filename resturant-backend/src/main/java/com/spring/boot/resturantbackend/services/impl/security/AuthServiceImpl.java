@@ -7,7 +7,7 @@ import com.spring.boot.resturantbackend.services.security.AccountService;
 import com.spring.boot.resturantbackend.services.security.AuthService;
 import com.spring.boot.resturantbackend.vm.Security.AccountAuthRequestVm;
 import com.spring.boot.resturantbackend.vm.Security.AccountAuthResponseVm;
-import com.spring.boot.resturantbackend.vm.Security.ProfileResponseVm;
+import com.spring.boot.resturantbackend.vm.Security.UpdateProfileVm;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -53,20 +53,44 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public ProfileResponseVm getProfile() {
+    public UpdateProfileVm getProfile() {
         try {
-            //get account id from context
-            AccountDto accountDto = (AccountDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            if (Objects.isNull(accountDto.getId())) {
-                throw new SystemException("id.must_be.not_null");
-            }
+            AccountDto accountDto = getUserDataFromContext();
             accountDto = accountService.getAccountById(accountDto.getId());
-            if (Objects.isNull(accountDto)) {
-                throw new SystemException("not_found.account");
-            }
             return AccountMapper.ACCOUNT_MAPPER.toProfileResponseVm(accountDto);
         } catch (SystemException e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    @Override
+    public UpdateProfileVm updateProfile(UpdateProfileVm updateProfileVm) {
+        try {
+            AccountDto accountDto = getUserDataFromContext();
+            if (Objects.isNull(accountDto)) {
+                throw new SystemException("not_found.account");
+            }
+            updateProfileVm = accountService.updateAccount(updateProfileVm);
+            return updateProfileVm;
+        } catch (SystemException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    private AccountDto getUserDataFromContext() throws SystemException {
+        AccountDto accountDto = (AccountDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        accountDto = validateAccountDto(accountDto);
+        return accountDto;
+    }
+
+    private AccountDto validateAccountDto(AccountDto accountDto) throws SystemException {
+        if (Objects.isNull(accountDto.getId())) {
+            throw new SystemException("id.must_be.not_null");
+        }
+        accountDto = accountService.getAccountById(accountDto.getId());
+        if (Objects.isNull(accountDto)) {
+            throw new SystemException("not_found.account");
+        }
+        return accountDto;
     }
 }

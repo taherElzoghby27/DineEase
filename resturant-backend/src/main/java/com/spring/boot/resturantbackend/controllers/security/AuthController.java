@@ -4,7 +4,7 @@ import com.spring.boot.resturantbackend.dto.ExceptionDto;
 import com.spring.boot.resturantbackend.services.security.AuthService;
 import com.spring.boot.resturantbackend.vm.Security.AccountAuthRequestVm;
 import com.spring.boot.resturantbackend.vm.Security.AccountAuthResponseVm;
-import com.spring.boot.resturantbackend.vm.Security.ProfileResponseVm;
+import com.spring.boot.resturantbackend.vm.Security.UpdateProfileVm;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -54,7 +54,18 @@ public class AuthController {
                     content = @Content(schema = @Schema(implementation = ExceptionDto.class))),
     })
     @GetMapping("/profile")
-    public ResponseEntity<ProfileResponseVm> getProfile() {
+    public ResponseEntity<UpdateProfileVm> getProfile() {
         return ResponseEntity.ok(authService.getProfile());
+    }
+
+    @Operation(summary = "update profile")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Http Status update profile"),
+            @ApiResponse(responseCode = "500", description = "Http Status internal server error",
+                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))),
+    })
+    @PutMapping("/update-profile")
+    public ResponseEntity<UpdateProfileVm> updateProfile(@Valid @RequestBody UpdateProfileVm updateProfileVm) {
+        return ResponseEntity.created(URI.create("/update-profile")).body(authService.updateProfile(updateProfileVm));
     }
 }
