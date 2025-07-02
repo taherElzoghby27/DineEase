@@ -102,7 +102,9 @@ public class AccountServiceImpl implements AccountService {
                 newAccountDetails.setAccount(account);
                 account.setAccountDetails(newAccountDetails);
             }
-            account.setUsername(updateProfileVm.getUsername());
+            if (Objects.nonNull(updateProfileVm.getUsername())) {
+                account.setUsername(updateProfileVm.getUsername());
+            }
             account = accountRepo.save(account);
             return AccountMapper.ACCOUNT_MAPPER.toProfileResponseVm(account);
         } catch (SystemException e) {
