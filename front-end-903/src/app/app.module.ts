@@ -20,14 +20,15 @@ import {FormsModule} from '@angular/forms';
 import {AuthInterceptor} from '../service/interceptors/auth-interceptors.service';
 import {LoginSignupGuard} from '../service/activitor/login-signup.guard';
 import {AuthGuard} from '../service/activitor/auth.guard';
-import { ProductDetailDialogComponent } from './componants/product-detail-dialog/product-detail-dialog.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {ProductDetailDialogComponent} from './componants/product-detail-dialog/product-detail-dialog.component';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { OrderDialogComponent } from './componants/order-dialog/order-dialog.component';
-import { AllRequestOrdersComponent } from './componants/all-request-orders/all-request-orders.component';
+import {OrderDialogComponent} from './componants/order-dialog/order-dialog.component';
+import {AllRequestOrdersComponent} from './componants/all-request-orders/all-request-orders.component';
+import {ProfileComponent} from './componants/profile/profile.component';
 
 // http://localhost:4200/
 export const routes: Routes = [
@@ -40,6 +41,7 @@ export const routes: Routes = [
   {path: 'category/:id/search/:key', component: ProductsComponent, canActivate: [AuthGuard]},
   // http://localhost:4200/cardDetails
   {path: 'cardDetails', component: CardDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'allRequestOrders', component: AllRequestOrdersComponent, canActivate: [AuthGuard]},
   // http://localhost:4200/cardDetails
   {path: 'contact-info', component: ContactInfoComponent, canActivate: [AuthGuard]},
@@ -71,7 +73,8 @@ export const routes: Routes = [
     SignUpComponent,
     ProductDetailDialogComponent,
     OrderDialogComponent,
-    AllRequestOrdersComponent
+    AllRequestOrdersComponent,
+    ProfileComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
