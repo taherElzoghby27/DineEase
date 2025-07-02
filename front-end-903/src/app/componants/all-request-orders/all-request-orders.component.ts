@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {OrderService} from '../../../service/order.service';
 import {RequestOrderResponse} from '../../../model/request-order-response';
+import {AuthService} from '../../../service/auth.service';
 
 @Component({
   selector: 'app-all-request-orders',
@@ -9,7 +10,7 @@ import {RequestOrderResponse} from '../../../model/request-order-response';
 })
 export class AllRequestOrdersComponent implements OnInit {
 
-  constructor(private orderService: OrderService) {
+  constructor(private orderService: OrderService, private authService: AuthService) {
   }
 
   orders: RequestOrderResponse[] = [];
@@ -17,6 +18,19 @@ export class AllRequestOrdersComponent implements OnInit {
   messageEn = '';
 
   ngOnInit(): void {
+    if (!this.isAdmin()) {
+
+    } else {
+      this.allOrdersForCurrentUser();
+    }
+
+  }
+
+  isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
+  allOrdersForCurrentUser(): void {
     this.orderService.getAllRequestOrders().subscribe(
       response => {
         this.orders = response;
@@ -27,5 +41,4 @@ export class AllRequestOrdersComponent implements OnInit {
       }
     );
   }
-
 }

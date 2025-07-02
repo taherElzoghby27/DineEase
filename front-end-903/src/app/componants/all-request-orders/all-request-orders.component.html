@@ -4,14 +4,14 @@
   <div class="order-card" *ngFor="let order of orders">
     <div class="order-header">
       <strong>Order ID{{ order.id }}</strong>
-      <span class="status-badge">{{ order.status }}</span>
+      <span class="status-badge">{{ order.status===null?"Unknown":order.status }}</span>
     </div>
 
     <div class="order-details">
       <div *ngFor="let product of order.products" style="display: flex; align-items: center; margin-bottom: 10px;">
         <img src="assets/img/{{product.imagePath}}" alt="{{ product.name }}" width="50" height="50" style="margin-right: 10px; object-fit: cover; border-radius: 4px;">
         <div>
-          • {{ product.name }} x {{ product.price }}
+          • {{ product.name }} - {{ product.price }} $
         </div>
       </div>
 
@@ -20,7 +20,7 @@
     <div class="order-meta">
       <span><strong>Code:</strong> {{ order.code }}</span>
       <span><strong>Total Number:</strong> {{ order.totalNumber }}</span>
-      <span><strong>Total Price:</strong> {{ order.totalPrice }}</span>
+      <span><strong>Total Price:</strong> {{ order.totalPrice }} $</span>
     </div>
   </div>
 </div>
