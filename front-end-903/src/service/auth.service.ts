@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {RequestLoginModel} from '../model/request-login-model';
+import {Profile} from '../model/profile';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,18 @@ export class AuthService {
     const username = requestLoginModel.username;
     const password = requestLoginModel.password;
     return this.http.post<any>(`${this.baseUrl}login`, {username, password}).pipe(
+      map(response => response)
+    );
+  }
+
+  getProfile(): Observable<Profile> {
+    return this.http.get<Profile>(`${this.baseUrl}profile`).pipe(
+      map(response => response)
+    );
+  }
+
+  updateProfile(profile: Profile): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}update-profile`, profile).pipe(
       map(response => response)
     );
   }

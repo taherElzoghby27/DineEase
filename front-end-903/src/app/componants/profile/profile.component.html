@@ -1,1 +1,35 @@
-<p>profile works!</p>
+<div class="profile-card" *ngIf="profile">
+  <img [src]="profile.photoUrl || defaultPhoto" alt="User Photo" />
+  <h2>{{ profile.username }}</h2>
+
+  <!-- Show "Complete Profile" button if not yet completed -->
+  <button
+    *ngIf="!profileComplete && !editing"
+    class="edit-button"
+    (click)="editing = true"
+  >
+    Complete Profile
+  </button>
+
+  <!-- Show editable fields if editing -->
+  <div class="profile-info" *ngIf="editing">
+    <p><span class="label">Age:</span>
+      <input type="number" [(ngModel)]="profile.age" placeholder="Enter age" />
+    </p>
+    <p><span class="label">Phone:</span>
+      <input type="text" [(ngModel)]="profile.phone" placeholder="Enter phone" />
+    </p>
+    <p><span class="label">Address:</span>
+      <input type="text" [(ngModel)]="profile.address" placeholder="Enter address" />
+    </p>
+    <button class="edit-button" (click)="saveProfile()">Save Profile</button>
+  </div>
+
+  <!-- Show full profile if completed and not editing -->
+  <div class="profile-info" *ngIf="profileComplete && !editing">
+    <p><span class="label">Age:</span> {{ profile.age }}</p>
+    <p><span class="label">Phone:</span> {{ profile.phone }}</p>
+    <p><span class="label">Address:</span> {{ profile.address }}</p>
+    <button class="edit-button" (click)="editing = true">Edit Profile</button>
+  </div>
+</div>
