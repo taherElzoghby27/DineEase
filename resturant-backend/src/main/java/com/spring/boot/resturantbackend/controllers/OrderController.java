@@ -1,7 +1,7 @@
 package com.spring.boot.resturantbackend.controllers;
 
 import com.spring.boot.resturantbackend.dto.OrderDto;
-import com.spring.boot.resturantbackend.services.OrderService;
+import com.spring.boot.resturantbackend.services.order.OrderService;
 import com.spring.boot.resturantbackend.vm.RequestOrderVm;
 import com.spring.boot.resturantbackend.vm.ResponseOrderVm;
 import jakarta.validation.Valid;
@@ -21,7 +21,7 @@ public class OrderController {
 
     @GetMapping("/all-request-orders")
     public ResponseEntity<List<OrderDto>> getRequestOrders() {
-        return ResponseEntity.ok(orderService.getAllOrders());
+        return ResponseEntity.ok(orderService.getAccessibleOrders());
     }
 
     @PostMapping("/request-order")

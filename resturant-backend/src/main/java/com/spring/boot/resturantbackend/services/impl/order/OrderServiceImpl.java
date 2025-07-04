@@ -1,4 +1,4 @@
-package com.spring.boot.resturantbackend.services.impl;
+package com.spring.boot.resturantbackend.services.impl.order;
 
 import com.spring.boot.resturantbackend.dto.OrderDto;
 import com.spring.boot.resturantbackend.dto.security.AccountDto;
@@ -8,7 +8,7 @@ import com.spring.boot.resturantbackend.models.Order;
 import com.spring.boot.resturantbackend.models.product.Product;
 import com.spring.boot.resturantbackend.models.security.Account;
 import com.spring.boot.resturantbackend.repositories.OrderRepo;
-import com.spring.boot.resturantbackend.services.OrderService;
+import com.spring.boot.resturantbackend.services.order.OrderService;
 import com.spring.boot.resturantbackend.services.product.ProductService;
 import com.spring.boot.resturantbackend.services.security.AccountService;
 import com.spring.boot.resturantbackend.services.security.RoleService;
@@ -63,7 +63,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> getAllOrders() {
+    public List<OrderDto> getAccessibleOrders() {
         try {
             //get account id
             AccountDto accountDto = SecurityUtils.getCurrentAccount();
