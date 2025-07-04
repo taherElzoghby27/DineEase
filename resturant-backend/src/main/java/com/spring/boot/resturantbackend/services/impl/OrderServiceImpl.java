@@ -14,11 +14,11 @@ import com.spring.boot.resturantbackend.services.security.AccountService;
 import com.spring.boot.resturantbackend.services.security.RoleService;
 import com.spring.boot.resturantbackend.utils.OrderStatus;
 import com.spring.boot.resturantbackend.utils.RoleEnum;
+import com.spring.boot.resturantbackend.utils.SecurityUtils;
 import com.spring.boot.resturantbackend.vm.RequestOrderVm;
 import com.spring.boot.resturantbackend.vm.ResponseOrderVm;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -63,10 +63,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> getAllRequestOrders() {
+    public List<OrderDto> getAllOrders() {
         try {
             //get account id
-            AccountDto accountDto = (AccountDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            AccountDto accountDto = SecurityUtils.getCurrentAccount();
             List<RoleDto> roles = roleService.getRoleByAccountId(accountDto.getId());
             if (roles.isEmpty()) {
                 throw new SystemException("role.not.fount");

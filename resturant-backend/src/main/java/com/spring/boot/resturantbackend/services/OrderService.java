@@ -9,6 +9,5 @@ import java.util.List;
 public interface OrderService {
     ResponseOrderVm requestOrder(RequestOrderVm requestOrderDto);
 
-    List<OrderDto> getAllRequestOrders();
-    //getAllRequestOrdersForAdmin();
+    List<OrderDto> getAllOrders();
 }

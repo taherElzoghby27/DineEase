@@ -5,12 +5,12 @@ import com.spring.boot.resturantbackend.dto.security.AccountDto;
 import com.spring.boot.resturantbackend.mappers.security.AccountMapper;
 import com.spring.boot.resturantbackend.services.security.AccountService;
 import com.spring.boot.resturantbackend.services.security.AuthService;
+import com.spring.boot.resturantbackend.utils.SecurityUtils;
 import com.spring.boot.resturantbackend.vm.Security.AccountAuthRequestVm;
 import com.spring.boot.resturantbackend.vm.Security.AccountAuthResponseVm;
 import com.spring.boot.resturantbackend.vm.Security.UpdateProfileVm;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -78,7 +78,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     private AccountDto getUserDataFromContext() throws SystemException {
-        AccountDto accountDto = (AccountDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        AccountDto accountDto = SecurityUtils.getCurrentAccount();
         accountDto = validateAccountDto(accountDto);
         return accountDto;
     }

@@ -21,7 +21,7 @@ public class OrderController {
 
     @GetMapping("/all-request-orders")
     public ResponseEntity<List<OrderDto>> getRequestOrders() {
-        return ResponseEntity.ok(orderService.getAllRequestOrders());
+        return ResponseEntity.ok(orderService.getAllOrders());
     }
 
     @PostMapping("/request-order")
