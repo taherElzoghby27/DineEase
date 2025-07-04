@@ -1,8 +1,8 @@
 <div class="profile-card" *ngIf="profile">
-  <img [src]="profile.photoUrl || defaultPhoto" alt="User Photo" />
+  <img [src]="profile.photoUrl || defaultPhoto" alt="User Photo" class="profile-photo" />
   <h2>{{ profile.username }}</h2>
 
-  <!-- Show "Complete Profile" button if not yet completed -->
+  <!-- "Complete Profile" Button -->
   <button
     *ngIf="!profileComplete && !editing"
     class="edit-button"
@@ -11,25 +11,67 @@
     Complete Profile
   </button>
 
-  <!-- Show editable fields if editing -->
+  <!-- Editable Profile Info -->
   <div class="profile-info" *ngIf="editing">
-    <p><span class="label">Age:</span>
-      <input type="number" [(ngModel)]="profile.age" placeholder="Enter age" />
-    </p>
-    <p><span class="label">Phone:</span>
-      <input type="text" [(ngModel)]="profile.phone" placeholder="Enter phone" />
-    </p>
-    <p><span class="label">Address:</span>
-      <input type="text" [(ngModel)]="profile.address" placeholder="Enter address" />
-    </p>
-    <button class="edit-button" (click)="saveProfile()">Save Profile</button>
+    <div class="form-group">
+      <label for="age">Age</label>
+      <input
+        id="age"
+        type="number"
+        [(ngModel)]="profile.accountDetails.age"
+        name="age"
+        placeholder="Enter age"
+        required
+      />
+      <small class="error" *ngIf="errorAge !== ''">{{ errorAge }}</small>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Phone</label>
+      <input
+        id="phone"
+        type="text"
+        [(ngModel)]="profile.accountDetails.phoneNumber"
+        name="phone"
+        placeholder="Enter phone number"
+        required
+      />
+      <small class="error" *ngIf="errorPhoneNumber !== ''">{{ errorPhoneNumber }}</small>
+    </div>
+
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input
+        id="address"
+        type="text"
+        [(ngModel)]="profile.accountDetails.address"
+        name="address"
+        placeholder="Enter address"
+        required
+      />
+      <small class="error" *ngIf="errorAddress !== ''">{{ errorAddress }}</small>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div *ngIf="isUpdatingProfile" class="loading-indicator">
+      <span class="spinner"></span> Updating...
+    </div>
+
+    <button
+      type="submit"
+      class="edit-button"
+      (click)="updateProfile()"
+      [disabled]="isUpdatingProfile"
+    >
+      {{ isUpdatingProfile ? 'Updating...' : 'Update Profile' }}
+    </button>
   </div>
 
-  <!-- Show full profile if completed and not editing -->
+  <!-- Read-Only Profile Info -->
   <div class="profile-info" *ngIf="profileComplete && !editing">
-    <p><span class="label">Age:</span> {{ profile.age }}</p>
-    <p><span class="label">Phone:</span> {{ profile.phone }}</p>
-    <p><span class="label">Address:</span> {{ profile.address }}</p>
+    <p><span class="label">Age:</span> {{ profile.accountDetails.age }}</p>
+    <p><span class="label">Phone:</span> {{ profile.accountDetails.phoneNumber }}</p>
+    <p><span class="label">Address:</span> {{ profile.accountDetails.address }}</p>
     <button class="edit-button" (click)="editing = true">Edit Profile</button>
   </div>
 </div>
