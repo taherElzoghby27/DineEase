@@ -1,12 +1,9 @@
 package com.spring.boot.resturantbackend.services.impl;
 
-import com.spring.boot.resturantbackend.config.security.TokenHandler;
 import com.spring.boot.resturantbackend.dto.OrderDto;
-import com.spring.boot.resturantbackend.dto.product.ProductDto;
 import com.spring.boot.resturantbackend.dto.security.AccountDto;
+import com.spring.boot.resturantbackend.dto.security.RoleDto;
 import com.spring.boot.resturantbackend.mappers.OrderMapper;
-import com.spring.boot.resturantbackend.mappers.ProductMapper;
-import com.spring.boot.resturantbackend.mappers.security.AccountMapper;
 import com.spring.boot.resturantbackend.models.Order;
 import com.spring.boot.resturantbackend.models.product.Product;
 import com.spring.boot.resturantbackend.models.security.Account;
@@ -14,7 +11,9 @@ import com.spring.boot.resturantbackend.repositories.OrderRepo;
 import com.spring.boot.resturantbackend.services.OrderService;
 import com.spring.boot.resturantbackend.services.product.ProductService;
 import com.spring.boot.resturantbackend.services.security.AccountService;
+import com.spring.boot.resturantbackend.services.security.RoleService;
 import com.spring.boot.resturantbackend.utils.OrderStatus;
+import com.spring.boot.resturantbackend.utils.RoleEnum;
 import com.spring.boot.resturantbackend.vm.RequestOrderVm;
 import com.spring.boot.resturantbackend.vm.ResponseOrderVm;
 import jakarta.transaction.SystemException;
@@ -33,6 +32,8 @@ public class OrderServiceImpl implements OrderService {
     private ProductService productService;
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private RoleService roleService;
 
 
     @Override
@@ -66,10 +67,14 @@ public class OrderServiceImpl implements OrderService {
         try {
             //get account id
             AccountDto accountDto = (AccountDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            if (Objects.isNull(accountDto.getId())) {
-                throw new SystemException("id.must_be.not_null");
+            List<RoleDto> roles = roleService.getRoleByAccountId(accountDto.getId());
+            if (roles.isEmpty()) {
+                throw new SystemException("role.not.fount");
             }
-            List<Order> orders = orderRepo.findByAccountId(accountDto.getId());
+            // Fetch orders based on role
+            List<Order> orders = isAdmin(roles)
+                    ? orderRepo.findAll()
+                    : orderRepo.findByAccountId(accountDto.getId());
             if (orders.isEmpty()) {
                 throw new SystemException("error.orders.is.empty");
             }
@@ -77,5 +82,10 @@ public class OrderServiceImpl implements OrderService {
         } catch (SystemException e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    // Helper method to check for ADMIN role
+    private boolean isAdmin(List<RoleDto> roles) {
+        return roles.stream().anyMatch(role -> role.getRole().equals(RoleEnum.ADMIN.toString()));
     }
 }

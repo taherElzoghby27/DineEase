@@ -20,4 +20,5 @@ public class OrderDto {
     private String status;
     private String code;
     private List<ProductDto> products;
+    private String createdBy;
 }
