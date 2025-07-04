@@ -3,6 +3,7 @@ import {AuthService} from '../../../service/auth.service';
 import {Profile} from '../../../model/profile';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ProfileDetails} from '../../../model/profile-details';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -11,7 +12,7 @@ import {ProfileDetails} from '../../../model/profile-details';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private authService: AuthService, private snackBar: MatSnackBar) {
+  constructor(private authService: AuthService, private snackBar: MatSnackBar, private activatedRoute: ActivatedRoute) {
   }
 
   profile: Profile;
@@ -26,14 +27,17 @@ export class ProfileComponent implements OnInit {
   loadingUpdating = false;
 
   ngOnInit(): void {
-    this.getProfile();
+    this.activatedRoute.paramMap.subscribe(params => this.getProfile());
   }
 
   getProfile(): void {
     this.authService.getProfile().subscribe(
       profile => {
         this.profile = profile;
-        if (this.profile.accountDetails.age && this.profile.accountDetails.phoneNumber && this.profile.accountDetails.phoneNumber) {
+        if (this.profile.accountDetails === null) {
+          this.profile.accountDetails = new ProfileDetails();
+        }
+        if (this.profile.accountDetails.age && this.profile.accountDetails.phoneNumber && this.profile.accountDetails.address) {
           this.profileComplete = true;
         }
       },
@@ -45,9 +49,6 @@ export class ProfileComponent implements OnInit {
   }
 
   updateProfile(): void {
-    if (this.profile.accountDetails === null) {
-      this.profile.accountDetails = new ProfileDetails();
-    }
     if (!this.validationUpdateProfile()) {
       return;
     }
@@ -56,6 +57,7 @@ export class ProfileComponent implements OnInit {
       response => {
         this.editing = false;
         this.loadingUpdating = false;
+        this.profileComplete = true;
         this.snackBar.open('Success Updated', 'Close', {
           duration: 3000, // milliseconds
           verticalPosition: 'top', // or 'bottom'
@@ -85,20 +87,26 @@ export class ProfileComponent implements OnInit {
 
 // Validate profile update data
   validationUpdateProfile(): boolean {
-    const {age, phoneNumber, address} = this.profile.accountDetails;
+    const details = this.profile?.accountDetails;
 
     // Reset previous errors
     this.errorAge = '';
     this.errorPhoneNumber = '';
     this.errorAddress = '';
-
-    if (age < 18) {
-      this.errorAge = 'Age must be greater than or equal to 18.';
+    const {id, phoneNumber, age, address} = details;
+    if (isNaN(age) || age < 18) {
+      this.errorAge = 'Age must be a valid number and at least 18.';
       return false;
     }
 
     if (!phoneNumber?.trim()) {
       this.errorPhoneNumber = 'Phone number must not be empty.';
+      return false;
+    }
+
+    const phonePattern = /^[0-9+\-() ]{7,15}$/;
+    if (!phonePattern.test(phoneNumber.trim())) {
+      this.errorPhoneNumber = 'Invalid phone number format.';
       return false;
     }
 
@@ -109,6 +117,5 @@ export class ProfileComponent implements OnInit {
 
     return true;
   }
-
 
 }

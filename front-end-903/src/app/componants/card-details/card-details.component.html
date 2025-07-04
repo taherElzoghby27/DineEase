@@ -4,6 +4,13 @@
       <div class="col-md-6 text-center mb-4">
         <h1 class="heading-section">Orders</h1>
       </div>
+      <div
+        class="center-message"
+        *ngIf="!profileComplete && errorMessage !== '' && orders.length !== 0"
+      >
+        <p class="error-text">{{ errorMessage }}</p>
+      </div>
+
     </div>
     <div class="row">
       <div class="col-md-12">
@@ -83,7 +90,6 @@
             <p>No order found now!</p>
           </div>
         </div>
-
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
 <div class="profile-card" *ngIf="profile">
-  <img [src]="profile.photoUrl || defaultPhoto" alt="User Photo" class="profile-photo" />
+  <img [src]="profile.photoUrl || defaultPhoto" alt="User Photo" class="profile-photo"/>
   <h2>{{ profile.username }}</h2>
 
   <!-- "Complete Profile" Button -->
@@ -53,18 +53,19 @@
     </div>
 
     <!-- Loading Indicator -->
-    <div *ngIf="isUpdatingProfile" class="loading-indicator">
+    <div *ngIf="loadingUpdating" class="loading-indicator">
       <span class="spinner"></span> Updating...
     </div>
 
     <button
       type="submit"
       class="edit-button"
+      [disabled]="loadingUpdating"
       (click)="updateProfile()"
-      [disabled]="isUpdatingProfile"
     >
-      {{ isUpdatingProfile ? 'Updating...' : 'Update Profile' }}
+      Update Profile
     </button>
+
   </div>
 
   <!-- Read-Only Profile Info -->

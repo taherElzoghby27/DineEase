@@ -54,11 +54,11 @@
         <div class="nav-item dropdown">
           <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Actions</a>
           <div class="dropdown-menu m-0">
-            <a routerLink="/products" class="dropdown-item">Update Profile</a>
-            <a routerLink="/category/breakfast" class="dropdown-item">Delete Profile</a>
-            <a routerLink="/category/lunch" class="dropdown-item">Edt Profile</a>
+            <a *ngIf="isAdmin()" routerLink="/products" class="dropdown-item">Update Profile</a>
+            <a *ngIf="isAdmin()" routerLink="/category/breakfast" class="dropdown-item">Delete Profile</a>
+            <a *ngIf="isAdmin()" routerLink="/category/lunch" class="dropdown-item">Edt Profile</a>
             <a routerLink="/allRequestOrders" class="dropdown-item">All Request Orders</a>
-            <a routerLink="/category/lunch" class="dropdown-item">Add Product</a>
+            <a *ngIf="isAdmin()" routerLink="/category/lunch" class="dropdown-item">Add Product</a>
           </div>
         </div>
         <a class="nav-item nav-link" routerLink="/profile">Profile</a>

@@ -1,0 +1,14 @@
+.center-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 20vh;
+  text-align: center;
+}
+
+.error-text {
+  color: red;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
