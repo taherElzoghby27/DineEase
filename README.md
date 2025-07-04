@@ -1,4 +1,5 @@
-Full-Stack Spring Boot & Angular Application
+##Full-Stack Spring Boot & Angular Application
+<br>
 Overview
 This full-stack web application combines Spring Boot for a robust backend and Angular for a dynamic, responsive frontend. Built with a scalable, modular architecture, it offers RESTful APIs and a user-friendly interface. The application supports key e-commerce functionalities such as user authentication, product and order management, and bill processing, with features tailored for both admin and user roles.
 
