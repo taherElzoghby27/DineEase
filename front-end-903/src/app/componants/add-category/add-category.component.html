@@ -35,4 +35,15 @@
 
   <!-- Submit Button -->
   <button class="submit-btn" (click)="addCategory()">Add Category</button>
+
+  <!-- Server Message Section -->
+  <div class="server-message error" *ngIf="errorBackend">
+    <p *ngIf="errorEn" class="error-text">
+      <strong>Error:</strong> {{ errorEn }}
+    </p>
+    <p *ngIf="errorAr" class="error-text rtl-text">
+      <strong>خطأ:</strong> {{ errorAr }}
+    </p>
+  </div>
+
 </div>

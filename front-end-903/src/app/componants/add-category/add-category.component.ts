@@ -1,4 +1,8 @@
 import {Component, OnInit} from '@angular/core';
+import {CategoryService} from '../../../service/category.service';
+import {Category} from '../../../model/category';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-category',
@@ -12,6 +16,9 @@ export class AddCategoryComponent implements OnInit {
   errorSelectedLogo = '';
   errorName = '';
   errorFlag = '';
+  errorAr = '';
+  errorEn = '';
+  errorBackend = false;
 
   flags: string[] = [
     'Popular', 'Lovely', 'Special', 'New', 'Top Pick',
@@ -31,6 +38,9 @@ export class AddCategoryComponent implements OnInit {
     // Add more icons as needed
   ];
 
+  constructor(private categoryService: CategoryService, private snackBar: MatSnackBar, private router: Router) {
+  }
+
   ngOnInit(): void {
   }
 
@@ -43,6 +53,24 @@ export class AddCategoryComponent implements OnInit {
     if (!this.validation()) {
       return;
     }
+    const category = new Category(this.name, this.selectedLogo, this.flag, null);
+    this.categoryService.createCategory(category).subscribe(
+      response => {
+        this.clearError();
+        this.snackBar.open('Category Added Successfully', 'Close', {
+          duration: 3000, // milliseconds
+          verticalPosition: 'top', // or 'bottom'
+          panelClass: ['snackbar-success']
+        });
+        this.router.navigateByUrl('products');
+      },
+      errors => {
+        this.clearError();
+        this.errorBackend = true;
+        this.errorAr = errors.error.bundleMessage.message_ar;
+        this.errorEn = errors.error.bundleMessage.message_en;
+      }
+    );
   }
 
   validation(): boolean {
@@ -66,5 +94,6 @@ export class AddCategoryComponent implements OnInit {
     this.errorName = '';
     this.errorFlag = '';
     this.errorSelectedLogo = '';
+    this.errorBackend = false;
   }
 }
