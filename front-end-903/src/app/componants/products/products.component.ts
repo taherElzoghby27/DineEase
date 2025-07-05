@@ -53,20 +53,25 @@ export class ProductsComponent implements OnInit {
   }
 
   getAllProducts(pageNumber): void {
-    this.service.getAllProducts(pageNumber, this.size).subscribe(response => {
-      this.products = response.products;
-      this.collectionSize = response.totalProducts;
-    }, errors => {
-      this.products = [];
-      this.collectionSize = 0;
-      this.messageAr = errors.error.bundleMessage.message_ar;
-      this.messageEn = errors.error.bundleMessage.message_en;
-      this.isError = true;
-    });
+    this.service.getAllProducts(pageNumber, this.size).subscribe(
+      response => {
+        this.isError = false;
+        this.products = response.products;
+        this.collectionSize = response.totalProducts;
+      },
+      errors => {
+        this.products = [];
+        this.collectionSize = 0;
+        this.messageAr = errors.error.bundleMessage.message_ar;
+        this.messageEn = errors.error.bundleMessage.message_en;
+        this.isError = true;
+      });
   }
 
   getAllProductsByCategoryId(id: string, pageNumber): void {
-    this.service.getProductsByCategoryId(id, pageNumber, this.size).subscribe(response => {
+    this.service.getProductsByCategoryId(id, pageNumber, this.size).subscribe(
+      response => {
+      this.isError = false;
       this.products = response.products;
       this.collectionSize = response.totalProducts;
     }, errors => {
@@ -79,7 +84,9 @@ export class ProductsComponent implements OnInit {
   }
 
   getProductsByKey(key: string, pageNumber): void {
-    this.service.getProductsByKey(key, pageNumber, this.size).subscribe(response => {
+    this.service.getProductsByKey(key, pageNumber, this.size).subscribe(
+      response => {
+      this.isError = false;
       this.products = response.products;
       this.collectionSize = response.totalProducts;
     }, errors => {
@@ -92,7 +99,9 @@ export class ProductsComponent implements OnInit {
   }
 
   getProductsByKeyAndCategoryId(key: string, id: string, pageNumber): void {
-    this.service.searchByCategoryIdAndKey(id, key, pageNumber, this.size).subscribe(response => {
+    this.service.searchByCategoryIdAndKey(id, key, pageNumber, this.size).subscribe(
+      response => {
+      this.isError = false;
       this.products = response.products;
       this.collectionSize = response.totalProducts;
     }, errors => {
