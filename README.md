@@ -57,7 +57,7 @@ At its core, a **Spring Boot** backend powers a scalable and secure REST API arc
 - `Angular`
 - `TypeScript`
 - `Angular CLI`
-- `Angular Material` or `Bootstrap` (if used)
+- `Angular Material`
 
 ### 🗄️ Database & Tools
 - `Oracle Database`
@@ -67,9 +67,3 @@ At its core, a **Spring Boot** backend powers a scalable and secure REST API arc
 - `Tomcat` (Spring Boot embedded server)
 
 ---
-
-## 📸 Screenshots (Optional)
-> Add images of key pages here  
-```markdown
-![Admin Dashboard](images/admin-dashboard.png)
-![Order Page](images/order-page.png)
