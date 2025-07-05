@@ -4,6 +4,7 @@ import {map} from 'rxjs/operators';
 import {RequestOrder} from '../model/request-order';
 import {Observable} from 'rxjs';
 import {RequestOrderResponse} from '../model/request-order-response';
+import {OrderStatusRequest} from '../model/order-status-request';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,11 @@ export class OrderService {
       .pipe(
         map(response => response)
       );
+  }
+
+  updateOrder(orderStatusRequest: OrderStatusRequest): any {
+    return this.http.put<any>(`${this.baseUrl}update-order`, orderStatusRequest).pipe(map(response => {
+    }));
   }
 
   getAllRequestOrders(): Observable<RequestOrderResponse[]> {

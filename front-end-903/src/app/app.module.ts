@@ -29,6 +29,10 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {OrderDialogComponent} from './componants/order-dialog/order-dialog.component';
 import {AllRequestOrdersComponent} from './componants/all-request-orders/all-request-orders.component';
 import {ProfileComponent} from './componants/profile/profile.component';
+import { UpdateOrderStatusComponent } from './componants/update-order-status/update-order-status.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatOptionModule} from '@angular/material/core';
 
 // http://localhost:4200/
 export const routes: Routes = [
@@ -74,7 +78,8 @@ export const routes: Routes = [
     ProductDetailDialogComponent,
     OrderDialogComponent,
     AllRequestOrdersComponent,
-    ProfileComponent
+    ProfileComponent,
+    UpdateOrderStatusComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -86,7 +91,10 @@ export const routes: Routes = [
     MatDialogModule,
     MatButtonModule,
     MatProgressSpinnerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatInputModule,
+    MatSelectModule,
+    MatOptionModule
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue: '/'},
