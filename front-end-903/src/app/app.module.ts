@@ -33,6 +33,7 @@ import { UpdateOrderStatusComponent } from './componants/update-order-status/upd
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatOptionModule} from '@angular/material/core';
+import { AddCategoryComponent } from './componants/add-category/add-category.component';
 
 // http://localhost:4200/
 export const routes: Routes = [
@@ -41,6 +42,7 @@ export const routes: Routes = [
   // http://localhost:4200/products
   {path: 'products', component: ProductsComponent, canActivate: [AuthGuard]},
   {path: 'category/:id', component: ProductsComponent, canActivate: [AuthGuard]},
+  {path: 'add-category', component: AddCategoryComponent, canActivate: [AuthGuard]},
   {path: 'search/:key', component: ProductsComponent, canActivate: [AuthGuard]},
   {path: 'category/:id/search/:key', component: ProductsComponent, canActivate: [AuthGuard]},
   // http://localhost:4200/cardDetails
@@ -79,7 +81,8 @@ export const routes: Routes = [
     OrderDialogComponent,
     AllRequestOrdersComponent,
     ProfileComponent,
-    UpdateOrderStatusComponent
+    UpdateOrderStatusComponent,
+    AddCategoryComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

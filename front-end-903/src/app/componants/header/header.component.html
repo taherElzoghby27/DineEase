@@ -41,6 +41,7 @@
         <div class="nav-item dropdown">
           <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Category</a>
           <div class="dropdown-menu m-0">
+            <a *ngIf="isAdmin()" routerLink="/add-category" class="dropdown-item">Add Category</a>
             <a routerLink="/products" class="dropdown-item">All</a>
             <a routerLink="/category/breakfast" class="dropdown-item">Breakfast</a>
             <a routerLink="/category/lunch" class="dropdown-item">Lunch</a>

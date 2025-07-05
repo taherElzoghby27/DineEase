@@ -1,0 +1,38 @@
+<div class="add-category-container">
+  <h2>Add Category</h2>
+
+  <!-- Name Field -->
+  <div class="form-group">
+    <label for="categoryName">Category Name</label>
+    <input type="text" id="categoryName" name="name" [(ngModel)]="name" required>
+    <div class="error" *ngIf="errorName !== ''">{{ errorName }}</div>
+  </div>
+
+  <!-- Logo Selection -->
+  <div class="form-group">
+    <label for="logoSelect">Logo</label>
+    <select id="logoSelect" name="logo" (change)="onLogoChange($event)">
+      <option value="" disabled selected>Select a logo</option>
+      <option *ngFor="let icon of icons" [value]="icon.class">
+        {{ icon.label }}
+      </option>
+    </select>
+    <div class="icon-preview" *ngIf="selectedLogo">
+      <i [class]="selectedLogo"></i>
+    </div>
+    <div class="error" *ngIf="errorSelectedLogo !== ''">{{ errorSelectedLogo }}</div>
+  </div>
+
+  <!-- Flag Selection -->
+  <div class="form-group">
+    <label for="flagSelect">Flag</label>
+    <select id="flagSelect" name="flag" [(ngModel)]="flag" required>
+      <option value="" disabled selected>Select a flag</option>
+      <option *ngFor="let flag of flags" [value]="flag">{{ flag }}</option>
+    </select>
+    <div class="error" *ngIf="errorFlag !== ''">{{ errorFlag }}</div>
+  </div>
+
+  <!-- Submit Button -->
+  <button class="submit-btn" (click)="addCategory()">Add Category</button>
+</div>
