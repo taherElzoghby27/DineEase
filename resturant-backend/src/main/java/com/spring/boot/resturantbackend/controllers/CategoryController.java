@@ -13,6 +13,7 @@ import jakarta.transaction.SystemException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -46,6 +47,7 @@ public class CategoryController {
                     )
             ),
     })
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/all-categories")
     public ResponseEntity<List<CategoryDto>> getAllCategories() {
         return ResponseEntity.ok(categoryService.getAllCategories());
@@ -67,6 +69,7 @@ public class CategoryController {
                     )
             ),
     })
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create-category")
     public ResponseEntity<CategoryDto> createCategory(@RequestBody @Valid CategoryDto categoryDto) {
         return ResponseEntity.created(URI.create("create-category")).body(categoryService.createCategory(categoryDto));
@@ -95,6 +98,7 @@ public class CategoryController {
                     )
             ),
     })
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/get-category/{id}")
     public ResponseEntity<CategoryDto> getCategoryById(@PathVariable Long id) {
         return ResponseEntity.ok(categoryService.getCategoryById(id));

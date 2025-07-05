@@ -8,6 +8,7 @@ import com.spring.boot.resturantbackend.vm.ResponseOrderVm;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -20,17 +21,19 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/all-request-orders")
     public ResponseEntity<List<OrderDto>> getRequestOrders() {
         return ResponseEntity.ok(orderService.getAccessibleOrders());
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/request-order")
     public ResponseEntity<ResponseOrderVm> requestOrder(@RequestBody @Valid RequestOrderVm requestOrderDto) {
         return ResponseEntity.created(URI.create("/request-order")).body(orderService.requestOrder(requestOrderDto));
     }
 
-    //@PreAuthorize(value = )
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update-order")
     public ResponseEntity<Void> updateOrder(@RequestBody @Valid RequestUpdateStatusOrder requestUpdateStatusOrder) {
         orderService.updateOrder(requestUpdateStatusOrder);

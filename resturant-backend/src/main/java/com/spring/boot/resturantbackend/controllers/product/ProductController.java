@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -44,6 +45,7 @@ public class ProductController {
                     )
             ),
     })
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/all-products")
     public ResponseEntity<ProductResponseVm> getAllProducts(@RequestParam int page, @RequestParam int size) {
         return ResponseEntity.ok(productService.getAllProducts(page, size));
@@ -72,6 +74,7 @@ public class ProductController {
                     )
             ),
     })
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/all-products/{id}")
     public ResponseEntity<ProductResponseVm> getAllProductsByCategoryId(@PathVariable Long id, @RequestParam int page, @RequestParam int size) {
         return ResponseEntity.ok(productService.getAllProductsByCategoryId(id, page, size));
@@ -101,6 +104,7 @@ public class ProductController {
                     )
             ),
     })
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/all-products-by-key")
     public ResponseEntity<ProductResponseVm> getAllProductsByKey(@RequestParam String key, @RequestParam int page, @RequestParam int size) {
         return ResponseEntity.ok(productService.getAllProductsByKey(key, page, size));
@@ -129,6 +133,7 @@ public class ProductController {
                     )
             ),
     })
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/all-products-by-key-and-category-id")
     public ResponseEntity<ProductResponseVm> getAllProductsByKeyAndCategoryId(
             @RequestParam Long categoryId,
@@ -162,6 +167,7 @@ public class ProductController {
                     )
             ),
     })
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete-product")
     public ResponseEntity<Void> deleteProductById(@RequestParam Long id) {
         productService.deleteProductById(id);
@@ -191,6 +197,7 @@ public class ProductController {
                     )
             ),
     })
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create-product")
     public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
         return ResponseEntity.created(URI.create("/create-product")).body(

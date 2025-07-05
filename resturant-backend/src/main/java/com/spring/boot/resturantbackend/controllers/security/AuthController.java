@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -53,6 +54,7 @@ public class AuthController {
             @ApiResponse(responseCode = "500", description = "Http Status internal server error",
                     content = @Content(schema = @Schema(implementation = ExceptionDto.class))),
     })
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
     public ResponseEntity<UpdateProfileVm> getProfile() {
         return ResponseEntity.ok(authService.getProfile());
@@ -64,6 +66,7 @@ public class AuthController {
             @ApiResponse(responseCode = "500", description = "Http Status internal server error",
                     content = @Content(schema = @Schema(implementation = ExceptionDto.class))),
     })
+    @PreAuthorize("isAuthenticated()")
     @PutMapping("/update-profile")
     public ResponseEntity<UpdateProfileVm> updateProfile(@Valid @RequestBody UpdateProfileVm updateProfileVm) {
         return ResponseEntity.created(URI.create("/update-profile")).body(authService.updateProfile(updateProfileVm));

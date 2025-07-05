@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -41,6 +42,7 @@ public class ProductDetailsController {
                             schema = @Schema(implementation = ExceptionDto.class))
             )
             ,})
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add-product-details")
     public ResponseEntity<ProductDetailsDto> addProductDetails(@Valid @RequestBody ProductDetailsDto productDetailsDto) {
         return ResponseEntity.created(
@@ -70,6 +72,7 @@ public class ProductDetailsController {
                     )
             ),
     })
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/get-product-details")
     public ResponseEntity<ProductDetailsDto> getProductDetailsByProductId(@RequestParam Long id) {
         return ResponseEntity.ok(productDetailsService.getProductDetailsByProductId(id));
@@ -98,6 +101,7 @@ public class ProductDetailsController {
                     )
             ),
     })
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update-product-details")
     public ResponseEntity<ProductDetailsDto> updateProductDetailsByProductId(@RequestBody @Valid ProductDetailsDto productDetailsDto) {
         return ResponseEntity.ok(productDetailsService.updateProductDetails(productDetailsDto));
