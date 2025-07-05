@@ -1,8 +1,9 @@
-package com.spring.boot.resturantbackend.controllers;
+package com.spring.boot.resturantbackend.controllers.order;
 
 import com.spring.boot.resturantbackend.dto.OrderDto;
 import com.spring.boot.resturantbackend.services.order.OrderService;
 import com.spring.boot.resturantbackend.vm.RequestOrderVm;
+import com.spring.boot.resturantbackend.vm.RequestUpdateStatusOrder;
 import com.spring.boot.resturantbackend.vm.ResponseOrderVm;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,13 @@ public class OrderController {
     @PostMapping("/request-order")
     public ResponseEntity<ResponseOrderVm> requestOrder(@RequestBody @Valid RequestOrderVm requestOrderDto) {
         return ResponseEntity.created(URI.create("/request-order")).body(orderService.requestOrder(requestOrderDto));
+    }
+
+    //@PreAuthorize(value = )
+    @PutMapping("/update-order")
+    public ResponseEntity<Void> updateOrder(@RequestBody @Valid RequestUpdateStatusOrder requestUpdateStatusOrder) {
+        orderService.updateOrder(requestUpdateStatusOrder);
+        return ResponseEntity.noContent().build();
     }
 
 }

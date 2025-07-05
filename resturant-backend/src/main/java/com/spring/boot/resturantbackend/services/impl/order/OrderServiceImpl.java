@@ -16,11 +16,13 @@ import com.spring.boot.resturantbackend.utils.OrderStatus;
 import com.spring.boot.resturantbackend.utils.RoleEnum;
 import com.spring.boot.resturantbackend.utils.SecurityUtils;
 import com.spring.boot.resturantbackend.vm.RequestOrderVm;
+import com.spring.boot.resturantbackend.vm.RequestUpdateStatusOrder;
 import com.spring.boot.resturantbackend.vm.ResponseOrderVm;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -84,8 +86,27 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    @Override
+    public void updateOrder(RequestUpdateStatusOrder requestUpdateStatusOrder) {
+        try {
+            Order order = getOrderById(requestUpdateStatusOrder.getId());
+            if (Objects.isNull(order)) {
+                throw new SystemException("order.not.found");
+            }
+            OrderStatus.valueOf(requestUpdateStatusOrder.getStatus());
+            order.setStatus(requestUpdateStatusOrder.getStatus());
+            orderRepo.save(order);
+        } catch (SystemException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
     // Helper method to check for ADMIN role
     private boolean isAdmin(List<RoleDto> roles) {
         return roles.stream().anyMatch(role -> role.getRole().equals(RoleEnum.ADMIN.toString()));
+    }
+
+    private Order getOrderById(Long id) {
+        return orderRepo.findById(id).orElse(null);
     }
 }
