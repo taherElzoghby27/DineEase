@@ -19,7 +19,6 @@ public class ProductRequestVm {
     @NotEmpty(message = "not_empty.name")
     @Size(min = 7, max = 50, message = "size.name")
     private String name;
-    @NotEmpty(message = "not_empty.image_path")
     private String imagePath;
     @NotEmpty(message = "not_empty.description")
     private String description;

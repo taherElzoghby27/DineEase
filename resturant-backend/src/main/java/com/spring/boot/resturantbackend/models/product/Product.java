@@ -19,7 +19,6 @@ import java.util.List;
 public class Product extends BaseEntity<String> {
     @Column(nullable = false)
     private String name;
-    @Column(nullable = false)
     private String imagePath;
     @Column(nullable = false)
     private String description;
