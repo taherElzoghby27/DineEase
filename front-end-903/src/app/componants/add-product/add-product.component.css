@@ -1,4 +1,5 @@
 .add-product-container {
+  width: 100%;
   max-width: 600px;
   margin: 2rem auto;
   padding: 30px;
@@ -6,6 +7,7 @@
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   font-family: 'Segoe UI', sans-serif;
+  box-sizing: border-box;
 }
 
 h2 {
@@ -29,22 +31,39 @@ label {
 }
 
 input,
-textarea {
+textarea,
+select {
   width: 100%;
   padding: 12px 14px;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #fdfdfd;
-  transition: border 0.2s;
-  resize: vertical;
+  transition: border 0.2s ease, background-color 0.2s ease;
+  box-sizing: border-box;
 }
 
 input:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
   border-color: #4a90e2;
   outline: none;
   background-color: #fff;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Category Dropdown Styling */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='14' height='8' viewBox='0 0 14 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L7 7L13 1' stroke='%23444' stroke-width='2'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 14px;
+  padding-right: 36px;
 }
 
 .submit-btn {
@@ -61,13 +80,37 @@ textarea:focus {
   transition: background-color 0.25s ease;
 }
 
+.submit-btn:hover:not(:disabled) {
+  background-color: #357bd8;
+}
+
 .submit-btn:disabled {
   background-color: #b0c8e8;
   cursor: not-allowed;
 }
 
-.submit-btn:hover:not(:disabled) {
-  background-color: #357bd8;
+.error {
+  color: #d93025;
+  font-size: 0.875rem;
+  margin-top: 6px;
+}
+
+.server-message.error {
+  background-color: #ffe5e5;
+  border: 1px solid #ff4d4d;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
+.error-text {
+  color: #d8000c;
+  margin: 5px 0;
+}
+
+.rtl-text {
+  direction: rtl;
+  text-align: right;
 }
 
 @media (max-width: 600px) {
@@ -78,4 +121,21 @@ textarea:focus {
   h2 {
     font-size: 1.5rem;
   }
+}
+.server-message.error {
+  background-color: #ffe5e5;
+  border: 1px solid #ff4d4d;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
+.error-text {
+  color: #d8000c;
+  margin: 5px 0;
+}
+
+.rtl-text {
+  direction: rtl;
+  text-align: right;
 }

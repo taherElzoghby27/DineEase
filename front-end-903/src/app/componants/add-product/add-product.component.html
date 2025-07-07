@@ -3,33 +3,41 @@
 
   <div class="form-group">
     <label for="name">Name*</label>
-    <input type="text" id="name" [(ngModel)]="product.name" name="name" required />
+    <input type="text" id="name" [(ngModel)]="name" name="name" required/>
   </div>
 
   <div class="form-group">
     <label for="description">Description*</label>
-    <textarea id="description" [(ngModel)]="product.description" name="description" required></textarea>
+    <textarea id="description" [(ngModel)]="description" name="description" required></textarea>
   </div>
 
   <div class="form-group">
     <label for="price">Price*</label>
-    <input type="number" id="price" [(ngModel)]="product.price" name="price" required />
+    <input type="number" id="price" [(ngModel)]="price" name="price" required/>
   </div>
 
   <div class="form-group">
     <label for="image">Image URL</label>
-    <input type="url" id="image" [(ngModel)]="product.image" name="image" />
+    <input type="url" id="image" [(ngModel)]="image" name="image"/>
+  </div>
+  <div class="form-group">
+    <label for="category">Category*</label>
+    <select id="category" [(ngModel)]="categoryId" name="categoryId" required>
+      <option *ngFor="let category of categories" [value]="category.id">
+        {{ category.name }}
+      </option>
+    </select>
   </div>
 
-  <div class="form-group">
-    <label for="preparationTime">Preparation Time (mins)</label>
-    <input type="number" id="preparationTime" [(ngModel)]="product.preparationTime" name="preparationTime" />
-  </div>
-
-  <div class="form-group">
-    <label for="productCode">Product Code</label>
-    <input type="text" id="productCode" [(ngModel)]="product.productCode" name="productCode" />
-  </div>
 
   <button class="submit-btn" (click)="addProduct()" [disabled]="!isFormValid()">Add Product</button>
+  <!-- Server Message Section -->
+  <div class="server-message error" *ngIf="errorBackend">
+    <p *ngIf="errorEn" class="error-text">
+      <strong>Error:</strong> {{ errorEn }}
+    </p>
+    <p *ngIf="errorAr" class="error-text rtl-text">
+      <strong>خطأ:</strong> {{ errorAr }}
+    </p>
+  </div>
 </div>
