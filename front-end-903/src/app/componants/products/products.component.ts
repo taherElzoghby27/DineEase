@@ -22,6 +22,7 @@ export class ProductsComponent implements OnInit {
   messageAr = '';
   messageEn = '';
   isError = false;
+  noPhoto = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHICWZcFeQ7UuaU7N30-E4Vt1GaTYIU1DIEA&s';
 
   constructor(private service: ProductService,
               private activatedRoute: ActivatedRoute,
@@ -71,46 +72,46 @@ export class ProductsComponent implements OnInit {
   getAllProductsByCategoryId(id: string, pageNumber): void {
     this.service.getProductsByCategoryId(id, pageNumber, this.size).subscribe(
       response => {
-      this.isError = false;
-      this.products = response.products;
-      this.collectionSize = response.totalProducts;
-    }, errors => {
-      this.products = [];
-      this.collectionSize = 0;
-      this.messageAr = errors.error.bundleMessage.message_ar;
-      this.messageEn = errors.error.bundleMessage.message_en;
-      this.isError = true;
-    });
+        this.isError = false;
+        this.products = response.products;
+        this.collectionSize = response.totalProducts;
+      }, errors => {
+        this.products = [];
+        this.collectionSize = 0;
+        this.messageAr = errors.error.bundleMessage.message_ar;
+        this.messageEn = errors.error.bundleMessage.message_en;
+        this.isError = true;
+      });
   }
 
   getProductsByKey(key: string, pageNumber): void {
     this.service.getProductsByKey(key, pageNumber, this.size).subscribe(
       response => {
-      this.isError = false;
-      this.products = response.products;
-      this.collectionSize = response.totalProducts;
-    }, errors => {
-      this.products = [];
-      this.collectionSize = 0;
-      this.messageAr = errors.error.bundleMessage.message_ar;
-      this.messageEn = errors.error.bundleMessage.message_en;
-      this.isError = true;
-    });
+        this.isError = false;
+        this.products = response.products;
+        this.collectionSize = response.totalProducts;
+      }, errors => {
+        this.products = [];
+        this.collectionSize = 0;
+        this.messageAr = errors.error.bundleMessage.message_ar;
+        this.messageEn = errors.error.bundleMessage.message_en;
+        this.isError = true;
+      });
   }
 
   getProductsByKeyAndCategoryId(key: string, id: string, pageNumber): void {
     this.service.searchByCategoryIdAndKey(id, key, pageNumber, this.size).subscribe(
       response => {
-      this.isError = false;
-      this.products = response.products;
-      this.collectionSize = response.totalProducts;
-    }, errors => {
-      this.products = [];
-      this.collectionSize = 0;
-      this.messageAr = errors.error.bundleMessage.message_ar;
-      this.messageEn = errors.error.bundleMessage.message_en;
-      this.isError = true;
-    });
+        this.isError = false;
+        this.products = response.products;
+        this.collectionSize = response.totalProducts;
+      }, errors => {
+        this.products = [];
+        this.collectionSize = 0;
+        this.messageAr = errors.error.bundleMessage.message_ar;
+        this.messageEn = errors.error.bundleMessage.message_en;
+        this.isError = true;
+      });
   }
 
   doPagination(): void {
