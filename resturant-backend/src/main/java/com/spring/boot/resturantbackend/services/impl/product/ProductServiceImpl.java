@@ -1,12 +1,16 @@
 package com.spring.boot.resturantbackend.services.impl.product;
 
 import com.spring.boot.resturantbackend.controllers.vm.ProductResponseVm;
+import com.spring.boot.resturantbackend.dto.CategoryDto;
 import com.spring.boot.resturantbackend.dto.product.ProductDto;
+import com.spring.boot.resturantbackend.mappers.CategoryMapper;
 import com.spring.boot.resturantbackend.mappers.ProductMapper;
+import com.spring.boot.resturantbackend.models.Category;
 import com.spring.boot.resturantbackend.models.product.Product;
 import com.spring.boot.resturantbackend.repositories.product.ProductRepo;
 import com.spring.boot.resturantbackend.services.CategoryService;
 import com.spring.boot.resturantbackend.services.product.ProductService;
+import com.spring.boot.resturantbackend.vm.product.ProductRequestVm;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,7 +21,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -64,14 +67,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto createProduct(ProductDto productDto) {
+    public ProductRequestVm createProduct(ProductRequestVm productRequestVm) {
         try {
-            if (Objects.nonNull(productDto.getId())) {
+            if (Objects.nonNull(productRequestVm.getId())) {
                 throw new SystemException("id.must_be.null");
             }
-            Product product = ProductMapper.PRODUCT_MAPPER.toProduct(productDto);
+            if (Objects.isNull(productRequestVm.getCategoryId())) {
+                throw new SystemException("id.must_be.not_null");
+            }
+            //map productRequestVm to product
+            Product product = ProductMapper.PRODUCT_MAPPER.toProduct(productRequestVm);
+            //get category by id
+            CategoryDto categoryDto = categoryService.getCategoryById(productRequestVm.getCategoryId());
+            //map categoryDto to category
+            Category category = CategoryMapper.CATEGORY_MAPPER.toCategory(categoryDto);
+            product.setCategory(category);
             product = productRepo.save(product);
-            return ProductMapper.PRODUCT_MAPPER.toProductDto(product);
+            return ProductMapper.PRODUCT_MAPPER.toProductRequestVm(product);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
