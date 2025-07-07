@@ -34,6 +34,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatOptionModule} from '@angular/material/core';
 import { AddCategoryComponent } from './componants/add-category/add-category.component';
+import { AddProductComponent } from './componants/add-product/add-product.component';
 
 // http://localhost:4200/
 export const routes: Routes = [
@@ -41,6 +42,7 @@ export const routes: Routes = [
   {path: 'sign-up', component: SignUpComponent, canActivate: [LoginSignupGuard]},
   // http://localhost:4200/products
   {path: 'products', component: ProductsComponent, canActivate: [AuthGuard]},
+  {path: 'add-product', component: AddProductComponent, canActivate: [AuthGuard]},
   {path: 'category/:id', component: ProductsComponent, canActivate: [AuthGuard]},
   {path: 'add-category', component: AddCategoryComponent, canActivate: [AuthGuard]},
   {path: 'search/:key', component: ProductsComponent, canActivate: [AuthGuard]},
@@ -82,7 +84,8 @@ export const routes: Routes = [
     AllRequestOrdersComponent,
     ProfileComponent,
     UpdateOrderStatusComponent,
-    AddCategoryComponent
+    AddCategoryComponent,
+    AddProductComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {ProductResponseVm} from '../model/product-response-vm';
+import {ProductRequest} from '../model/product-request';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +47,13 @@ export class ProductService {
 
   deleteProductById(id: string): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}delete-product?id=${id}`)
+      .pipe(
+        map(response => response)
+      );
+  }
+
+  createProduct(productRequest: ProductRequest): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}create-product`, productRequest)
       .pipe(
         map(response => response)
       );

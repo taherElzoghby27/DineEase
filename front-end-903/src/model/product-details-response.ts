@@ -7,7 +7,7 @@ export class ProductDetailsResponse {
   constructor(
     preparationTime: string,
     productCode: string,
-    idProduct: number,
+    idProduct?: number,
     id?: number // optional parameter at the end
   ) {
     this.id = id;
