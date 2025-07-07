@@ -1,4 +1,4 @@
-package com.spring.boot.resturantbackend.vm;
+package com.spring.boot.resturantbackend.vm.product;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

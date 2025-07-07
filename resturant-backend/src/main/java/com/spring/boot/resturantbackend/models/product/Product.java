@@ -1,5 +1,4 @@
 package com.spring.boot.resturantbackend.models.product;
-
 import com.spring.boot.resturantbackend.models.BaseEntity;
 import com.spring.boot.resturantbackend.models.Category;
 import com.spring.boot.resturantbackend.models.Order;
