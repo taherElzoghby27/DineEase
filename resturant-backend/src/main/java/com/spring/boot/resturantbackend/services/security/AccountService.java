@@ -20,5 +20,6 @@ public interface AccountService {
     AccountDto getAccountByUsername(String username);
 
     Account idToAccount(Long id);
+    changePassword();
 
 }
