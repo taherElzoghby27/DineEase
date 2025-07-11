@@ -4,6 +4,7 @@ import com.spring.boot.resturantbackend.dto.ExceptionDto;
 import com.spring.boot.resturantbackend.services.security.AuthService;
 import com.spring.boot.resturantbackend.vm.Security.AccountAuthRequestVm;
 import com.spring.boot.resturantbackend.vm.Security.AccountAuthResponseVm;
+import com.spring.boot.resturantbackend.vm.Security.ChangePasswordRequest;
 import com.spring.boot.resturantbackend.vm.Security.UpdateProfileVm;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -70,5 +71,18 @@ public class AuthController {
     @PutMapping("/update-profile")
     public ResponseEntity<UpdateProfileVm> updateProfile(@Valid @RequestBody UpdateProfileVm updateProfileVm) {
         return ResponseEntity.created(URI.create("/update-profile")).body(authService.updateProfile(updateProfileVm));
+    }
+
+    @Operation(summary = "change Password")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Http Status change Password"),
+            @ApiResponse(responseCode = "500", description = "Http Status internal server error",
+                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))),
+    })
+    @PreAuthorize("isAuthenticated()")
+    @PutMapping("/change-password")
+    public ResponseEntity<Void> changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
+        authService.changePassword(changePasswordRequest);
+        return ResponseEntity.noContent().build();
     }
 }
