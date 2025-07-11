@@ -186,12 +186,20 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void changePassword(ChangePasswordRequest changePasswordRequest) {
-        //get account by username
-        AccountDto accountDto = getAccountByUsername(changePasswordRequest.getUsername());
-        Account account = AccountMapper.ACCOUNT_MAPPER.toAccount(accountDto);
-        //encode password
-        String newHashPassword = passwordEncoder.encode(changePasswordRequest.getNewPassword());
-        account.setPassword(newHashPassword);
-        accountRepo.save(account);
+        try {
+            //get account by username
+            AccountDto accountDto = getAccountByUsername(changePasswordRequest.getUsername());
+            Optional<Account> result = accountRepo.findById(accountDto.getId());
+            if (result.isEmpty()) {
+                throw new SystemException("not_found.account");
+            }
+            Account account = result.get();
+            //encode password
+            String newHashPassword = passwordEncoder.encode(changePasswordRequest.getNewPassword());
+            account.setPassword(newHashPassword);
+            accountRepo.save(account);
+        } catch (SystemException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

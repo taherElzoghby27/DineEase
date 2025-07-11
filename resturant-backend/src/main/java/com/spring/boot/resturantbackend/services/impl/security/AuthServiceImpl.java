@@ -84,7 +84,7 @@ public class AuthServiceImpl implements AuthService {
             //verify username and password
             AccountDto accountDto = SecurityUtils.getCurrentAccount();
             if (!changePasswordRequest.getUsername().equals(accountDto.getUsername()) ||
-                    !changePasswordRequest.getOldPassword().equals(accountDto.getPassword())) {
+                    !passwordEncoder.matches(changePasswordRequest.getOldPassword(), accountDto.getPassword())) {
                 throw new SystemException("username.or.password.incorrect");
             }
             accountService.changePassword(changePasswordRequest);
