@@ -8,6 +8,7 @@ import com.spring.boot.resturantbackend.services.security.AuthService;
 import com.spring.boot.resturantbackend.utils.SecurityUtils;
 import com.spring.boot.resturantbackend.vm.Security.AccountAuthRequestVm;
 import com.spring.boot.resturantbackend.vm.Security.AccountAuthResponseVm;
+import com.spring.boot.resturantbackend.vm.Security.ChangePasswordRequest;
 import com.spring.boot.resturantbackend.vm.Security.UpdateProfileVm;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +73,21 @@ public class AuthServiceImpl implements AuthService {
             }
             updateProfileVm = accountService.updateAccount(updateProfileVm);
             return updateProfileVm;
+        } catch (SystemException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void changePassword(ChangePasswordRequest changePasswordRequest) {
+        try {
+            //verify username and password
+            AccountDto accountDto = SecurityUtils.getCurrentAccount();
+            if (!changePasswordRequest.getUsername().equals(accountDto.getUsername()) ||
+                    !changePasswordRequest.getOldPassword().equals(accountDto.getPassword())) {
+                throw new SystemException("username.or.password.incorrect");
+            }
+            accountService.changePassword(changePasswordRequest);
         } catch (SystemException e) {
             throw new RuntimeException(e.getMessage());
         }
