@@ -11,6 +11,8 @@ import com.spring.boot.resturantbackend.repositories.security.AccountRepo;
 import com.spring.boot.resturantbackend.services.security.AccountService;
 import com.spring.boot.resturantbackend.services.security.RoleService;
 import com.spring.boot.resturantbackend.utils.RoleEnum;
+import com.spring.boot.resturantbackend.utils.SecurityUtils;
+import com.spring.boot.resturantbackend.vm.Security.ChangePasswordRequest;
 import com.spring.boot.resturantbackend.vm.Security.UpdateProfileVm;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -180,5 +182,26 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account idToAccount(Long id) {
         return id != null ? AccountMapper.ACCOUNT_MAPPER.toAccount(getAccountById(id)) : null;
+    }
+
+    @Override
+    public void changePassword(ChangePasswordRequest changePasswordRequest) {
+        try {
+            //verify username and password
+            AccountDto accountDto = SecurityUtils.getCurrentAccount();
+            if (!changePasswordRequest.getUsername().equals(accountDto.getUsername()) ||
+                    !changePasswordRequest.getOldPassword().equals(accountDto.getPassword())) {
+                throw new SystemException("username.or.password.incorrect");
+            }
+            //get account by username
+            accountDto = getAccountByUsername(changePasswordRequest.getUsername());
+            Account account = AccountMapper.ACCOUNT_MAPPER.toAccount(accountDto);
+            //encode password
+            String newHashPassword = passwordEncoder.encode(changePasswordRequest.getNewPassword());
+            account.setPassword(newHashPassword);
+            accountRepo.save(account);
+        } catch (SystemException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.spring.boot.resturantbackend.services.security;
 
 import com.spring.boot.resturantbackend.dto.security.AccountDto;
 import com.spring.boot.resturantbackend.models.security.Account;
+import com.spring.boot.resturantbackend.vm.Security.ChangePasswordRequest;
 import com.spring.boot.resturantbackend.vm.Security.UpdateProfileVm;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public interface AccountService {
     AccountDto getAccountByUsername(String username);
 
     Account idToAccount(Long id);
-    changePassword();
+
+    void changePassword(ChangePasswordRequest changePasswordRequest);
 
 }
