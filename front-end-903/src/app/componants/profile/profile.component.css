@@ -1,109 +1,129 @@
+/* === Profile Card Container === */
 .profile-card {
   max-width: 400px;
-  margin: 30px auto;
-  padding: 20px;
+  margin: 2rem auto;
+  padding: 1.5rem;
   background-color: #fdfdfd;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* === Profile Photo === */
 .profile-photo {
-  width: 120px;
-  height: 120px;
+  width: 7.5rem;
+  height: 7.5rem;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
+  border: 2px solid #e0e0e0;
 }
 
+/* === Buttons === */
 .edit-button {
   background-color: #007bff;
-  border: none;
-  padding: 10px 16px;
   color: #fff;
-  font-weight: bold;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.edit-button:disabled {
-  background-color: #6c757d;
-  cursor: not-allowed;
-}
-
-.profile-info {
-  margin-top: 20px;
-  text-align: left;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-.form-group label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
-
-.error {
-  color: red;
-  font-size: 12px;
-}
-
-.label {
-  font-weight: bold;
-}
-
-.loading-indicator {
-  margin: 10px 0;
-  font-weight: bold;
-  color: #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.spinner {
-  border: 3px solid #f3f3f3;
-  border-top: 3px solid #007bff;
-  border-radius: 50%;
-  width: 16px;
-  height: 16px;
-  animation: spin 1s linear infinite;
-  margin-right: 8px;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-.edit-button {
-  background-color: #007bff; /* Bootstrap primary blue */
-  color: white;
   border: none;
   padding: 0.6rem 1.2rem;
   font-size: 1rem;
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 1rem;
+  margin-right: 0.5rem;
 }
 
 .edit-button:hover:not(:disabled) {
   background-color: #0056b3;
+  transform: translateY(-1px);
 }
 
 .edit-button:disabled {
   background-color: #6c757d;
   cursor: not-allowed;
   opacity: 0.7;
+}
+
+/* === Profile Info Section === */
+.profile-info {
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.profile-info .info-row {
+  margin-bottom: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.label {
+  font-weight: bold;
+  min-width: 80px;
+  color: #333;
+}
+
+.value {
+  color: #555;
+}
+
+/* === Form Elements === */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: #444;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 0.4rem;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* === Error Text === */
+.error {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+/* === Loading Indicator === */
+.loading-indicator {
+  margin: 1rem 0;
+  font-weight: bold;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+}
+
+.spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #007bff;
+  border-radius: 50%;
+  width: 1rem;
+  height: 1rem;
+  animation: spin 1s linear infinite;
+  margin-right: 0.5rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

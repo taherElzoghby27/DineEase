@@ -74,5 +74,10 @@
     <p><span class="label">Phone:</span> {{ profile.accountDetails.phoneNumber }}</p>
     <p><span class="label">Address:</span> {{ profile.accountDetails.address }}</p>
     <button class="edit-button" (click)="editing = true">Edit Profile</button>
+    <a routerLink="/change-password">
+      <button class="edit-button" type="button" aria-label="Change Password">
+        Change Password
+      </button>
+    </a>
   </div>
 </div>

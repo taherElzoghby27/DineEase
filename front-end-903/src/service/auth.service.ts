@@ -5,6 +5,7 @@ import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {RequestLoginModel} from '../model/request-login-model';
 import {Profile} from '../model/profile';
+import {RequestChangePassword} from '../model/request-change-password';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,12 @@ export class AuthService {
     const username = requestLoginModel.username;
     const password = requestLoginModel.password;
     return this.http.post<any>(`${this.baseUrl}login`, {username, password}).pipe(
+      map(response => response)
+    );
+  }
+
+  changePassword(requestChangePassword: RequestChangePassword): any {
+    return this.http.put<any>(`${this.baseUrl}change-password`, requestChangePassword).pipe(
       map(response => response)
     );
   }

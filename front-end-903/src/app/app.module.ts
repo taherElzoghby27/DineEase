@@ -29,12 +29,13 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {OrderDialogComponent} from './componants/order-dialog/order-dialog.component';
 import {AllRequestOrdersComponent} from './componants/all-request-orders/all-request-orders.component';
 import {ProfileComponent} from './componants/profile/profile.component';
-import { UpdateOrderStatusComponent } from './componants/update-order-status/update-order-status.component';
+import {UpdateOrderStatusComponent} from './componants/update-order-status/update-order-status.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatOptionModule} from '@angular/material/core';
-import { AddCategoryComponent } from './componants/add-category/add-category.component';
-import { AddProductComponent } from './componants/add-product/add-product.component';
+import {AddCategoryComponent} from './componants/add-category/add-category.component';
+import {AddProductComponent} from './componants/add-product/add-product.component';
+import {ChangePasswordComponent} from './componants/change-password/change-password.component';
 
 // http://localhost:4200/
 export const routes: Routes = [
@@ -50,6 +51,7 @@ export const routes: Routes = [
   // http://localhost:4200/cardDetails
   {path: 'cardDetails', component: CardDetailsComponent, canActivate: [AuthGuard]},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+  {path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard]},
   {path: 'allRequestOrders', component: AllRequestOrdersComponent, canActivate: [AuthGuard]},
   // http://localhost:4200/cardDetails
   {path: 'contact-info', component: ContactInfoComponent, canActivate: [AuthGuard]},
@@ -85,7 +87,8 @@ export const routes: Routes = [
     ProfileComponent,
     UpdateOrderStatusComponent,
     AddCategoryComponent,
-    AddProductComponent
+    AddProductComponent,
+    ChangePasswordComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
