@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 @AllArgsConstructor
@@ -21,7 +22,7 @@ import java.util.List;
         name = "Category Dto",
         description = "category dto contains (id,name,logo,flag,products)"
 )
-public class CategoryDto {
+public class CategoryDto implements Serializable {
     private Long id;
     @NotEmpty(message = "not_empty.name")
     @Size(min = 7, max = 50, message = "size.name")

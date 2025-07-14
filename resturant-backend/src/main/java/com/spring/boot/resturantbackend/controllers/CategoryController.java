@@ -103,4 +103,58 @@ public class CategoryController {
     public ResponseEntity<CategoryDto> getCategoryById(@PathVariable Long id) {
         return ResponseEntity.ok(categoryService.getCategoryById(id));
     }
+
+    @Operation(
+            summary = "update category"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Http Status update category"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Http Status internal server error",
+                    content = @Content(
+                            schema = @Schema(implementation = ExceptionDto.class)
+                    )
+            ),
+    })
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/update-category")
+    public ResponseEntity<CategoryDto> updateCategory(@RequestBody @Valid CategoryDto categoryDto) {
+        return ResponseEntity.ok(categoryService.updateCategory(categoryDto));
+    }
+
+    @Operation(
+            summary = "delete category by id"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Http Status delete category by id"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Http Status internal server error",
+                    content = @Content(
+                            schema = @Schema(implementation = ExceptionDto.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Http Status Not Found",
+                    content = @Content(
+                            schema = @Schema(implementation = ExceptionDto.class)
+                    )
+            ),
+    })
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/delete-category/{id}")
+    public ResponseEntity<Void> deleteCategoryById(@PathVariable Long id) {
+        categoryService.deleteCategoryById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
 }

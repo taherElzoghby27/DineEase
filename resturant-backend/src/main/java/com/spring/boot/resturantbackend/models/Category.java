@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.util.List;
 
 @Entity
@@ -15,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Category extends BaseEntity<String> {
+public class Category extends BaseEntity<String>{
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)

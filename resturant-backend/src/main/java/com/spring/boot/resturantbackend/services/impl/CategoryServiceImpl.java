@@ -7,6 +7,10 @@ import com.spring.boot.resturantbackend.repositories.CategoryRepo;
 import com.spring.boot.resturantbackend.services.CategoryService;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +22,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepo categoryRepo;
 
-
+    @Cacheable(value = "categories", key = "'all'")
     @Override
     public List<CategoryDto> getAllCategories() {
         try {
@@ -33,6 +37,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @CacheEvict(value = "categories", key = "'all'")
     public CategoryDto createCategory(CategoryDto categoryDto) {
         try {
             if (Objects.nonNull(categoryDto.getId())) {
@@ -47,6 +52,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @CacheEvict(value = "categories", key = "'all'")
     public List<CategoryDto> createListOfCategory(List<CategoryDto> categoriesDto) {
         return saveCategoriesDto(categoriesDto);
     }
@@ -65,6 +71,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @CachePut(value = "categories", key = "#result.id")
+    @CacheEvict(value = "categories", key = "'all'")
     public CategoryDto updateCategory(CategoryDto categoryDto) {
         try {
             if (Objects.isNull(categoryDto.getId())) {
@@ -84,6 +92,13 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+
+    @Caching(
+            evict = {
+                    @CacheEvict(value = "categories", key = "#id"),
+                    @CacheEvict(value = "categories", key = "'all'")
+            }
+    )
     public void deleteCategoryById(Long id) {
         try {
             if (Objects.isNull(id)) {
@@ -97,6 +112,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @CacheEvict(value = "categories", key = "'all'")
     public void deleteListOfCategory(List<Long> categoryIds) {
         try {
             if (categoryIds.isEmpty()) {
@@ -109,6 +125,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Cacheable(value = "categories", key = "#id")
     public CategoryDto getCategoryById(Long id) {
         try {
             if (Objects.isNull(id)) {
