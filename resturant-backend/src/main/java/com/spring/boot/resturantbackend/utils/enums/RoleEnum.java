@@ -1,4 +1,4 @@
-package com.spring.boot.resturantbackend.utils;
+package com.spring.boot.resturantbackend.utils.enums;
 
 public enum RoleEnum {
     ADMIN("ADMIN"), USER("USER");

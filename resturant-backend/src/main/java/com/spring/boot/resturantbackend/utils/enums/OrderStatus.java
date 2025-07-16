@@ -1,4 +1,4 @@
-package com.spring.boot.resturantbackend.utils;
+package com.spring.boot.resturantbackend.utils.enums;
 
 public enum OrderStatus {
     Pending("Pending"), Preparing("Preparing"), Ready("Ready"), Delivered("Delivered");

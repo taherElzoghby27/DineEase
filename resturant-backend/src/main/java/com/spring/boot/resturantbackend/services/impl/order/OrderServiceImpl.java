@@ -12,8 +12,8 @@ import com.spring.boot.resturantbackend.services.order.OrderService;
 import com.spring.boot.resturantbackend.services.product.ProductService;
 import com.spring.boot.resturantbackend.services.security.AccountService;
 import com.spring.boot.resturantbackend.services.security.RoleService;
-import com.spring.boot.resturantbackend.utils.OrderStatus;
-import com.spring.boot.resturantbackend.utils.RoleEnum;
+import com.spring.boot.resturantbackend.utils.enums.OrderStatus;
+import com.spring.boot.resturantbackend.utils.enums.RoleEnum;
 import com.spring.boot.resturantbackend.utils.SecurityUtils;
 import com.spring.boot.resturantbackend.vm.RequestOrderVm;
 import com.spring.boot.resturantbackend.vm.RequestUpdateStatusOrder;
@@ -22,7 +22,6 @@ import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
