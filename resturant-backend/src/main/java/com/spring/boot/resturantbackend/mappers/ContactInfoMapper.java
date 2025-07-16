@@ -1,7 +1,7 @@
 package com.spring.boot.resturantbackend.mappers;
 
 import com.spring.boot.resturantbackend.dto.ContactInfoDto;
-import com.spring.boot.resturantbackend.models.ContactInfo;
+import com.spring.boot.resturantbackend.models.contact_info.ContactInfo;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

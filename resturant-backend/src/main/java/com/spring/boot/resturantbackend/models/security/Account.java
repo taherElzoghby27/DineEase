@@ -1,7 +1,7 @@
 package com.spring.boot.resturantbackend.models.security;
 
 import com.spring.boot.resturantbackend.models.BaseEntity;
-import com.spring.boot.resturantbackend.models.ContactInfo;
+import com.spring.boot.resturantbackend.models.contact_info.ContactInfo;
 import com.spring.boot.resturantbackend.models.Order;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

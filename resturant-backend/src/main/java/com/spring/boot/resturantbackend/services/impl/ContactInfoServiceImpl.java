@@ -2,7 +2,7 @@ package com.spring.boot.resturantbackend.services.impl;
 
 import com.spring.boot.resturantbackend.dto.ContactInfoDto;
 import com.spring.boot.resturantbackend.mappers.ContactInfoMapper;
-import com.spring.boot.resturantbackend.models.ContactInfo;
+import com.spring.boot.resturantbackend.models.contact_info.ContactInfo;
 import com.spring.boot.resturantbackend.repositories.ContactInfoRepo;
 import com.spring.boot.resturantbackend.services.ContactInfoService;
 import jakarta.transaction.SystemException;
