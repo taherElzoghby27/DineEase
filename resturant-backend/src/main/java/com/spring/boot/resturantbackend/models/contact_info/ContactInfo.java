@@ -30,5 +30,5 @@ public class ContactInfo extends BaseEntity<String> {
     @ManyToOne
     private Account account;
     @OneToMany(mappedBy = "contactInfo")
-    private List<Comment> comments;
+    private List<Comment> comment;
 }

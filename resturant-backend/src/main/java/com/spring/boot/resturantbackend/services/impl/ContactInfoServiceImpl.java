@@ -1,6 +1,6 @@
 package com.spring.boot.resturantbackend.services.impl;
 
-import com.spring.boot.resturantbackend.dto.ContactInfoDto;
+import com.spring.boot.resturantbackend.dto.contact_info.ContactInfoDto;
 import com.spring.boot.resturantbackend.mappers.ContactInfoMapper;
 import com.spring.boot.resturantbackend.models.contact_info.ContactInfo;
 import com.spring.boot.resturantbackend.repositories.ContactInfoRepo;

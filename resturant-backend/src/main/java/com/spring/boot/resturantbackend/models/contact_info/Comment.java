@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(schema = "hr")
+@Table(schema = "hr", name = "comment_contact_info")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -17,7 +17,7 @@ public class Comment extends BaseEntity<String> {
     @Column(nullable = false)
     private String value;
     @Column(nullable = false)
-    private Long order;
+    private Long orderNumber;
     @Column(nullable = false)
     private String sender;
     @ManyToOne
