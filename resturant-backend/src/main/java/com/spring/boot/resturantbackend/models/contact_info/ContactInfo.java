@@ -2,7 +2,11 @@ package com.spring.boot.resturantbackend.models.contact_info;
 
 import com.spring.boot.resturantbackend.models.BaseEntity;
 import com.spring.boot.resturantbackend.models.security.Account;
+import com.spring.boot.resturantbackend.utils.enums.FilterContactInfo;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,15 +22,23 @@ import java.util.List;
 @Getter
 public class ContactInfo extends BaseEntity<String> {
     @Column(nullable = false)
+    @NotBlank(message = "not_empty.name")
+    @Size(min = 7, max = 100, message = "size.name")
     private String name;
     @Column(nullable = false)
+    @Email(message = "not_valid.email")
+    @NotBlank(message = "not_empty.email")
     private String email;
     @Column(nullable = false)
+    @NotBlank(message = "not_empty.subject")
     private String subject;
     @Column(nullable = false)
+    @NotBlank(message = "not_empty.message")
     private String message;
     @Column(nullable = false)
-    private String status;
+    @NotBlank(message = "not_empty.status")
+    @Enumerated(EnumType.STRING)
+    private FilterContactInfo status;
     @ManyToOne
     private Account account;
     @OneToMany(mappedBy = "contactInfo")

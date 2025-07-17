@@ -7,6 +7,8 @@ import java.util.List;
 public interface ContactInfoService {
     List<ContactInfoDto> allContactInfos(String filter);
 
+    List<ContactInfoDto> allContactInfosForSpecificAccount(String filter);
+
     ContactInfoDto createContactInfo(ContactInfoDto contactInfoDto);
 
 }
