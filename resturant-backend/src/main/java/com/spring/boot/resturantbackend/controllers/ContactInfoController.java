@@ -1,4 +1,5 @@
 package com.spring.boot.resturantbackend.controllers;
+
 import com.spring.boot.resturantbackend.dto.ExceptionDto;
 import com.spring.boot.resturantbackend.dto.contact_info.ContactInfoDto;
 import com.spring.boot.resturantbackend.services.ContactInfoService;
@@ -52,8 +53,8 @@ public class ContactInfoController {
     }
 
     @Operation(
-            summary = "get all contacts info",
-            description = "all contacts info in restaurant"
+            summary = "get all contacts info for admin",
+            description = "all contacts info for admin in restaurant"
     )
     @ApiResponses({
             @ApiResponse(
@@ -70,7 +71,7 @@ public class ContactInfoController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/contacts-info")
-    public ResponseEntity<List<ContactInfoDto>> getAllContactsInfo(@RequestParam() String filter) {
+    public ResponseEntity<List<ContactInfoDto>> getAllContactsInfo(@RequestParam(required = false) String filter) {
         return ResponseEntity.ok(contactInfoService.allContactInfos(filter));
     }
 
@@ -93,7 +94,7 @@ public class ContactInfoController {
     })
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/contacts-info-for-account")
-    public ResponseEntity<List<ContactInfoDto>> getAllContactsInfoForAccount(@RequestParam() String filter) {
+    public ResponseEntity<List<ContactInfoDto>> getAllContactsInfoForAccount(@RequestParam(required = false) String filter) {
         return ResponseEntity.ok(contactInfoService.allContactInfosForSpecificAccount(filter));
     }
 }

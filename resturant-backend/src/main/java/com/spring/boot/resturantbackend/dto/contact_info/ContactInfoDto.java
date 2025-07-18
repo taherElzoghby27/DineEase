@@ -5,6 +5,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,7 +30,7 @@ public class ContactInfoDto {
     private String subject;
     @NotEmpty(message = "not_empty.message")
     private String message;
-    @NotEmpty(message = "not_empty.status")
+    @NotNull(message = "not_empty.status")
     @Enumerated(EnumType.STRING)
     private FilterContactInfo status;
     private List<CommentDto> comment;

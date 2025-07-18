@@ -34,7 +34,7 @@ public class Account extends BaseEntity<String> {
             uniqueConstraints = @UniqueConstraint(columnNames = {"account_id", "role_id"})
     )
     private List<Role> roles = new ArrayList<>();
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ContactInfo> contacts;
     @OneToMany(mappedBy = "account")
     private List<Order> orders;

@@ -6,6 +6,7 @@ import com.spring.boot.resturantbackend.utils.enums.FilterContactInfo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,7 +37,7 @@ public class ContactInfo extends BaseEntity<String> {
     @NotBlank(message = "not_empty.message")
     private String message;
     @Column(nullable = false)
-    @NotBlank(message = "not_empty.status")
+    @NotNull(message = "not_empty.status")
     @Enumerated(EnumType.STRING)
     private FilterContactInfo status;
     @ManyToOne

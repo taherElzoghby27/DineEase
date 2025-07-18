@@ -1,7 +1,7 @@
 package com.spring.boot.resturantbackend.utils.enums;
 
 public enum FilterContactInfo {
-    Replied("Replied"), NotReplied("NotReplied"), All("All");
+    NOT_REPLIED("NOT_REPLIED"), REPLIED("REPLIED");
     private String status;
 
     FilterContactInfo(String status) {
