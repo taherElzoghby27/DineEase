@@ -13,6 +13,9 @@ import com.spring.boot.resturantbackend.services.product.ProductService;
 import com.spring.boot.resturantbackend.vm.product.ProductRequestVm;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +33,7 @@ public class ProductServiceImpl implements ProductService {
     private CategoryService categoryService;
 
     @Override
+    @Cacheable(value = "products", key = "'products'+#page +'-'+#size")
     public ProductResponseVm getAllProducts(int page, int size) {
         try {
             Pageable pageable = getPageable(page, size);
@@ -47,6 +51,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Cacheable(value = "products", key = "'products category id '+#id+'-'+#page +'-'+#size")
     public ProductResponseVm getAllProductsByCategoryId(Long id, int page, int size) {
         try {
             if (Objects.isNull(id)) {
@@ -67,6 +72,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @CacheEvict(value = "products", allEntries = true)
+    @CachePut(value = "products", key = "#result.id")
     public ProductRequestVm createProduct(ProductRequestVm productRequestVm) {
         try {
             if (Objects.nonNull(productRequestVm.getId())) {
@@ -90,6 +97,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @CacheEvict(value = "products", allEntries = true)
     public List<ProductDto> createListOfProduct(List<ProductDto> productDto) {
         try {
             if (productDto.isEmpty()) {
@@ -104,6 +112,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @CacheEvict(value = "products", allEntries = true)
+    @CachePut(value = "products", key = "#result.id")
     public ProductDto updateProduct(ProductDto productDto) {
         try {
             if (Objects.isNull(productDto.getId())) {
@@ -118,6 +128,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @CacheEvict(value = "products", allEntries = true)
     public List<ProductDto> updateListOfProduct(List<ProductDto> productDto) {
         try {
             if (productDto.isEmpty()) {
@@ -132,6 +143,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @CacheEvict(value = "products", allEntries = true)
     public void deleteProductById(Long id) {
         try {
             if (Objects.isNull(id)) {
@@ -145,6 +157,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @CacheEvict(value = "products", allEntries = true)
     public void deleteListOfProduct(List<Long> productIds) {
         try {
             if (productIds.isEmpty()) {
@@ -157,6 +170,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Cacheable(value = "products", key = "#id")
     public ProductDto getProductById(Long id) {
         try {
             if (Objects.isNull(id)) {

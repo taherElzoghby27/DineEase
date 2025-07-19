@@ -9,12 +9,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ProductDto {
+public class ProductDto implements Serializable {
     private Long id;
     @NotEmpty(message = "not_empty.name")
     @Size(min = 7, max = 50, message = "size.name")

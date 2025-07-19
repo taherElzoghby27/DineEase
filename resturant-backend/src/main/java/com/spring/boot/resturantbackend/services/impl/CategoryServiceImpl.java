@@ -38,6 +38,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @CacheEvict(value = "categories", key = "'all'")
+    @CachePut(value = "categories" , key = "#result.id")
     public CategoryDto createCategory(CategoryDto categoryDto) {
         try {
             if (Objects.nonNull(categoryDto.getId())) {

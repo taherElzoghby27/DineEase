@@ -2,14 +2,14 @@ package com.spring.boot.resturantbackend.services.impl.product;
 
 import com.spring.boot.resturantbackend.dto.product.ProductDetailsDto;
 import com.spring.boot.resturantbackend.mappers.ProductMapper;
-import com.spring.boot.resturantbackend.models.product.Product;
 import com.spring.boot.resturantbackend.models.product.ProductDetails;
 import com.spring.boot.resturantbackend.repositories.product.ProductDetailsRepo;
 import com.spring.boot.resturantbackend.services.product.ProductDetailsService;
 import com.spring.boot.resturantbackend.services.product.ProductService;
 import jakarta.transaction.SystemException;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -23,6 +23,8 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     private ProductService productService;
 
     @Override
+    @CacheEvict(value = "products", allEntries = true)
+    @CachePut(value = "products", key = "#result.product_id")
     public ProductDetailsDto addProductDetailsToProduct(ProductDetailsDto productDetailsDto) {
         try {
             if (Objects.nonNull(productDetailsDto.getId())) {
@@ -62,6 +64,8 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
     }
 
     @Override
+    @CacheEvict(value = "products", allEntries = true)
+    @CachePut(value = "products", key = "#result.product_id")
     public ProductDetailsDto updateProductDetails(ProductDetailsDto productDetailsDto) {
         try {
             if (Objects.isNull(productDetailsDto.getId())) {
