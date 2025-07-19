@@ -170,7 +170,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    @Cacheable(value = "products", key = "#id")
+    @Cacheable(value = "products", key = "#result.id")
     public ProductDto getProductById(Long id) {
         try {
             if (Objects.isNull(id)) {
