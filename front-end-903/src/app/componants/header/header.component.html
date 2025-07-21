@@ -5,7 +5,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
     <a routerLink="/products" class="navbar-brand p-0">
       <h1 class="text-primary m-0">
-        <i class="fa fa-utensils me-3"></i>Restorant
+        <i class="fa fa-utensils me-3"></i>Restaurant
       </h1>
       <!-- Optional logo: <img src="img/logo.png" alt="Logo"> -->
     </a>
@@ -55,9 +55,8 @@
         <div class="nav-item dropdown">
           <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Actions</a>
           <div class="dropdown-menu m-0">
-            <a *ngIf="isAdmin()" routerLink="/products" class="dropdown-item">Update Profile</a>
             <a *ngIf="isAdmin()" routerLink="/category/breakfast" class="dropdown-item">Delete Profile</a>
-            <a *ngIf="isAdmin()" routerLink="/category/lunch" class="dropdown-item">Edt Profile</a>
+            <a *ngIf="isAdmin()" routerLink="/category/lunch" class="dropdown-item">Edit User Profile</a>
             <a routerLink="/allRequestOrders" class="dropdown-item">All Request Orders</a>
             <a *ngIf="isAdmin()" routerLink="/add-product" class="dropdown-item">Add Product</a>
           </div>
