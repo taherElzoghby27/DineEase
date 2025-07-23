@@ -18,8 +18,6 @@ public class Comment extends BaseEntity<String> {
     private String value;
     @Column(nullable = false)
     private Long orderNumber;
-    @Column(nullable = false)
-    private String sender;
     @ManyToOne
     private ContactInfo contactInfo;
 }

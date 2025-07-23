@@ -4,7 +4,7 @@ import com.spring.boot.resturantbackend.dto.contact_info.ContactInfoDto;
 import com.spring.boot.resturantbackend.dto.security.AccountDto;
 import com.spring.boot.resturantbackend.mappers.ContactInfoMapper;
 import com.spring.boot.resturantbackend.models.contact_info.ContactInfo;
-import com.spring.boot.resturantbackend.repositories.ContactInfoRepo;
+import com.spring.boot.resturantbackend.repositories.contact_info.ContactInfoRepo;
 import com.spring.boot.resturantbackend.services.contact_info.ContactInfoRetrievalStrategy;
 import com.spring.boot.resturantbackend.utils.SecurityUtils;
 import com.spring.boot.resturantbackend.utils.enums.FilterContactInfo;

@@ -6,10 +6,9 @@ import com.spring.boot.resturantbackend.mappers.ContactInfoMapper;
 import com.spring.boot.resturantbackend.mappers.security.AccountMapper;
 import com.spring.boot.resturantbackend.models.contact_info.ContactInfo;
 import com.spring.boot.resturantbackend.models.security.Account;
-import com.spring.boot.resturantbackend.repositories.ContactInfoRepo;
+import com.spring.boot.resturantbackend.repositories.contact_info.ContactInfoRepo;
 import com.spring.boot.resturantbackend.services.contact_info.ContactInfoService;
 import com.spring.boot.resturantbackend.utils.SecurityUtils;
-import com.spring.boot.resturantbackend.utils.enums.FilterContactInfo;
 import com.spring.boot.resturantbackend.utils.enums.RoleEnum;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class ContactInfoServiceImpl implements ContactInfoService {

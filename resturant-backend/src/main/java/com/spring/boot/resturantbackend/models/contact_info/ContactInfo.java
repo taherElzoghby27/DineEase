@@ -40,8 +40,10 @@ public class ContactInfo extends BaseEntity<String> {
     @NotNull(message = "not_empty.status")
     @Enumerated(EnumType.STRING)
     private FilterContactInfo status;
-    @ManyToOne
-    private Account account;
-    @OneToMany(mappedBy = "contactInfo")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Account senderAccount;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Account receivedAccount;
+    @OneToMany(mappedBy = "contactInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comment;
 }

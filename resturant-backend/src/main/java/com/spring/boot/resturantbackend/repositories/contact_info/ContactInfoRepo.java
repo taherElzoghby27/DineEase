@@ -1,4 +1,4 @@
-package com.spring.boot.resturantbackend.repositories;
+package com.spring.boot.resturantbackend.repositories.contact_info;
 
 import com.spring.boot.resturantbackend.models.contact_info.ContactInfo;
 import com.spring.boot.resturantbackend.utils.enums.FilterContactInfo;
