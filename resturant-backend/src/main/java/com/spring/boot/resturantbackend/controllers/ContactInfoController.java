@@ -2,7 +2,7 @@ package com.spring.boot.resturantbackend.controllers;
 
 import com.spring.boot.resturantbackend.dto.ExceptionDto;
 import com.spring.boot.resturantbackend.dto.contact_info.ContactInfoDto;
-import com.spring.boot.resturantbackend.services.ContactInfoService;
+import com.spring.boot.resturantbackend.services.contact_info.ContactInfoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -69,32 +69,32 @@ public class ContactInfoController {
                     )
             ),
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/contacts-info")
     public ResponseEntity<List<ContactInfoDto>> getAllContactsInfo(@RequestParam(required = false) String filter) {
         return ResponseEntity.ok(contactInfoService.allContactInfos(filter));
     }
 
-    @Operation(
-            summary = "get all contacts info for account",
-            description = "all contacts info for account in restaurant"
-    )
-    @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Http Status get all contacts for account"
-            ),
-            @ApiResponse(
-                    responseCode = "500",
-                    description = "Http Status internal server error",
-                    content = @Content(
-                            schema = @Schema(implementation = ExceptionDto.class)
-                    )
-            ),
-    })
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/contacts-info-for-account")
-    public ResponseEntity<List<ContactInfoDto>> getAllContactsInfoForAccount(@RequestParam(required = false) String filter) {
-        return ResponseEntity.ok(contactInfoService.allContactInfosForSpecificAccount(filter));
-    }
+//    @Operation(
+//            summary = "get all contacts info for account",
+//            description = "all contacts info for account in restaurant"
+//    )
+//    @ApiResponses({
+//            @ApiResponse(
+//                    responseCode = "200",
+//                    description = "Http Status get all contacts for account"
+//            ),
+//            @ApiResponse(
+//                    responseCode = "500",
+//                    description = "Http Status internal server error",
+//                    content = @Content(
+//                            schema = @Schema(implementation = ExceptionDto.class)
+//                    )
+//            ),
+//    })
+//    @PreAuthorize("isAuthenticated()")
+//    @GetMapping("/contacts-info-for-account")
+//    public ResponseEntity<List<ContactInfoDto>> getAllContactsInfoForAccount(@RequestParam(required = false) String filter) {
+//        return ResponseEntity.ok(contactInfoService.allContactInfosForSpecificAccount(filter));
+//    }
 }
