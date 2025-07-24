@@ -1,11 +1,13 @@
 package com.spring.boot.resturantbackend.dto.contact_info;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.spring.boot.resturantbackend.dto.security.AccountDto;
+import com.spring.boot.resturantbackend.models.security.Account;
 import com.spring.boot.resturantbackend.utils.enums.FilterContactInfo;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ContactInfoDto {
     private Long id;
     @NotEmpty(message = "not_empty.name")
@@ -30,8 +33,8 @@ public class ContactInfoDto {
     private String subject;
     @NotEmpty(message = "not_empty.message")
     private String message;
-    @NotNull(message = "not_empty.status")
     @Enumerated(EnumType.STRING)
     private FilterContactInfo status;
     private List<CommentDto> comment;
+    private Long accountId;
 }
