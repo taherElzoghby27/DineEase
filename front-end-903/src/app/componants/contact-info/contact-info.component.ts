@@ -1,4 +1,8 @@
 import {Component, OnInit} from '@angular/core';
+import {ContactInfoService} from '../../../service/contact-info.service';
+import {ContactInfo} from '../../../model/contact-info';
+import {AuthService} from '../../../service/auth.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-contact-info',
@@ -6,29 +10,19 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./contact-info.component.css']
 })
 export class ContactInfoComponent implements OnInit {
-  contacts = [
-    {
-      subject: 'General Inquiry',
-      message: 'What are your opening hours?',
-      comments: ['We are open 9 AM - 10 PM.', 'Also open on holidays.'],
-      newComment: '',
-      showComments: false
-    },
-    {
-      subject: 'Reservation',
-      message: 'Can I book a table for 6 people?',
-      comments: ['Yes, we can accommodate that.', 'Please call ahead.'],
-      newComment: '',
-      showComments: false
-    }
-  ];
+  contacts: ContactInfo[] = [];
+  messageErrorAr = '';
+  errorMessageEn = '';
 
 
-  constructor() {
+  constructor(private contactInfoService: ContactInfoService,
+              private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe(params => this.allContactsInfo());
   }
+
 
 
   toggleComments(contact: any): void {
@@ -40,6 +34,20 @@ export class ContactInfoComponent implements OnInit {
       contact.comments.push(contact.newComment.trim());
       contact.newComment = '';
     }
+  }
+
+
+
+  allContactsInfo(): void {
+    this.contactInfoService.allContactInfo().subscribe(
+      response => {
+        this.contacts = response;
+      },
+      errors => {
+        this.messageErrorAr = errors.error.bundleMessage.message_ar;
+        this.errorMessageEn = errors.error.bundleMessage.message_en;
+      }
+    );
   }
 
 

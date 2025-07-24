@@ -41,9 +41,7 @@ public class ContactInfo extends BaseEntity<String> {
     @Enumerated(EnumType.STRING)
     private FilterContactInfo status;
     @ManyToOne(fetch = FetchType.LAZY)
-    private Account senderAccount;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Account receivedAccount;
+    private Account account;
     @OneToMany(mappedBy = "contactInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comment;
 }

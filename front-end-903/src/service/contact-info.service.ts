@@ -13,18 +13,11 @@ export class ContactInfoService {
   constructor(private http: HttpClient) {
   }
 
-  allContactInfoForAdmin(filter?: string): Observable<ContactInfo> {
+  allContactInfo(filter?: string): Observable<ContactInfo[]> {
     const url = filter
       ? `${this.baseUrl}contacts-info?filter=${filter}`
       : `${this.baseUrl}contacts-info`;
-    return this.http.get<ContactInfo>(url).pipe(map(response => response));
-  }
-
-  allContactInfoForUser(filter?: string): Observable<ContactInfo> {
-    const url = filter
-      ? `${this.baseUrl}contacts-info-for-account?filter=${filter}`
-      : `${this.baseUrl}contacts-info-for-account`;
-    return this.http.get<ContactInfo>(url).pipe(map(response => response));
+    return this.http.get<ContactInfo[]>(url).pipe(map(response => response));
   }
 
   createContactInfo(contactInfo: ContactInfo): any {
