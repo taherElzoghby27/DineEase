@@ -8,7 +8,10 @@ import com.spring.boot.resturantbackend.models.contact_info.ContactInfo;
 import com.spring.boot.resturantbackend.models.security.Account;
 import com.spring.boot.resturantbackend.repositories.contact_info.ContactInfoRepo;
 import com.spring.boot.resturantbackend.services.contact_info.ContactInfoService;
+import com.spring.boot.resturantbackend.services.impl.contact_info.factories.ContactInfoStrategyFactory;
+import com.spring.boot.resturantbackend.services.security.AccountService;
 import com.spring.boot.resturantbackend.utils.SecurityUtils;
+import com.spring.boot.resturantbackend.utils.enums.FilterContactInfo;
 import com.spring.boot.resturantbackend.utils.enums.RoleEnum;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class ContactInfoServiceImpl implements ContactInfoService {
@@ -24,6 +28,8 @@ public class ContactInfoServiceImpl implements ContactInfoService {
     private ContactInfoRepo contactInfoRepo;
     @Autowired
     private ContactInfoStrategyFactory contactInfoStrategyFactory;
+    @Autowired
+    private AccountService accountService;
 
     @Override
     public List<ContactInfoDto> allContactInfos(String filter) {
@@ -32,41 +38,75 @@ public class ContactInfoServiceImpl implements ContactInfoService {
         return contactInfoStrategyFactory.getStrategy(role.toString()).getContactInfo(filter);
     }
 
-//    @Override
-//    public List<ContactInfoDto> allContactInfosForSpecificAccount(String filter) {
-//        try {
-//            Optional<List<ContactInfo>> contactsInfo;
-//            AccountDto accountDto = SecurityUtils.getCurrentAccount();
-//            if (Objects.isNull(filter)) {
-//                contactsInfo = contactInfoRepo.findContactInfosByAccountId(accountDto.getId());
-//            } else {
-//                FilterContactInfo filterContactInfo = FilterContactInfo.valueOf(filter);
-//                contactsInfo = contactInfoRepo.findContactInfosByAccountIdAndStatus(
-//                        accountDto.getId(),
-//                        filterContactInfo
-//                );
-//            }
-//            if (contactsInfo.isEmpty()) {
-//                throw new SystemException("empty_contact_info");
-//            }
-//            return contactsInfo.get().stream().map(ContactInfoMapper.CONTACT_INFO_MAPPER::toContactInfoDto).toList();
-//        } catch (Exception e) {
-//            throw new RuntimeException(e.getMessage());
-//        }
-//    }
-
     @Override
     public ContactInfoDto createContactInfo(ContactInfoDto contactInfoDto) {
         try {
-            AccountDto accountDto = SecurityUtils.getCurrentAccount();
-            Account account = AccountMapper.ACCOUNT_MAPPER.toAccount(accountDto);
+            Account account = getAccount();
             if (Objects.nonNull(contactInfoDto.getId())) {
                 throw new SystemException("id.must_be.null");
             }
             ContactInfo contactInfo = ContactInfoMapper.CONTACT_INFO_MAPPER.toContactInfo(contactInfoDto);
             contactInfo.setAccount(account);
+            contactInfo.setStatus(FilterContactInfo.NOT_REPLIED);
             contactInfo = contactInfoRepo.save(contactInfo);
             return ContactInfoMapper.CONTACT_INFO_MAPPER.toContactInfoDto(contactInfo);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    private static Account getAccount() {
+        AccountDto accountDto = SecurityUtils.getCurrentAccount();
+        return AccountMapper.ACCOUNT_MAPPER.toAccount(accountDto);
+    }
+
+    @Override
+    public ContactInfoDto updateStatus(FilterContactInfo filterContactInfo, Long id) {
+        try {
+            ContactInfoDto contactInfoDto = getContactInfo(id);
+            ContactInfo contactInfo = ContactInfoMapper.CONTACT_INFO_MAPPER.toContactInfo(contactInfoDto);
+            Account account = getAccount(contactInfoDto);
+            contactInfo.setAccount(account);
+            contactInfo.setStatus(filterContactInfo);
+            contactInfo = contactInfoRepo.save(contactInfo);
+            return ContactInfoMapper.CONTACT_INFO_MAPPER.toContactInfoDto(contactInfo);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    private Account getAccount(ContactInfoDto contactInfoDto) {
+        AccountDto accountDto = accountService.getAccountById(contactInfoDto.getAccountId());
+        return AccountMapper.ACCOUNT_MAPPER.toAccount(accountDto);
+    }
+
+    @Override
+    public ContactInfoDto getContactInfo(Long id) {
+        try {
+            if (Objects.isNull(id)) {
+                throw new SystemException("id.must_be.not_null");
+            }
+            Optional<ContactInfo> contactInfo = contactInfoRepo.findById(id);
+            if (contactInfo.isEmpty()) {
+                throw new SystemException("empty_contact_info");
+            }
+            return ContactInfoMapper.CONTACT_INFO_MAPPER.toContactInfoDto(contactInfo.get());
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public ContactInfoDto getContactInfoByIdAndAccountId(Long id, Long accountId) {
+        try {
+            if (Objects.isNull(accountId)) {
+                throw new SystemException("id.must_be.not_null");
+            }
+            Optional<ContactInfo> contactInfo = contactInfoRepo.findByIdAndAccountId(id, accountId);
+            if (contactInfo.isEmpty()) {
+                throw new SystemException("empty_contact_info");
+            }
+            return ContactInfoMapper.CONTACT_INFO_MAPPER.toContactInfoDto(contactInfo.get());
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }

@@ -12,7 +12,9 @@ import java.util.Optional;
 public interface ContactInfoRepo extends JpaRepository<ContactInfo, Long> {
     Optional<List<ContactInfo>> findContactInfosByStatus(FilterContactInfo status);
 
-    Optional<List<ContactInfo>> findContactInfosByAccountIdAndStatus(Long id, FilterContactInfo status);
+    Optional<List<ContactInfo>> findContactInfosByAccountIdAndStatus(Long accountId, FilterContactInfo status);
 
-    Optional<List<ContactInfo>> findContactInfosByAccountId(Long id);
+    Optional<List<ContactInfo>> findContactInfosByAccountId(Long accountId);
+
+    Optional<ContactInfo> findByIdAndAccountId(Long id, Long accountId);
 }

@@ -1,6 +1,6 @@
-package com.spring.boot.resturantbackend.services.impl.contact_info;
+package com.spring.boot.resturantbackend.services.impl.contact_info.factories;
 
-import com.spring.boot.resturantbackend.services.contact_info.ContactInfoRetrievalStrategy;
+import com.spring.boot.resturantbackend.services.contact_info.strategies.ContactInfoRetrievalStrategy;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
