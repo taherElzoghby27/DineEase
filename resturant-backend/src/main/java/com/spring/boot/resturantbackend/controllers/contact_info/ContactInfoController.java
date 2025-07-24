@@ -28,7 +28,7 @@ public class ContactInfoController {
 
     @Operation(summary = "create contact info", description = "create contact info in restaurant")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "Http Status create contact"), @ApiResponse(responseCode = "500", description = "Http Status internal server error", content = @Content(schema = @Schema(implementation = ExceptionDto.class))),})
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/create-contact-info")
     public ResponseEntity<ContactInfoDto> createContactInfo(@Valid @RequestBody ContactInfoDto contactInfoDto) {
         return ResponseEntity.created(URI.create("/all-categories")).body(contactInfoService.createContactInfo(contactInfoDto));

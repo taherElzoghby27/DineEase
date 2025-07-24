@@ -28,7 +28,7 @@ public class CommentController {
             @ApiResponse(responseCode = "200", description = "Http Status send comment"),
             @ApiResponse(responseCode = "500", description = "Http Status internal server error",
                     content = @Content(schema = @Schema(implementation = ExceptionDto.class))),})
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @PostMapping("/send-comment")
     public ResponseEntity<Void> sendComment(@Valid @RequestBody CommentDto commentDto) {
         commentService.sendComment(commentDto);
