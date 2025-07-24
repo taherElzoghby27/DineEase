@@ -18,6 +18,6 @@ public class Comment extends BaseEntity<String> {
     private String value;
     @Column(nullable = false)
     private Long orderNumber;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private ContactInfo contactInfo;
 }

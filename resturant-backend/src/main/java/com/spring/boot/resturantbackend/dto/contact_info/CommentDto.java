@@ -1,6 +1,7 @@
 package com.spring.boot.resturantbackend.dto.contact_info;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.spring.boot.resturantbackend.vm.ContactInfoVm;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +20,9 @@ public class CommentDto {
     @NotEmpty(message = "not_empty.value")
     private String value;
     private String createdBy;
+    private Long orderNumber;
     private LocalDateTime createdDate;
     private Long receiverId;
-    private ContactInfoDto contactInfo;
+    private Long contactInfoId;
+    private ContactInfoVm contactInfo;
 }
