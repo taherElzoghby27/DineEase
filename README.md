@@ -50,7 +50,7 @@ At its core, a **Spring Boot** backend powers a scalable and secure REST API arc
 - `Spring Data JPA`
 - `Hibernate`
 - `JWT Authentication`
-- `Redis` (for session caching / tokens)
+- `Redis` (for caching)
 - `Maven`
 - `JDBC`
 - `RESTful APIs`
