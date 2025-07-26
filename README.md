@@ -19,13 +19,15 @@ At its core, a **Spring Boot** backend powers a scalable and secure REST API arc
 - 🍱 **Category Management**: Add, update, and filter product categories  
 - 🍔 **Product Management**: Create, edit, delete, and manage products with search/filter  
 - 🧾 **Order Management**: Track, update, and manage customer orders  
-- 🔐 **Security Controls**: Change admin credentials and enforce role-based access  
+- 🔐 **Security Controls**: Change admin credentials and enforce role-based access
+- 📨 Contact System (NEW)
 
 ### 🙋 User Functionality
 - 🔑 **Authentication**: JWT-secured login and registration  
 - 🏠 **User Dashboard**: Personalized view for order history and profile  
 - 🛍️ **Place Orders**: Add products to cart and create new orders  
-- 📝 **Profile Management**: Update user details and change password  
+- 📝 **Profile Management**: Update user details and change password
+- 📨 Contact System (NEW)  — Allow users to submit inquiries and enable admins to respond with comment threads and status tracking. 
 
 ---
 
