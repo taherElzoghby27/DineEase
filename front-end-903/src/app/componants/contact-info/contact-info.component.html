@@ -149,4 +149,8 @@
       </div>
     </div>
   </div>
+  <div *ngIf="errorBackendForm" class="alert alert-danger">
+    <div>{{ messageErrorArForm }}</div>
+    <div>{{ messageErrorEnForm }}</div>
+  </div>
 </div>

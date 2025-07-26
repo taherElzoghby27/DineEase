@@ -29,6 +29,9 @@ export class ContactInfoComponent implements OnInit {
   subjectError = '';
   messageError = '';
   errorBackend = false;
+  errorBackendForm = false;
+  messageErrorArForm = '';
+  messageErrorEnForm = '';
 
 
   constructor(private contactInfoService: ContactInfoService,
@@ -74,7 +77,7 @@ export class ContactInfoComponent implements OnInit {
     this.contactInfoService.createContactInfo(contact).subscribe(
       response => {
         this.resetErrors();
-        this.errorBackend = false;
+        this.errorBackendForm = false;
         this.snackBar.open('Contact Info Added Successfully', 'Close', {
           duration: 3000, // milliseconds
           verticalPosition: 'top', // or 'bottom'
@@ -84,9 +87,9 @@ export class ContactInfoComponent implements OnInit {
         this.resetFields();
       },
       errors => {
-        this.errorBackend = true;
-        this.messageErrorAr = errors.error.bundleMessage.message_ar;
-        this.messageErrorEn = errors.error.bundleMessage.message_en;
+        this.errorBackendForm = true;
+        this.messageErrorArForm = errors.error.bundleMessage.message_ar;
+        this.messageErrorEnForm = errors.error.bundleMessage.message_en;
       }
     );
   }
@@ -122,6 +125,8 @@ export class ContactInfoComponent implements OnInit {
     this.messageError = '';
     this.messageErrorEn = '';
     this.messageErrorAr = '';
+    this.messageErrorEnForm = '';
+    this.messageErrorArForm = '';
   }
 
   resetFields(): void {
