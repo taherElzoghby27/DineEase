@@ -25,6 +25,10 @@ export class AuthService {
     return roles && roles.includes('ADMIN');
   }
 
+  getCurrentUser(): string {
+    return sessionStorage.getItem('userName');
+  }
+
   logout(): void {
     sessionStorage.removeItem('token');
   }

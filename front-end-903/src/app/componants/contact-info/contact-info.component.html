@@ -1,15 +1,13 @@
 <!-- Navbar & Hero Start -->
 <div class="container-xxl position-relative p-0">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
-    <a href="" class="navbar-brand p-0">
+    <a href="#" class="navbar-brand p-0">
       <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Restaurant</h1>
-      <!-- <img src="img/logo.png" alt="Logo"> -->
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
       <span class="fa fa-bars"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-    </div>
+    <div class="collapse navbar-collapse" id="navbarCollapse"></div>
   </nav>
 
   <div class="container-xxl py-5 bg-dark hero-header mb-5">
@@ -25,73 +23,128 @@
 </div>
 <!-- Navbar & Hero End -->
 
-<div class="contact-section">
+<!-- Contact Section -->
+<div class="container contact-section">
   <h2>Contact Information</h2>
 
-  <!-- Contact Card - Repeat for each contact -->
+  <!-- Filter Buttons -->
+  <div class="filter-section mb-4">
+    <button class="btn btn-outline-primary" (click)="changeFilter(FilterContactInfo.ALL)">All</button>
+    <button class="btn btn-outline-success" (click)="changeFilter(FilterContactInfo.REPLIED)">Replied</button>
+    <button class="btn btn-outline-danger" (click)="changeFilter(FilterContactInfo.NOT_REPLIED)">Not Replied</button>
+  </div>
+
+  <div *ngIf="errorBackend" class="alert alert-danger">
+    <div>{{ messageErrorAr }}</div>
+    <div>{{ messageErrorEn }}</div>
+  </div>
+
+  <!-- Contact Cards -->
   <div class="contact-card" *ngFor="let contact of contacts">
     <h3>{{ contact.subject }}</h3>
     <p>{{ contact.message }}</p>
+    <p>Status: <strong>{{ contact.status }}</strong></p>
 
-    <button (click)="toggleComments(contact)" class="comments-btn">
-      {{ contact.showComments ? 'Hide' : 'Show' }} All Comments
+    <button (click)="toggleComments(contact)" class="btn btn-sm btn-secondary mt-2">
+      {{ contact.showComments ? 'Hide' : 'Show' }} Comments
     </button>
 
     <div class="comments-section" *ngIf="contact.showComments">
-      <div class="comment" *ngFor="let comment of contact.comments">
-        <p>{{ comment }}</p>
+      <div
+        class="comment"
+        *ngFor="let comment of contact.comment"
+        [ngClass]="{
+          'admin-comment': comment.createdBy !== getCurrentUser(),
+          'user-comment': comment.createdBy === getCurrentUser()
+        }"
+      >
+        <p class="comment-text">{{ comment.value }}</p>
+        <div class="comment-meta">
+          <span class="comment-author">{{ comment.createdBy }}</span> ·
+          <span class="comment-date">{{ comment.createdDate | date: 'short' }}</span>
+        </div>
       </div>
 
-      <textarea [(ngModel)]="contact.newComment" placeholder="Add a comment..."></textarea>
-      <button (click)="addComment(contact)">Add Comment</button>
+      <textarea [(ngModel)]="newComment" placeholder="Add a comment..."></textarea>
+      <button class="btn btn-primary mt-2" (click)="addComment(contact.id, contact.accountId)">Add Comment</button>
     </div>
   </div>
 </div>
 
-<!-- Your existing form fields here -->
-
-<!-- Contact Start -->
-<div class="container-xxl py-5">
+<!-- Contact Form (User Only) -->
+<div *ngIf="!isAdmin()" class="container-xxl py-5">
   <div class="container">
-    <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-      <h5 class="section-title ff-secondary text-center text-primary fw-normal">Contact Us</h5>
+    <div class="text-center">
+      <h5 class="section-title ff-secondary text-primary fw-normal">Contact Us</h5>
       <h1 class="mb-5">Contact For Any Query</h1>
     </div>
-    <div class="row g-4">
-      <div class="col-md-6">
-        <div class="wow fadeInUp" data-wow-delay="0.2s">
-          <form>
-            <div class="row g-3">
-              <div class="col-md-6">
-                <div class="form-floating">
-                  <input type="text" class="form-control" id="name" placeholder="Your Name">
-                  <label for="name">Your Name</label>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-floating">
-                  <input type="email" class="form-control" id="email" placeholder="Your Email">
-                  <label for="email">Your Email</label>
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="form-floating">
-                  <input type="text" class="form-control" id="subject" placeholder="Subject">
-                  <label for="subject">Subject</label>
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="form-floating">
-                  <textarea class="form-control" placeholder="Leave a message here" id="message"
-                            style="height: 150px"></textarea>
-                  <label for="message">Message</label>
-                </div>
-              </div>
-              <div class="col-12">
-                <button class="btn btn-primary w-100 py-3" type="submit">Send Message</button>
-              </div>
+
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-8">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                placeholder="Your Name"
+                [(ngModel)]="name"
+                name="name"
+              />
+              <label for="name">Your Name</label>
+              <div *ngIf="nameError" class="text-danger small mt-1">{{ nameError }}</div>
             </div>
-          </form>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                placeholder="Your Email"
+                [(ngModel)]="email"
+                name="email"
+              />
+              <label for="email">Your Email</label>
+              <div *ngIf="emailError" class="text-danger small mt-1">{{ emailError }}</div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-floating">
+              <input
+                type="text"
+                class="form-control"
+                id="subject"
+                placeholder="Subject"
+                [(ngModel)]="subject"
+                name="subject"
+              />
+              <label for="subject">Subject</label>
+              <div *ngIf="subjectError" class="text-danger small mt-1">{{ subjectError }}</div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-floating">
+              <textarea
+                class="form-control"
+                placeholder="Leave a message here"
+                id="message"
+                style="height: 150px"
+                [(ngModel)]="message"
+                name="message"
+              ></textarea>
+              <label for="message">Message</label>
+              <div *ngIf="messageError" class="text-danger small mt-1">{{ messageError }}</div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <button class="btn btn-primary w-100 py-3" (click)="createContactInfo()">Send Message</button>
+          </div>
         </div>
       </div>
     </div>
