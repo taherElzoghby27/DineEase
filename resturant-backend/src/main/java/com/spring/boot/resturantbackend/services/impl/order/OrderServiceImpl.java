@@ -1,8 +1,6 @@
 package com.spring.boot.resturantbackend.services.impl.order;
 
 import com.spring.boot.resturantbackend.dto.OrderDto;
-import com.spring.boot.resturantbackend.dto.security.AccountDto;
-import com.spring.boot.resturantbackend.dto.security.RoleDto;
 import com.spring.boot.resturantbackend.mappers.OrderMapper;
 import com.spring.boot.resturantbackend.models.Order;
 import com.spring.boot.resturantbackend.models.product.Product;
@@ -11,7 +9,6 @@ import com.spring.boot.resturantbackend.repositories.OrderRepo;
 import com.spring.boot.resturantbackend.services.order.OrderService;
 import com.spring.boot.resturantbackend.services.product.ProductService;
 import com.spring.boot.resturantbackend.services.security.AccountService;
-import com.spring.boot.resturantbackend.services.security.RoleService;
 import com.spring.boot.resturantbackend.utils.enums.OrderStatus;
 import com.spring.boot.resturantbackend.utils.enums.RoleEnum;
 import com.spring.boot.resturantbackend.utils.SecurityUtils;
@@ -20,6 +17,9 @@ import com.spring.boot.resturantbackend.vm.RequestUpdateStatusOrder;
 import com.spring.boot.resturantbackend.vm.ResponseOrderVm;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,9 +34,11 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private AccountService accountService;
     @Autowired
-    private RoleService roleService;
+    private OrderStrategyFactory orderStrategyFactory;
 
 
+    @CachePut(value = "orders", key = "#result.id")
+    @CacheEvict(value = "orders", allEntries = true)
     @Override
     public ResponseOrderVm requestOrder(RequestOrderVm requestOrderVm) {
         try {
@@ -63,28 +65,16 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    @Cacheable(value = "orders", key = "'all'")
     @Override
     public List<OrderDto> getAccessibleOrders() {
-        try {
-            //get account id
-            AccountDto accountDto = SecurityUtils.getCurrentAccount();
-            List<RoleDto> roles = roleService.getRoleByAccountId(accountDto.getId());
-            if (roles.isEmpty()) {
-                throw new SystemException("role.not.fount");
-            }
-            // Fetch orders based on role
-            List<Order> orders = isAdmin(roles)
-                    ? orderRepo.findAll()
-                    : orderRepo.findByAccountId(accountDto.getId());
-            if (orders.isEmpty()) {
-                throw new SystemException("error.orders.is.empty");
-            }
-            return orders.stream().map(OrderMapper.ORDER_MAPPER::toOrderDto).toList();
-        } catch (SystemException e) {
-            throw new RuntimeException(e.getMessage());
-        }
+        boolean isAdmin = SecurityUtils.hasRole(RoleEnum.ADMIN);
+        RoleEnum role = isAdmin ? RoleEnum.ADMIN : RoleEnum.USER;
+        return orderStrategyFactory.getStrategy(role.toString()).getAccessibleOrders();
     }
 
+    @CacheEvict(value = "orders", key = "'all'")
+    @CachePut(value = "orders", key = "#requestUpdateStatusOrder.id")
     @Override
     public void updateOrder(RequestUpdateStatusOrder requestUpdateStatusOrder) {
         try {
@@ -100,10 +90,6 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    // Helper method to check for ADMIN role
-    private boolean isAdmin(List<RoleDto> roles) {
-        return roles.stream().anyMatch(role -> role.getRole().equals(RoleEnum.ADMIN.toString()));
-    }
 
     private Order getOrderById(Long id) {
         return orderRepo.findById(id).orElse(null);
