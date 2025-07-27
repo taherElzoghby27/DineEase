@@ -22,7 +22,7 @@ public class UserContactInfoStrategy implements ContactInfoRetrievalStrategy {
     @Autowired
     private ContactInfoRepo contactInfoRepo;
 
-    @Cacheable(value = "contacts",key = "'user'+#filter==null?'ALL':#filter")
+    @Cacheable(value = "contacts",key = "accountIdGenerator+'_'+#filter==null?'ALL':#filter")
     @Override
     public List<ContactInfoDto> getContactInfo(String filter) {
         try {
