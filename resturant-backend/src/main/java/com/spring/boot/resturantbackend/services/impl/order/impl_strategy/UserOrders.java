@@ -19,7 +19,7 @@ public class UserOrders implements OrderAccessStrategy {
     @Autowired
     private OrderRepo orderRepo;
 
-    @Cacheable(value = "orders", key = "accountIdGenerator")
+    @Cacheable(value = "orders", keyGenerator = "accountIdGenerator")
     @Override
     public List<OrderDto> getAccessibleOrders() {
         try {
