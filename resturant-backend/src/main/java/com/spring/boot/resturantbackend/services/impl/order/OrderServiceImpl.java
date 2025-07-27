@@ -1,6 +1,7 @@
 package com.spring.boot.resturantbackend.services.impl.order;
 
 import com.spring.boot.resturantbackend.dto.OrderDto;
+import com.spring.boot.resturantbackend.dto.security.AccountDto;
 import com.spring.boot.resturantbackend.mappers.OrderMapper;
 import com.spring.boot.resturantbackend.models.Order;
 import com.spring.boot.resturantbackend.models.product.Product;
@@ -65,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    @Cacheable(value = "orders", key = "'all'")
+
     @Override
     public List<OrderDto> getAccessibleOrders() {
         boolean isAdmin = SecurityUtils.hasRole(RoleEnum.ADMIN);

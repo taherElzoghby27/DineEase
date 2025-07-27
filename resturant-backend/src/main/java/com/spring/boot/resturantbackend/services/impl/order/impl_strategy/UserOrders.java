@@ -9,6 +9,7 @@ import com.spring.boot.resturantbackend.services.order.OrderAccessStrategy;
 import com.spring.boot.resturantbackend.utils.SecurityUtils;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class UserOrders implements OrderAccessStrategy {
     @Autowired
     private OrderRepo orderRepo;
 
+    @Cacheable(value = "orders", key = "accountIdGenerator")
     @Override
     public List<OrderDto> getAccessibleOrders() {
         try {

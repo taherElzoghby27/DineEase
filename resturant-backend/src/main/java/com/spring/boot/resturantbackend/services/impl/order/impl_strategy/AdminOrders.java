@@ -7,6 +7,7 @@ import com.spring.boot.resturantbackend.repositories.OrderRepo;
 import com.spring.boot.resturantbackend.services.order.OrderAccessStrategy;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class AdminOrders implements OrderAccessStrategy {
     @Autowired
     private OrderRepo orderRepo;
 
+    @Cacheable(value = "orders", key = "'all'")
     @Override
     public List<OrderDto> getAccessibleOrders() {
         try {
