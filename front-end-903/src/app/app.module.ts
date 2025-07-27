@@ -11,7 +11,6 @@ import {FooterComponent} from './componants/footer/footer.component';
 import {ChefsComponent} from './componants/chefs/chefs.component';
 import {ContactInfoComponent} from './componants/contact-info/contact-info.component';
 import {APP_BASE_HREF} from '@angular/common';
-import {PanelComponent} from './componants/panel/panel.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
 import {LoginComponent} from './componants/login/login.component';
@@ -57,7 +56,6 @@ export const routes: Routes = [
   {path: 'contact-info', component: ContactInfoComponent, canActivate: [AuthGuard]},
   // http://localhost:4200/chefs
   {path: 'chefs', component: ChefsComponent, canActivate: [AuthGuard]},
-  {path: 'panel', component: PanelComponent, canActivate: [AuthGuard]},
   // http://localhost:4200/
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: '**', redirectTo: '/login', pathMatch: 'full'}
@@ -78,7 +76,6 @@ export const routes: Routes = [
     FooterComponent,
     ChefsComponent,
     ContactInfoComponent,
-    PanelComponent,
     LoginComponent,
     SignUpComponent,
     ProductDetailDialogComponent,

@@ -35,28 +35,18 @@
         <a class="nav-item nav-link active" (click)="logout()" style="cursor: pointer;">Logout</a>
         <a class="nav-item nav-link" routerLink="/contact-info">Contact</a>
         <a class="nav-item nav-link" routerLink="/chefs">Team</a>
-        <a class="nav-item nav-link" routerLink="/panel">Panel</a>
 
         <!-- Category Dropdown -->
         <div class="nav-item dropdown">
           <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Category</a>
           <div class="dropdown-menu m-0">
             <a *ngIf="isAdmin()" routerLink="/add-category" class="dropdown-item">Add Category</a>
-            <a routerLink="/products" class="dropdown-item">All</a>
-            <a routerLink="/category/breakfast" class="dropdown-item">Breakfast</a>
-            <a routerLink="/category/lunch" class="dropdown-item">Lunch</a>
-            <a routerLink="/category/dinner" class="dropdown-item">Dinner</a>
-            <a routerLink="/category/ice-cream" class="dropdown-item">Ice Cream</a>
-            <a routerLink="/category/coffee" class="dropdown-item">Coffee</a>
-            <a routerLink="/category/cake" class="dropdown-item">Cake</a>
           </div>
         </div>
         <!-- all actions Dropdown -->
         <div class="nav-item dropdown">
           <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Actions</a>
           <div class="dropdown-menu m-0">
-            <a *ngIf="isAdmin()" routerLink="/category/breakfast" class="dropdown-item">Delete Profile</a>
-            <a *ngIf="isAdmin()" routerLink="/category/lunch" class="dropdown-item">Edit User Profile</a>
             <a routerLink="/allRequestOrders" class="dropdown-item">All Request Orders</a>
             <a *ngIf="isAdmin()" routerLink="/add-product" class="dropdown-item">Add Product</a>
           </div>
