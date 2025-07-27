@@ -10,6 +10,7 @@ import com.spring.boot.resturantbackend.utils.SecurityUtils;
 import com.spring.boot.resturantbackend.utils.enums.FilterContactInfo;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class UserContactInfoStrategy implements ContactInfoRetrievalStrategy {
     @Autowired
     private ContactInfoRepo contactInfoRepo;
 
+    @Cacheable(value = "contacts",key = "'user'+#filter==null?'ALL':#filter")
     @Override
     public List<ContactInfoDto> getContactInfo(String filter) {
         try {

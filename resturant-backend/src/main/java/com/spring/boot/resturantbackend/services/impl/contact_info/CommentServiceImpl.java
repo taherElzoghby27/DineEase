@@ -6,6 +6,7 @@ import com.spring.boot.resturantbackend.services.impl.contact_info.factories.Com
 import com.spring.boot.resturantbackend.utils.SecurityUtils;
 import com.spring.boot.resturantbackend.utils.enums.RoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,6 +14,7 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentStrategyFactory commentStrategyFactory;
 
+    @CacheEvict(value = "contacts", allEntries = true)
     @Override
     public void sendComment(CommentDto commentDto) {
         boolean isAdmin = SecurityUtils.hasRole(RoleEnum.ADMIN);

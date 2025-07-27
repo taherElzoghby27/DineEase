@@ -15,6 +15,8 @@ import com.spring.boot.resturantbackend.utils.enums.FilterContactInfo;
 import com.spring.boot.resturantbackend.utils.enums.RoleEnum;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,6 +32,7 @@ public class ContactInfoServiceImpl implements ContactInfoService {
     private ContactInfoStrategyFactory contactInfoStrategyFactory;
     @Autowired
     private AccountService accountService;
+
 
     @Override
     public List<ContactInfoDto> allContactInfos(String filter) {
@@ -60,6 +63,7 @@ public class ContactInfoServiceImpl implements ContactInfoService {
         return AccountMapper.ACCOUNT_MAPPER.toAccount(accountDto);
     }
 
+    @CacheEvict(value = "contacts", allEntries = true)
     @Override
     public ContactInfoDto updateStatus(FilterContactInfo filterContactInfo, Long id) {
         try {
@@ -80,6 +84,7 @@ public class ContactInfoServiceImpl implements ContactInfoService {
         return AccountMapper.ACCOUNT_MAPPER.toAccount(accountDto);
     }
 
+    @Cacheable(value = "contacts",key = "#result.id")
     @Override
     public ContactInfoDto getContactInfo(Long id) {
         try {
@@ -96,6 +101,7 @@ public class ContactInfoServiceImpl implements ContactInfoService {
         }
     }
 
+    @Cacheable(value = "contacts",key = "'id '+#id+' accId'+#accountId")
     @Override
     public ContactInfoDto getContactInfoByIdAndAccountId(Long id, Long accountId) {
         try {
