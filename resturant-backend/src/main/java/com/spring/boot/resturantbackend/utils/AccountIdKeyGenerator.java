@@ -10,11 +10,11 @@ public class AccountIdKeyGenerator implements KeyGenerator {
     @Override
     public Object generate(Object target, Method method, Object... params) {
         // Get the current account ID from your security utility
-        Long accountId = null;
+        Long accountId;
         try {
             accountId = SecurityUtils.getCurrentAccount().getId();
         } catch (Exception e) {
-            throw new IllegalStateException("Unable to get account ID for caching", e);
+            throw new IllegalStateException("Unable to get account ID", e);
         }
 
         return accountId;
