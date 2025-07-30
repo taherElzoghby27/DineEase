@@ -1,0 +1,29 @@
+/* Footer styling with red theme */
+.footer {
+  background-color: #343a40 !important; /* Keep dark background */
+}
+
+.footer a {
+  color: var(--primary-red) !important;
+}
+
+.footer a:hover {
+  color: var(--primary-red-light) !important;
+}
+
+.footer .text-white {
+  color: var(--text-on-red) !important;
+}
+
+.footer .text-muted {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Social media icons with red hover effect */
+.footer .bi {
+  transition: color 0.3s ease;
+}
+
+.footer .bi:hover {
+  color: var(--primary-red) !important;
+}

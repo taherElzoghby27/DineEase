@@ -1,0 +1,31 @@
+/* Card component styling with red theme */
+.nav-link {
+  color: var(--primary-red) !important;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--primary-red-dark) !important;
+}
+
+/* Override the inline style color */
+.nav-link div {
+  color: var(--primary-red) !important;
+}
+
+/* Cart display styling */
+.cart-display {
+  font-size: 31px;
+  color: var(--primary-red) !important;
+}
+
+/* Cart icon styling */
+.fa-cart-arrow-down,
+.fa-coins {
+  color: var(--primary-red) !important;
+}
+
+/* Price and order count styling */
+.span {
+  color: var(--primary-red) !important;
+}

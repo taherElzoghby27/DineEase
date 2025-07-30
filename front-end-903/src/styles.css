@@ -1,5 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 
+/* Global color variables for red theme */
+:root {
+  --primary-red: #d32f2f;
+  --primary-red-light: #ff6659;
+  --primary-red-dark: #9a0007;
+  --accent-red: #ff1744;
+  --accent-red-light: #ff616f;
+  --accent-red-dark: #c4001d;
+  --warn-red: #f44336;
+  --text-on-red: #ffffff;
+  --background-red-light: #ffebee;
+}
 
 html, body {
   height: 100%;
@@ -8,6 +20,200 @@ html, body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: var(--background-red-light);
+}
+
+/* Global button styles with red theme */
+.btn-primary, .mat-raised-button.mat-primary {
+  background-color: var(--primary-red) !important;
+  color: var(--text-on-red) !important;
+  border-color: var(--primary-red) !important;
+}
+
+.btn-primary:hover, .mat-raised-button.mat-primary:hover {
+  background-color: var(--primary-red-dark) !important;
+  border-color: var(--primary-red-dark) !important;
+}
+
+/* Global link styles */
+a {
+  color: var(--primary-red);
+}
+
+a:hover {
+  color: var(--primary-red-dark);
+}
+
+/* Global form focus styles */
+.form-control:focus, .mat-form-field.mat-focused .mat-form-field-ripple {
+  border-color: var(--primary-red) !important;
+  box-shadow: 0 0 0 0.2rem rgba(211, 47, 47, 0.25) !important;
+}
+
+/* Comprehensive Bootstrap overrides for red theme */
+.text-primary {
+  color: var(--primary-red) !important;
+}
+
+.bg-primary {
+  background-color: var(--primary-red) !important;
+}
+
+.border-primary {
+  border-color: var(--primary-red) !important;
+}
+
+.btn-outline-primary {
+  color: var(--primary-red) !important;
+  border-color: var(--primary-red) !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--primary-red) !important;
+  color: var(--text-on-red) !important;
+}
+
+.link-primary {
+  color: var(--primary-red) !important;
+}
+
+.link-primary:hover {
+  color: var(--primary-red-dark) !important;
+}
+
+/* Override any remaining gold colors */
+[style*="#FEA116"], [style*="#fea116"] {
+  color: var(--primary-red) !important;
+}
+
+/* Override Bootstrap CSS variables */
+:root {
+  --bs-primary: var(--primary-red) !important;
+}
+
+/* Specific overrides for category icons and product prices */
+.nav-pills .nav-item .active i,
+.nav-pills .nav-item i.text-primary,
+.category i.text-primary,
+.fa-2x.text-primary,
+[class*="fa-"].text-primary {
+  color: var(--primary-red) !important;
+}
+
+/* Product price overrides */
+.text-primary,
+span.text-primary,
+.product-price,
+.price {
+  color: var(--primary-red) !important;
+}
+
+/* Force override any gold colors with higher specificity */
+.text-primary,
+.text-primary *,
+[class*="text-primary"],
+[class*="text-primary"] * {
+  color: var(--primary-red) !important;
+}
+
+/* Override Bootstrap's primary color completely */
+:root {
+  --bs-primary: var(--primary-red) !important;
+  --bs-primary-rgb: 211, 47, 47 !important;
+}
+
+/* Additional specificity for category icons */
+.nav-pills .nav-item a i.text-primary,
+.nav-pills .nav-item .text-primary,
+.category .text-primary {
+  color: var(--primary-red) !important;
+}
+
+/* Most aggressive override for all text-primary elements */
+.text-primary,
+.text-primary *,
+span.text-primary,
+span.text-primary *,
+h5 .text-primary,
+h5 .text-primary *,
+.nav-pills .text-primary,
+.nav-pills .text-primary *,
+.category .text-primary,
+.category .text-primary *,
+[class*="text-primary"],
+[class*="text-primary"] * {
+  color: var(--primary-red) !important;
+}
+
+/* Override Bootstrap's text-primary with maximum specificity */
+html body .text-primary,
+html body .text-primary *,
+html body span.text-primary,
+html body span.text-primary *,
+html body h5 .text-primary,
+html body h5 .text-primary * {
+  color: var(--primary-red) !important;
+}
+
+/* Force override Bootstrap's primary color */
+:root {
+  --bs-primary: var(--primary-red) !important;
+  --bs-primary-rgb: 211, 47, 47 !important;
+}
+
+/* Override any inline styles */
+[style*="color: #FEA116"],
+[style*="color: #fea116"],
+[style*="color:#FEA116"],
+[style*="color:#fea116"] {
+  color: var(--primary-red) !important;
+}
+
+/* Global pagination styling with red theme */
+.page-link {
+  color: var(--primary-red) !important;
+  border-color: rgba(211, 47, 47, 0.2) !important;
+  background-color: #fff !important;
+}
+
+.page-link:hover {
+  color: var(--primary-red-dark) !important;
+  background-color: var(--background-red-light) !important;
+  border-color: var(--primary-red) !important;
+}
+
+.page-link:focus {
+  color: var(--primary-red-dark) !important;
+  background-color: var(--background-red-light) !important;
+  border-color: var(--primary-red) !important;
+  box-shadow: 0 0 0 0.2rem rgba(211, 47, 47, 0.25) !important;
+}
+
+.page-item.active .page-link {
+  background-color: var(--primary-red) !important;
+  border-color: var(--primary-red) !important;
+  color: var(--text-on-red) !important;
+}
+
+.page-item.disabled .page-link {
+  color: #6c757d !important;
+  background-color: #fff !important;
+  border-color: rgba(211, 47, 47, 0.2) !important;
+}
+
+/* Pagination container styling */
+.pagination {
+  --bs-pagination-color: var(--primary-red);
+  --bs-pagination-hover-color: var(--primary-red-dark);
+  --bs-pagination-focus-color: var(--primary-red-dark);
+  --bs-pagination-active-bg: var(--primary-red);
+  --bs-pagination-active-border-color: var(--primary-red);
+}
+
+/* Form select styling for page size dropdown */
+.form-select:focus {
+  border-color: var(--primary-red) !important;
+  box-shadow: 0 0 0 0.2rem rgba(211, 47, 47, 0.25) !important;
 }
 
 .snackbar-success {

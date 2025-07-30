@@ -1,0 +1,48 @@
+/* Override Bootstrap primary color with red */
+.text-primary {
+  color: var(--primary-red) !important;
+}
+
+/* Override Bootstrap primary background with red */
+.bg-primary {
+  background-color: var(--primary-red) !important;
+}
+
+/* Override Bootstrap button primary with red */
+.btn-primary {
+  background-color: var(--primary-red) !important;
+  border-color: var(--primary-red) !important;
+  color: var(--text-on-red) !important;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-red-dark) !important;
+  border-color: var(--primary-red-dark) !important;
+}
+
+/* Override Bootstrap navbar brand color */
+.navbar-brand .text-primary {
+  color: var(--primary-red) !important;
+}
+
+/* Override Bootstrap navbar links */
+.navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+  color: var(--primary-red) !important;
+}
+
+/* Override Bootstrap dropdown items */
+.dropdown-item:hover {
+  background-color: var(--background-red-light) !important;
+  color: var(--primary-red) !important;
+}
+
+/* Override Bootstrap form controls */
+.form-control:focus {
+  border-color: var(--primary-red) !important;
+  box-shadow: 0 0 0 0.2rem rgba(211, 47, 47, 0.25) !important;
+}

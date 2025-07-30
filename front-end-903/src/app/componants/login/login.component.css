@@ -12,7 +12,7 @@ h2 {
   text-align: center;
   margin-bottom: 1.5rem;
   font-weight: 600;
-  color: #333;
+  color: var(--primary-red); /* Updated to use red */
 }
 
 .form-group {
@@ -37,15 +37,15 @@ input[type="password"] {
 }
 
 input:focus {
-  border-color: #007bff;
+  border-color: var(--primary-red); /* Updated to use red */
   outline: none;
 }
 
 button {
   width: 100%;
   padding: 0.75rem;
-  background-color: #007bff;
-  color: #fff;
+  background-color: var(--primary-red); /* Updated to use red */
+  color: var(--text-on-red); /* Updated to use white text */
   font-size: 1rem;
   font-weight: 500;
   border: none;
@@ -55,7 +55,7 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: var(--primary-red-dark); /* Updated to use darker red */
 }
 
 button:disabled {
@@ -64,7 +64,7 @@ button:disabled {
 }
 
 .error {
-  color: #d9534f;
+  color: var(--warn-red); /* Updated to use red error color */
   font-size: 0.85rem;
   margin-top: 0.25rem;
 }
@@ -77,49 +77,48 @@ button:disabled {
 
 .signup-link a {
   margin-left: 0.3rem;
-  color: #007bff;
+  color: var(--primary-red); /* Updated to use red */
   text-decoration: none;
   font-weight: 500;
 }
 
 .signup-link a:hover {
   text-decoration: underline;
+  color: var(--primary-red-dark); /* Updated to use darker red */
 }
 
 .error-message {
   display: flex;
   align-items: flex-start;
-  background-color: #ffecec;
-  border: 1px solid #f5c6cb;
-  color: #721c24;
+  background-color: var(--background-red-light); /* Updated to use red background */
+  border: 1px solid var(--warn-red); /* Updated to use red border */
+  color: var(--primary-red-dark); /* Updated to use dark red text */
   padding: 1rem;
   border-radius: 6px;
   margin-top: 1rem;
 }
 
 .error-icon {
-  font-size: 1.5rem;
-  margin-right: 0.75rem;
+  margin-right: 0.5rem;
+  color: var(--warn-red); /* Updated to use red */
 }
 
 .error-text {
-  display: flex;
-  flex-direction: column;
+  flex: 1;
   font-size: 0.9rem;
 }
 
 .error-ar {
-  direction: rtl;
-  font-weight: bold;
+  font-family: "Arial", sans-serif;
 }
 
 .error-en {
-  font-style: italic;
-  direction: ltr;
+  font-family: "Segoe UI", sans-serif;
 }
+
 @media (max-width: 480px) {
   .login-container {
-    margin: 40px 16px;
+    margin: 40px 20px;
     padding: 1.5rem;
   }
 }

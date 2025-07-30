@@ -17,13 +17,13 @@
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 1rem;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--primary-red); /* Updated to use red border */
 }
 
 /* === Buttons === */
 .edit-button {
-  background-color: #007bff;
-  color: #fff;
+  background-color: var(--primary-red); /* Updated to use red */
+  color: var(--text-on-red); /* Updated to use white text */
   border: none;
   padding: 0.6rem 1.2rem;
   font-size: 1rem;
@@ -36,7 +36,7 @@
 }
 
 .edit-button:hover:not(:disabled) {
-  background-color: #0056b3;
+  background-color: var(--primary-red-dark); /* Updated to use darker red */
   transform: translateY(-1px);
 }
 
@@ -61,7 +61,7 @@
 .label {
   font-weight: bold;
   min-width: 80px;
-  color: #333;
+  color: var(--primary-red); /* Updated to use red */
 }
 
 .value {
@@ -77,7 +77,7 @@
   display: block;
   font-weight: 600;
   margin-bottom: 0.4rem;
-  color: #444;
+  color: var(--primary-red); /* Updated to use red */
 }
 
 .form-group input {
@@ -90,40 +90,35 @@
 }
 
 .form-group input:focus {
-  border-color: #007bff;
+  border-color: var(--primary-red); /* Updated to use red */
   outline: none;
 }
 
 /* === Error Text === */
 .error {
-  color: red;
+  color: var(--warn-red); /* Updated to use red error color */
   font-size: 0.85rem;
   margin-top: 0.25rem;
 }
 
 /* === Loading Indicator === */
 .loading-indicator {
-  margin: 1rem 0;
-  font-weight: bold;
-  color: #333;
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 0.95rem;
+  align-items: center;
+  padding: 2rem;
 }
 
 .spinner {
+  width: 2rem;
+  height: 2rem;
   border: 3px solid #f3f3f3;
-  border-top: 3px solid #007bff;
+  border-top: 3px solid var(--primary-red); /* Updated to use red */
   border-radius: 50%;
-  width: 1rem;
-  height: 1rem;
   animation: spin 1s linear infinite;
-  margin-right: 0.5rem;
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

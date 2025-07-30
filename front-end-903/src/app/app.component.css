@@ -4,7 +4,7 @@ body {
   width: 100%;
   margin: 0;
   padding: 0;
-  background-color: #ffffff; /* Optional: match your container background */
+  background-color: var(--background-red-light); /* Updated to use red theme */
 }
 
 .container-xxl.bg-white.p-0 {
@@ -17,7 +17,7 @@ body {
 
 /* Container Reset */
 .container-xxl.bg-white.p-0 {
-  background-color: #ffffff;
+  background-color: var(--background-red-light); /* Updated to use red theme */
   padding: 0;
   overflow-x: hidden;
 }
@@ -41,7 +41,7 @@ body {
 }
 
 .spinner-border.text-primary {
-  color: var(--bs-primary);
+  color: var(--primary-red); /* Updated to use red */
 }
 
 .spinner-border .sr-only {
@@ -57,7 +57,7 @@ body {
 
 /* Section Styling */
 .container-xxl.py-5 {
-  background-color: #f8f9fa;
+  background-color: var(--background-red-light); /* Updated to use red theme */
 }
 
 .section-title {
@@ -65,6 +65,7 @@ body {
   letter-spacing: 1px;
   text-transform: uppercase;
   margin-bottom: 1.5rem;
+  color: var(--primary-red); /* Added red color for section titles */
 }
 
 .ff-secondary {
@@ -82,8 +83,8 @@ body {
   bottom: 30px;
   right: 30px;
   z-index: 999;
-  background-color: var(--bs-primary);
-  color: #fff;
+  background-color: var(--primary-red); /* Updated to use red */
+  color: var(--text-on-red); /* Updated to use white text */
   border: none;
   width: 45px;
   height: 45px;
@@ -102,8 +103,8 @@ body {
 }
 
 .back-to-top:hover {
-  background-color: #0056b3;
-  color: #fff;
+  background-color: var(--primary-red-dark); /* Updated to use darker red */
+  color: var(--text-on-red); /* Updated to use white text */
 }
 
 /* Animation Fade (optional WOW.js enhancement) */
@@ -120,4 +121,57 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Force override all text-primary elements to be red */
+.text-primary,
+.text-primary *,
+[class*="text-primary"],
+[class*="text-primary"] * {
+  color: var(--primary-red) !important;
+}
+
+/* Specific overrides for category icons and product prices */
+.nav-pills .nav-item .active i,
+.nav-pills .nav-item i.text-primary,
+.category i.text-primary,
+.fa-2x.text-primary,
+[class*="fa-"].text-primary {
+  color: var(--primary-red) !important;
+}
+
+/* Product price overrides */
+.text-primary,
+span.text-primary,
+.product-price,
+.price {
+  color: var(--primary-red) !important;
+}
+
+/* Override Bootstrap's primary color completely */
+:root {
+  --bs-primary: var(--primary-red) !important;
+  --bs-primary-rgb: 211, 47, 47 !important;
+}
+
+/* Most aggressive override for category icons and product prices */
+html body .text-primary,
+html body .text-primary *,
+html body span.text-primary,
+html body span.text-primary *,
+html body h5 .text-primary,
+html body h5 .text-primary *,
+html body .nav-pills .text-primary,
+html body .nav-pills .text-primary *,
+html body .category .text-primary,
+html body .category .text-primary * {
+  color: var(--primary-red) !important;
+}
+
+/* Override any inline styles with gold colors */
+[style*="color: #FEA116"],
+[style*="color: #fea116"],
+[style*="color:#FEA116"],
+[style*="color:#fea116"] {
+  color: var(--primary-red) !important;
 }

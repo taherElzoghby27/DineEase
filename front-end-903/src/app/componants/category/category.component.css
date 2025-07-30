@@ -1,6 +1,25 @@
 .recommended-label {
   display: block;
   font-weight: bold;
-  color: goldenrod;
+  color: var(--primary-red);
   margin-top: 2px;
+}
+
+/* Force category icons to be red */
+.nav-pills .nav-item i.text-primary,
+.nav-pills .nav-item .text-primary,
+.category i.text-primary,
+.fa-2x.text-primary {
+  color: var(--primary-red) !important;
+}
+
+/* Override any Bootstrap primary colors */
+.text-primary {
+  color: var(--primary-red) !important;
+}
+
+/* Specific override for category navigation */
+.nav-pills .nav-item a i,
+.nav-pills .nav-item a .text-primary {
+  color: var(--primary-red) !important;
 }

@@ -27,9 +27,9 @@
             ],
             "styles": [
               "src/custom-theme.scss",
-              "src/styles.css",
               "src/assets/css/bootstrap.min.css",
               "src/assets/css/style.css",
+              "src/styles.css",
               "src/assets/lib/animate/animate.min.css",
               "src/assets/lib/owlcarousel/assets/owl.carousel.min.css",
               "src/assets/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"

@@ -4,7 +4,7 @@
 }
 
 .tab-content .row > div:hover {
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 8px rgba(211, 47, 47, 0.1); /* Updated to use red shadow */
 }
 
 /* Gap for buttons */
@@ -15,4 +15,105 @@ button.btn + button.btn {
 /* Ensure consistent height for all cards */
 .d-flex.align-items-start {
   min-height: 160px;
+}
+
+/* Override Bootstrap primary colors with red */
+.btn-primary {
+  background-color: var(--primary-red) !important;
+  border-color: var(--primary-red) !important;
+  color: var(--text-on-red) !important;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-red-dark) !important;
+  border-color: var(--primary-red-dark) !important;
+}
+
+/* Product card styling with red theme */
+.card {
+  border-color: rgba(211, 47, 47, 0.1);
+}
+
+.card:hover {
+  border-color: var(--primary-red);
+}
+
+/* Category tabs styling */
+.nav-tabs .nav-link.active {
+  background-color: var(--primary-red) !important;
+  color: var(--text-on-red) !important;
+  border-color: var(--primary-red) !important;
+}
+
+.nav-tabs .nav-link:hover {
+  border-color: var(--primary-red-light) !important;
+  color: var(--primary-red) !important;
+}
+
+/* Force product prices to be red */
+.text-primary,
+span.text-primary,
+.product-price,
+.price,
+h5 .text-primary {
+  color: var(--primary-red) !important;
+}
+
+/* Specific override for product price spans */
+.d-flex.justify-content-between .text-primary,
+h5 .text-primary {
+  color: var(--primary-red) !important;
+}
+
+/* Override any Bootstrap text-primary with higher specificity */
+.text-primary,
+.text-primary * {
+  color: var(--primary-red) !important;
+}
+
+/* Pagination styling with red theme */
+.page-link {
+  color: var(--primary-red) !important;
+  border-color: rgba(211, 47, 47, 0.2) !important;
+  background-color: #fff !important;
+}
+
+.page-link:hover {
+  color: var(--primary-red-dark) !important;
+  background-color: var(--background-red-light) !important;
+  border-color: var(--primary-red) !important;
+}
+
+.page-link:focus {
+  color: var(--primary-red-dark) !important;
+  background-color: var(--background-red-light) !important;
+  border-color: var(--primary-red) !important;
+  box-shadow: 0 0 0 0.2rem rgba(211, 47, 47, 0.25) !important;
+}
+
+.page-item.active .page-link {
+  background-color: var(--primary-red) !important;
+  border-color: var(--primary-red) !important;
+  color: var(--text-on-red) !important;
+}
+
+.page-item.disabled .page-link {
+  color: #6c757d !important;
+  background-color: #fff !important;
+  border-color: rgba(211, 47, 47, 0.2) !important;
+}
+
+/* Page size dropdown styling */
+.form-select:focus {
+  border-color: var(--primary-red) !important;
+  box-shadow: 0 0 0 0.2rem rgba(211, 47, 47, 0.25) !important;
+}
+
+/* Pagination container styling */
+.pagination {
+  --bs-pagination-color: var(--primary-red);
+  --bs-pagination-hover-color: var(--primary-red-dark);
+  --bs-pagination-focus-color: var(--primary-red-dark);
+  --bs-pagination-active-bg: var(--primary-red);
+  --bs-pagination-active-border-color: var(--primary-red);
 }
