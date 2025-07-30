@@ -61,6 +61,7 @@ export class CardDetailsComponent implements OnInit {
       result => {
         if (result?.success) {
           this.orders = [];
+          this.cardService.clearOrders();
         }
       }
     );

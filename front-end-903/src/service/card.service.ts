@@ -65,4 +65,10 @@ export class CardService {
     this.totalPrice.next(totalElementPrice);
   }
 
+  clearOrders(): void {
+    this.orders = [];
+    this.totalOrders.next(0);
+    this.totalPrice.next(0);
+  }
+
 }
