@@ -20,4 +20,6 @@ public interface CategoryService {
     void deleteListOfCategory(List<Long> categoryIds);
 
     CategoryDto getCategoryById(Long id);
+
+    boolean updateRecommendedCategory();
 }

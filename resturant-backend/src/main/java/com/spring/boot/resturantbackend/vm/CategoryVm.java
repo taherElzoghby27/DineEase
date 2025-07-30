@@ -18,4 +18,5 @@ public class CategoryVm implements Serializable {
     private String name;
     private String logo;
     private String flag;
+    private Long recommended;
 }

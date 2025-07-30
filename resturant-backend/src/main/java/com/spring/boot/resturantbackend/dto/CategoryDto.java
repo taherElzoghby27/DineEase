@@ -36,6 +36,7 @@ public class CategoryDto implements Serializable {
     private String logo;
     @NotEmpty(message = "not_empty.flag")
     private String flag;
+    private Long recommended;
     @Schema(
             name = "products",
             description = "list of products (List<ProductVm>)"

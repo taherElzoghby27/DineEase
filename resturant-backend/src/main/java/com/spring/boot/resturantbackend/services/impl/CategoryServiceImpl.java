@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -38,13 +39,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @CacheEvict(value = "categories", key = "'all'")
-    @CachePut(value = "categories" , key = "#result.id")
+    @CachePut(value = "categories", key = "#result.id")
     public CategoryDto createCategory(CategoryDto categoryDto) {
         try {
             if (Objects.nonNull(categoryDto.getId())) {
                 throw new SystemException("id.must_be.null");
             }
             Category category = CategoryMapper.CATEGORY_MAPPER.toCategory(categoryDto);
+            category.setRecommended(0L);
             category = categoryRepo.save(category);
             return CategoryMapper.CATEGORY_MAPPER.toCategoryDto(category);
         } catch (Exception e) {
@@ -133,6 +135,41 @@ public class CategoryServiceImpl implements CategoryService {
                 throw new SystemException("id.must_be.not_null");
             }
             Optional<Category> result = categoryRepo.findById(id);
+            if (result.isEmpty()) {
+                throw new SystemException("category.not.found");
+            }
+            return CategoryMapper.CATEGORY_MAPPER.toCategoryDto(result.get());
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    @CacheEvict(value = "categories", allEntries = true, condition = "#result")
+    public boolean updateRecommendedCategory() {
+        CategoryDto recommendedCategory = getCategoryBasedOnProducts();
+        Long recommendedId = recommendedCategory.getId();
+        List<Category> categories = categoryRepo.findAll();
+        boolean hasChanges = false;
+        for (Category category : categories) {
+            boolean shouldBeRecommended = category.getId().equals(recommendedId);
+            long targetValue = shouldBeRecommended ? 1L : 0L;
+
+            if (!Objects.equals(category.getRecommended(), targetValue)) {
+                category.setRecommended(targetValue);
+                hasChanges = true;
+            }
+        }
+        if (hasChanges) {
+            categoryRepo.saveAll(categories);
+        }
+        return hasChanges;
+    }
+
+
+    private CategoryDto getCategoryBasedOnProducts() {
+        try {
+            Optional<Category> result = categoryRepo.findCategoryForRecommendation();
             if (result.isEmpty()) {
                 throw new SystemException("category.not.found");
             }

@@ -7,6 +7,7 @@ import com.spring.boot.resturantbackend.models.Order;
 import com.spring.boot.resturantbackend.models.product.Product;
 import com.spring.boot.resturantbackend.models.security.Account;
 import com.spring.boot.resturantbackend.repositories.OrderRepo;
+import com.spring.boot.resturantbackend.services.CategoryService;
 import com.spring.boot.resturantbackend.services.order.OrderService;
 import com.spring.boot.resturantbackend.services.product.ProductService;
 import com.spring.boot.resturantbackend.services.security.AccountService;
@@ -36,6 +37,8 @@ public class OrderServiceImpl implements OrderService {
     private AccountService accountService;
     @Autowired
     private OrderStrategyFactory orderStrategyFactory;
+    @Autowired
+    private CategoryService categoryService;
 
 
     @CachePut(value = "orders", key = "#result.id")
@@ -60,6 +63,7 @@ public class OrderServiceImpl implements OrderService {
             order.setStatus(OrderStatus.Pending.toString());
             //save order
             order = orderRepo.save(order);
+            categoryService.updateRecommendedCategory();
             return OrderMapper.ORDER_MAPPER.toResponseOrderVm(order);
         } catch (SystemException e) {
             throw new RuntimeException(e.getMessage());
