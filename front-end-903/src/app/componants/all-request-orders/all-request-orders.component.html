@@ -1,14 +1,19 @@
-<h2 class="page-title">Request Orders</h2>
+<h2 class="page-title text-center mb-4">Request Orders</h2>
 
-<div class="orders-wrapper">
+<div class="orders-wrapper container">
+  <div *ngIf="orders.length === 0" class="empty-orders text-center my-5">
+    <i class="bi bi-box-seam text-muted display-4 mb-3"></i>
+    <h5 class="text-muted">No orders found.</h5>
+  </div>
+
   <div class="order-card" *ngFor="let order of orders">
 
     <!-- Header -->
     <div class="order-header">
-      <strong>Order ID: {{ order.id }}</strong>
+      <strong class="order-id">Order #{{ order.id }}</strong>
       <span class="status-badge" [ngClass]="getStatusClass(order.status)">
-  {{ order.status || 'Unknown' }}
-</span>
+        {{ order.status || 'Unknown' }}
+      </span>
     </div>
 
     <!-- Product List -->
@@ -16,7 +21,8 @@
       <div *ngFor="let product of order.products" class="product-item">
         <img [src]="'assets/img/' + product.imagePath" [alt]="product.name">
         <div class="product-info">
-          • {{ product.name }} - {{ product.price }} $
+          <div class="product-name">{{ product.name }}</div>
+          <div class="product-price">{{ product.price }} $</div>
         </div>
       </div>
     </div>
@@ -35,7 +41,6 @@
         Update Status
       </button>
     </div>
-
 
   </div>
 </div>
