@@ -5,10 +5,12 @@
 ---
 
 ## 📖 Overview  
-Step into the world of **smart dining** with this robust full-stack **Restaurant Management System**, designed to streamline operations like **menu management**, **order tracking**, and **user roles**.  
+Step into the world of smart dining with this robust full-stack Restaurant Management System, designed to streamline operations like menu management, order tracking, and user roles.
 Tailored for restaurant administrators and staff, this system ensures real-time control over food categories, product listings, and customer orders.
 
-At its core, a **Spring Boot** backend powers a scalable and secure REST API architecture, while an intuitive **Angular frontend** delivers a modern and responsive user experience.
+At its core, a Spring Boot backend powers a scalable and secure REST API architecture, while an intuitive Angular frontend delivers a modern and responsive user experience.
+
+The system now includes an intelligent Category Recommendation engine that dynamically identifies and highlights the most frequently ordered food category, using optimized Oracle SQL and smart Redis cache eviction to ensure both accuracy and performance.
 
 ---
 
@@ -27,8 +29,8 @@ At its core, a **Spring Boot** backend powers a scalable and secure REST API arc
 - 🏠 **User Dashboard**: Personalized view for order history and profile  
 - 🛍️ **Place Orders**: Add products to cart and create new orders  
 - 📝 **Profile Management**: Update user details and change password
-- 📨 Contact System (NEW)  — Allow users to submit inquiries and enable admins to respond with comment threads and status tracking. 
-
+- 📨 Contact System (NEW)  — Allow users to submit inquiries and enable admins to respond with comment threads and status tracking
+- 💡 Category Recommendation: Automatically highlights the most popular food category based on customer order history (with smart cache handling).
 ---
 
 ## 🏗️ Backend Highlights
@@ -37,7 +39,8 @@ At its core, a **Spring Boot** backend powers a scalable and secure REST API arc
 - ⚠️ Exception Handling & API Validation  
 - 🛡️ Secure REST APIs with JWT Authentication  
 - 📘 API Documentation via Swagger / OpenAPI  
-- 🧹 Clean Code Practices and modular services  
+- 🧹 Clean Code Practices and modular services
+- 💡 Smart Category Recommendation with Oracle-native SQL and conditional Redis cache eviction
 
 ---
 
