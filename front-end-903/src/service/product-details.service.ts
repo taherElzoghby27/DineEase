@@ -22,9 +22,9 @@ export class ProductDetailsService {
 
   addProductDetails(productDetailsRequest: ProductDetailsResponse): any {
     // tslint:disable-next-line:variable-name
-    const {idProduct: product_id, preparationTime, productCode} = productDetailsRequest;
+    const {idProduct: productId, preparationTime, productCode} = productDetailsRequest;
     return this.http.post<any>(`${this.baseUrl}add-product-details`,
-      {preparationTime, productCode, product_id})
+      {preparationTime, productCode, productId})
       .pipe(
         map(response => response)
       );
@@ -32,9 +32,9 @@ export class ProductDetailsService {
 
   updateProductDetails(productDetailsRequest: ProductDetailsResponse): any {
     // tslint:disable-next-line:variable-name
-    const {id: id, idProduct: product_id, preparationTime, productCode} = productDetailsRequest;
+    const {id: id, idProduct: productId, preparationTime, productCode} = productDetailsRequest;
     return this.http.put<any>(`${this.baseUrl}update-product-details`,
-      {id, preparationTime, productCode, product_id})
+      {id, preparationTime, productCode, productId})
       .pipe(
         map(response => response)
       );

@@ -1,84 +1,89 @@
 <div class="tab-content">
-  <div id="tab-1" class="tab-pane fade show p-0 active">
+  <div id="tab-1" class="tab-pane fade show active p-0">
     <div class="row g-4">
       <div class="col-lg-6" *ngFor="let product of products">
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-start p-3 border rounded shadow-sm h-100 bg-white">
+          <!-- Product Image -->
           <img
-            class="flex-shrink-0 img-fluid rounded"
             [src]="product.imagePath ? 'assets/img/' + product.imagePath : noPhoto"
             alt="Product image"
-            style="width: 80px;"
+            class="img-fluid rounded"
+            style="width: 80px; height: 80px; object-fit: cover;"
           >
-          <div class="w-100 d-flex flex-column text-start ps-4">
-            <h5 class="d-flex justify-content-between border-bottom pb-2">
+
+          <!-- Product Info -->
+          <div class="ps-3 w-100">
+            <h5 class="d-flex justify-content-between border-bottom pb-2 mb-2">
               <span>{{ product.name }}</span>
               <span class="text-primary">${{ product.price }}</span>
             </h5>
-            <small class="fst-italic">{{ product.description }}</small>
-            <div class="d-flex mt-2 align-items-center gap-2">
-              <!-- Add to Cart Button -->
-              <button type="button" class="btn btn-danger" (click)="addToCard(product)">
-                ADD to Card
+
+            <p class="text-muted small mb-2">{{ product.description }}</p>
+
+            <!-- Action Buttons -->
+            <div class="d-flex flex-wrap gap-2">
+              <button class="btn btn-danger btn-sm" (click)="addToCard(product)">
+                Add to Cart
               </button>
 
-              <!-- View Details Button -->
-              <button type="button" class="btn btn-outline-secondary btn-sm"
-                      (click)="showProductDetails(product,'show')" title="View Product">
+              <button class="btn btn-outline-secondary btn-sm" (click)="showProductDetails(product, 'show')" title="View">
                 <i class="bi bi-eye"></i>
               </button>
-              <button *ngIf="product.productDetails===undefined&&isAdmin()" type="button"
-                      class="btn btn-outline-primary btn-sm"
-                      (click)="showProductDetails(product,'Add')"
-                      title="Edit Product details">
+
+              <button *ngIf="product.productDetails === undefined && isAdmin()" class="btn btn-outline-primary btn-sm"
+                      (click)="showProductDetails(product, 'Add')" title="Add Details">
                 <i class="bi bi-plus-circle"></i>
               </button>
-              <button *ngIf="product.productDetails!==undefined&&isAdmin()" type="button"
-                      class="btn btn-outline-success btn-sm"
-                      (click)="showProductDetails(product, 'Update')"
-                      title="Update Product Details">
+
+              <button *ngIf="product.productDetails !== undefined && isAdmin()" class="btn btn-outline-success btn-sm"
+                      (click)="showProductDetails(product, 'Update')" title="Edit Details">
                 <i class="bi bi-pencil-square"></i>
               </button>
 
-
-              <!-- Delete Product Button -->
-              <button type="button" *ngIf="isAdmin()" class="btn btn-outline-danger btn-sm"
-                      (click)="showProductDetails(product,'Delete')"
-                      title="Delete Product">
+              <button *ngIf="isAdmin()" class="btn btn-outline-danger btn-sm"
+                      (click)="showProductDetails(product, 'Delete')" title="Delete">
                 <i class="bi bi-trash"></i>
               </button>
             </div>
           </div>
         </div>
       </div>
-      <div *ngIf="isError" class="d-flex flex-column justify-content-center align-items-center text-center"
-           style="height: 200px;">
-        <i class="bi bi-exclamation-triangle text-danger mb-3" style="font-size: 2rem;"></i>
-        <h5 class="text-muted mb-2">{{ messageEn }}</h5>
+
+      <!-- Error Message -->
+      <div *ngIf="isError" class="col-12 text-center py-5">
+        <i class="bi bi-exclamation-triangle text-danger fs-2 mb-3"></i>
+        <h5 class="text-muted">{{ messageEn }}</h5>
         <h5 class="text-muted">{{ messageAr }}</h5>
       </div>
 
-      <div *ngIf="products.length>0" class="col-md-9 pag" style="padding-left: 30%">
+      <!-- Pagination -->
+      <div *ngIf="products.length > 0" class="col-12 d-flex flex-column align-items-center mt-4">
+
+        <!-- Pagination -->
         <ngb-pagination
-          [(page)]=page
-          [pageSize]=size
-          [collectionSize]=collectionSize
-          [maxSize]=maxSize
-          [boundaryLinks]=true
+          [(page)]="page"
+          [pageSize]="size"
+          [collectionSize]="collectionSize"
+          [maxSize]="maxSize"
+          [boundaryLinks]="true"
           (pageChange)="doPagination()"
-        >
-        </ngb-pagination>
-        <div class="sel">
-          <span class="mr-2">Page Size</span>
-          <select (change)="changeSizeOfItems($event)">
-            <option>2</option>
-            <option>5</option>
-            <option selected="true">10</option>
-            <option>20</option>
-            <option>50</option>
-          </select>
+        ></ngb-pagination>
+
+        <!-- Page Size Dropdown -->
+        <div class="mt-3">
+          <div class="d-inline-block">
+            <label class="me-2">Page Size</label>
+            <select (change)="changeSizeOfItems($event)" class="form-select d-inline-block w-auto">
+              <option>2</option>
+              <option>5</option>
+              <option selected="true">10</option>
+              <option>20</option>
+              <option>50</option>
+            </select>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
 </div>
-
