@@ -22,15 +22,15 @@ The system now includes an intelligent Category Recommendation engine that dynam
 - 🍔 **Product Management**: Create, edit, delete, and manage products with search/filter  
 - 🧾 **Order Management**: Track, update, and manage customer orders  
 - 🔐 **Security Controls**: Change admin credentials and enforce role-based access
-- 📨 Contact System (NEW)
+- 📨 **Contact System (NEW)**
 
 ### 🙋 User Functionality
 - 🔑 **Authentication**: JWT-secured login and registration  
 - 🏠 **User Dashboard**: Personalized view for order history and profile  
 - 🛍️ **Place Orders**: Add products to cart and create new orders  
 - 📝 **Profile Management**: Update user details and change password
-- 📨 Contact System (NEW)  — Allow users to submit inquiries and enable admins to respond with comment threads and status tracking
-- 💡 Category Recommendation: Automatically highlights the most popular food category based on customer order history (with smart cache handling).
+- 📨 **Contact System (NEW)** : Allow users to submit inquiries and enable admins to respond with comment threads and status tracking
+- 💡 **Category Recommendation** : Automatically highlights the most popular food category based on customer order history (with smart cache handling).
 ---
 
 ## 🏗️ Backend Highlights
