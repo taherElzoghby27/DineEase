@@ -1,127 +1,126 @@
-/* Signup Container Styling */
 .signup-container {
-  max-width: 400px;
-  margin: 100px auto;
+  max-width: 360px;
+  margin: 80px auto;
   padding: 2rem;
-  background-color: #FFFFFF;
-  border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  font-family: 'Segoe UI', sans-serif;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  font-family: "Segoe UI", sans-serif;
 }
 
-/* Title */
-.signup-container h2 {
+h2 {
   text-align: center;
   margin-bottom: 1.5rem;
-  color: #000000;
-}
-
-/* Form Group */
-.signup-container .form-group {
-  margin-bottom: 1.25rem;
-}
-
-/* Labels */
-.signup-container label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
+  font-weight: 600;
   color: #333;
 }
 
-/* Inputs */
-.signup-container input[type="text"],
-.signup-container input[type="email"],
-.signup-container input[type="password"] {
-  width: 100%;
-  padding: 0.6rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background-color: #fff;
+.form-group {
+  margin-bottom: 1rem;
 }
 
-/* Button */
-.signup-container button {
+label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 0.95rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #fff;
+  transition: border 0.2s;
+}
+
+input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+button {
   width: 100%;
   padding: 0.75rem;
   background-color: #007bff;
   color: white;
   font-size: 1rem;
+  font-weight: 500;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.2s ease-in-out;
 }
 
-.signup-container button:hover {
-  background-color: #007bff;
+button:hover {
+  background-color: #0056b3;
 }
 
-.signup-container button[disabled] {
+button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
 
-/* Error Text */
-.signup-container .error {
-  color: red;
+.error {
+  color: #d9534f;
   font-size: 0.85rem;
   margin-top: 0.25rem;
 }
 
-/* Link to Login */
 .login-link {
   margin-top: 1rem;
   text-align: center;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 .login-link a {
   margin-left: 0.3rem;
-  color: #a0522d;
+  color: #007bff;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .login-link a:hover {
   text-decoration: underline;
 }
 
-/* Error Message Box */
-.signup-container .error-message {
+.error-message {
   display: flex;
   align-items: flex-start;
-  background-color: #ffe6e6;
-  border: 1px solid #ff4d4d;
-  color: #a94442;
-  padding: 15px;
-  border-radius: 8px;
-  margin: 10px 0;
-  font-family: Arial, sans-serif;
+  background-color: #ffecec;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-top: 1rem;
 }
 
-/* Error Icon */
-.signup-container .error-icon {
-  font-size: 24px;
-  margin-right: 10px;
-  flex-shrink: 0;
+.error-icon {
+  font-size: 1.5rem;
+  margin-right: 0.75rem;
 }
 
-/* Error Text Details */
-.signup-container .error-text {
+.error-text {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  font-size: 0.9rem;
 }
 
-.signup-container .error-ar {
-  font-weight: bold;
+.error-ar {
   direction: rtl;
-  text-align: right;
+  font-weight: bold;
 }
 
-.signup-container .error-en {
+.error-en {
   font-style: italic;
   direction: ltr;
+}
+@media (max-width: 480px) {
+  .signup-container {
+    margin: 40px 16px;
+    padding: 1.5rem;
+  }
 }
