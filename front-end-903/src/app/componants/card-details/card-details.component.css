@@ -1,14 +1,87 @@
-.center-message {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 20vh;
-  text-align: center;
+/* Section Title */
+.heading-section {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #0d6efd;
+  border-left: 5px solid #0d6efd;
+  padding-left: 12px;
 }
 
-.error-text {
-  color: red;
-  font-weight: bold;
-  font-size: 1.2rem;
+/* Table Styling */
+.table {
+  background-color: #fff;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.table thead {
+  background-color: #343a40;
+  color: #fff;
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+  padding: 12px;
+}
+
+.table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* Image */
+.table img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+/* Buttons */
+.btn-outline-success,
+.btn-outline-danger {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.btn-outline-success i,
+.btn-outline-danger i {
+  font-size: 14px;
+}
+
+/* Quantity input */
+input.form-control[disabled] {
+  background-color: #f9f9f9;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Place Order Button */
+.btn-success {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px 28px;
+  border-radius: 8px;
+}
+
+/* No Orders Message */
+.text-muted i {
+  color: #dc3545;
+}
+
+/* Alert Box */
+.alert-warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border-color: #ffeeba;
+  border-radius: 6px;
+  font-size: 15px;
 }

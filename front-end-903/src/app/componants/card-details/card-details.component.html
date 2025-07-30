@@ -1,94 +1,83 @@
-<section class="ftco-section">
+<section class="ftco-section py-5">
   <div class="container">
+    <!-- Section Heading -->
     <div class="row justify-content-center">
       <div class="col-md-6 text-center mb-4">
-        <h1 class="heading-section">Orders</h1>
-      </div>
-      <div
-        class="center-message"
-        *ngIf="!profileComplete && errorMessage !== '' && orders.length !== 0"
-      >
-        <p class="error-text">{{ errorMessage }}</p>
+        <h1 class="heading-section text-primary fw-bold">Your Orders</h1>
       </div>
 
+      <!-- Optional Error Message -->
+      <div *ngIf="!profileComplete && errorMessage && orders.length" class="col-12 text-center mb-3">
+        <div class="alert alert-warning d-inline-block px-4 py-2">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ errorMessage }}
+        </div>
+      </div>
     </div>
+
+    <!-- Order Table -->
     <div class="row">
-      <div class="col-md-12">
-        <!--					<h3 class="h5 mb-4 text-center">Table Accordion</h3>-->
-        <div class="table-wrap" *ngIf="orders.length !== 0">
-          <table class="table">
-            <thead class="thead-primary">
+      <div class="col-12">
+        <div *ngIf="orders.length > 0" class="table-responsive">
+          <table class="table table-hover align-middle text-center">
+            <thead class="table-dark">
             <tr>
-              <th>&nbsp;</th>
-              <th>&nbsp;</th>
+              <th></th>
+              <th>Image</th>
               <th>Product</th>
               <th>Price</th>
-              <th>ADD</th>
+              <th>+</th>
               <th>Quantity</th>
-              <th>REMOVE</th>
-              <th>total</th>
-              <th>&nbsp;</th>
+              <th>-</th>
+              <th>Total</th>
+              <th>Remove</th>
             </tr>
             </thead>
-            <tbody *ngFor="let order of orders">
-            <tr class="alert" role="alert">
+            <tbody>
+            <tr *ngFor="let order of orders" class="align-middle">
+              <td></td>
               <td>
-                <label class="checkbox-wrap checkbox-primary">
-                </label>
+                <img [src]="'assets/img/' + order.imagePath" alt="{{ order.name }}" class="rounded" width="80" height="80">
               </td>
               <td>
-                <img class="img" src="assets/img/{{order.imagePath}}" style="height: 80px; width: 80px;"/>
-              </td>
-              <td>
-                <div class="email">
-                  <span>{{ order.name }} </span>
-                  <span>{{ order.description }}</span>
-                </div>
+                <strong>{{ order.name }}</strong><br>
+                <small class="text-muted">{{ order.description }}</small>
               </td>
               <td>${{ order.price }}</td>
-              <td class="quantity">
-                <div class="input-group">
-                  <a (click)="addOrder(order)">
-                    <i class="fa fa-plus"></i>
-                  </a>
-                </div>
+              <td>
+                <button class="btn btn-sm btn-outline-success" (click)="addOrder(order)">
+                  <i class="fa fa-plus"></i>
+                </button>
               </td>
-              <td class="quantity">
-                <div class="input-group">
-                  <input disabled type="text" name="quantity" class="quantity form-control input-number"
-                         value="{{order.quantity}}"
-                         min="1" max="100">
-                </div>
+              <td>
+                <input type="text" class="form-control text-center" [value]="order.quantity" disabled style="width: 60px;">
               </td>
-              <td class="quantity">
-                <div class="input-group">
-                  <a (click)="minusOrder(order)">
-                    <i class="fa fa-minus"></i>
-                  </a>
-                </div>
+              <td>
+                <button class="btn btn-sm btn-outline-danger" (click)="minusOrder(order)">
+                  <i class="fa fa-minus"></i>
+                </button>
               </td>
               <td>${{ order.totalPrice }}</td>
               <td>
-                <button type="button" class="close" aria-label="Close" (click)="deleteOrder(order)">
-                  X
+                <button class="btn btn-sm btn-outline-danger" (click)="deleteOrder(order)">
+                  <i class="bi bi-trash"></i>
                 </button>
               </td>
             </tr>
             </tbody>
           </table>
-          <button type="button" class="btn btn-success col-12" (click)="showDialogOrder(product)">
-            Take Order
-          </button>
-        </div>
-        <div
-          class="row no-orders-message justify-content-center align-items-center text-center"
-          *ngIf="orders.length === 0"
-          style="min-height: 150px;"
-        >
-          <div>
-            <i class="bi bi-cart-x" style="font-size: 24px; color: red;"></i>
-            <p>No order found now!</p>
+
+          <!-- Take Order Button -->
+          <div class="text-end mt-3">
+            <button type="button" class="btn btn-success px-4" (click)="showDialogOrder(product)">
+              <i class="bi bi-check-circle-fill me-2"></i>Place Order
+            </button>
           </div>
+        </div>
+
+        <!-- No Orders Message -->
+        <div *ngIf="orders.length === 0" class="text-center py-5 text-muted">
+          <i class="bi bi-cart-x display-4 d-block mb-3"></i>
+          <h5>No orders found.</h5>
         </div>
       </div>
     </div>
