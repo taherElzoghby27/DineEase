@@ -1,83 +1,54 @@
-/* General */
-body {
-  background-color: #f8f9fa;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #212529;
-}
-
-/* Navbar */
-.navbar {
-  background-color: #000 !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-}
-
-.navbar-brand h1 {
-  font-size: 1.75rem;
-}
-
-/* Hero */
-.hero-header {
-  background-color: #212529;
-  padding: 100px 0;
-  color: white;
-}
-
-.breadcrumb-item {
-  color: white;
-}
-
 /* Contact Section */
 .contact-section {
   padding: 50px 20px;
   background-color: #fff;
 }
 
+/* Filter Buttons */
+.filter-section button {
+  min-width: 100px;
+  font-weight: 500;
+}
+
+/* Contact Card */
 .contact-card {
   background: #fdfdfd;
   border-radius: 12px;
   padding: 25px;
   margin-bottom: 30px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
-  transition: all 0.3s ease;
+  transition: box-shadow 0.3s ease;
 }
-
 .contact-card:hover {
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
 }
 
-/* Filter Buttons */
-.filter-section button {
-  min-width: 100px;
-}
-
 /* Comments */
 .comments-section {
-  margin-top: 15px;
+  margin-top: 20px;
   border-top: 1px solid #ccc;
-  padding-top: 10px;
+  padding-top: 15px;
 }
 
 .comment {
   padding: 14px 18px;
-  border-radius: 20px;
+  border-radius: 15px;
   margin: 12px 0;
   color: #fff;
   word-wrap: break-word;
-  clear: both;
-  position: relative;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s;
 }
 
 .admin-comment {
-  background-color: #198754; /* Bootstrap success */
-  margin-left: auto;
+  background-color: #198754; /* green */
   text-align: right;
+  margin-left: auto;
 }
 
 .user-comment {
-  background-color: #fd7e14; /* Bootstrap orange */
-  margin-right: auto;
+  background-color: #fd7e14; /* orange */
   text-align: left;
+  margin-right: auto;
 }
 
 .comment-meta {
@@ -95,13 +66,30 @@ textarea {
   resize: vertical;
 }
 
-/* Error Styling */
-.text-danger {
-  font-size: 0.875rem;
-}
-
+/* Form Fields */
 textarea:focus,
 input:focus {
   border-color: #86b7fe;
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Small Error Text */
+.text-danger {
+  font-size: 0.875rem;
+}
+.empty-message {
+  text-align: center;
+  padding: 40px 0;
+  font-size: 1.25rem;
+  color: #888;
+}
+.form-floating > .form-control:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.section-title {
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }

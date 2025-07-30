@@ -1,156 +1,126 @@
-<!-- Navbar & Hero Start -->
-<div class="container-xxl position-relative p-0">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
-    <a href="#" class="navbar-brand p-0">
-      <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Restaurant</h1>
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-      <span class="fa fa-bars"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse"></div>
-  </nav>
-
-  <div class="container-xxl py-5 bg-dark hero-header mb-5">
-    <div class="container text-center my-5 pt-5 pb-4">
-      <h1 class="display-3 text-white mb-3 animated slideInDown">Contact Us</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb justify-content-center text-uppercase">
-          <li class="breadcrumb-item text-white active" aria-current="page">Contact</li>
-        </ol>
-      </nav>
-    </div>
-  </div>
-</div>
-<!-- Navbar & Hero End -->
-
 <!-- Contact Section -->
 <div class="container contact-section">
-  <h2>Contact Information</h2>
+  <h2 class="text-center mb-4">Contact Information</h2>
 
   <!-- Filter Buttons -->
-  <div class="filter-section mb-4">
+  <div class="d-flex justify-content-center gap-3 mb-5 flex-wrap filter-section">
     <button class="btn btn-outline-primary" (click)="changeFilter(FilterContactInfo.ALL)">All</button>
     <button class="btn btn-outline-success" (click)="changeFilter(FilterContactInfo.REPLIED)">Replied</button>
     <button class="btn btn-outline-danger" (click)="changeFilter(FilterContactInfo.NOT_REPLIED)">Not Replied</button>
   </div>
 
-  <div *ngIf="errorBackend" class="alert alert-danger">
+  <!-- Backend Error -->
+  <div *ngIf="errorBackend" class="alert alert-danger text-center">
     <div>{{ messageErrorAr }}</div>
     <div>{{ messageErrorEn }}</div>
   </div>
+  <div *ngIf="contacts.length === 0" class="empty-message">
+    No contact information found.
+  </div>
+
 
   <!-- Contact Cards -->
-  <div class="contact-card" *ngFor="let contact of contacts">
-    <h3>{{ contact.subject }}</h3>
-    <p>{{ contact.message }}</p>
-    <p>Status: <strong>{{ contact.status }}</strong></p>
+  <div class="row justify-content-center">
+    <div class="col-md-10" *ngFor="let contact of contacts">
+      <div class="contact-card">
+        <h4>{{ contact.subject }}</h4>
+        <p>{{ contact.message }}</p>
+        <p>Status: <strong>{{ contact.status }}</strong></p>
 
-    <button (click)="toggleComments(contact)" class="btn btn-sm btn-secondary mt-2">
-      {{ contact.showComments ? 'Hide' : 'Show' }} Comments
-    </button>
+        <button (click)="toggleComments(contact)" class="btn btn-sm btn-secondary mt-2">
+          {{ contact.showComments ? 'Hide' : 'Show' }} Comments
+        </button>
 
-    <div class="comments-section" *ngIf="contact.showComments">
-      <div
-        class="comment"
-        *ngFor="let comment of contact.comment"
-        [ngClass]="{
-          'admin-comment': comment.createdBy !== getCurrentUser(),
-          'user-comment': comment.createdBy === getCurrentUser()
-        }"
-      >
-        <p class="comment-text">{{ comment.value }}</p>
-        <div class="comment-meta">
-          <span class="comment-author">{{ comment.createdBy }}</span> ·
-          <span class="comment-date">{{ comment.createdDate | date: 'short' }}</span>
+        <!-- Comments Section -->
+        <div class="comments-section" *ngIf="contact.showComments">
+          <div *ngFor="let comment of contact.comment"
+               [ngClass]="{'admin-comment': comment.createdBy !== getCurrentUser(), 'user-comment': comment.createdBy === getCurrentUser()}"
+               class="comment">
+            <p class="comment-text mb-1">{{ comment.value }}</p>
+            <div class="comment-meta">
+              <span class="comment-author">{{ comment.createdBy }}</span> ·
+              <span class="comment-date">{{ comment.createdDate | date: 'short' }}</span>
+            </div>
+          </div>
+
+          <textarea [(ngModel)]="newComment" placeholder="Add a comment..."></textarea>
+          <button class="btn btn-primary mt-2" (click)="addComment(contact.id, contact.accountId)">Add Comment</button>
         </div>
       </div>
-
-      <textarea [(ngModel)]="newComment" placeholder="Add a comment..."></textarea>
-      <button class="btn btn-primary mt-2" (click)="addComment(contact.id, contact.accountId)">Add Comment</button>
     </div>
   </div>
 </div>
 
+
 <!-- Contact Form (User Only) -->
-<div *ngIf="!isAdmin()" class="container-xxl py-5">
+<div *ngIf="!isAdmin()" class="container-xxl py-5 bg-light rounded shadow-sm">
   <div class="container">
-    <div class="text-center">
-      <h5 class="section-title ff-secondary text-primary fw-normal">Contact Us</h5>
-      <h1 class="mb-5">Contact For Any Query</h1>
+    <div class="text-center mb-5">
+      <h5 class="section-title ff-secondary text-primary fw-semibold">Get in Touch</h5>
+      <h1 class="fw-bold">We’d love to hear from you</h1>
+      <p class="text-muted">Please fill out the form and we’ll get back to you as soon as possible.</p>
     </div>
 
-    <div class="row g-4 justify-content-center">
-      <div class="col-md-8">
-        <div class="row g-3">
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="row g-4">
+          <!-- Name -->
           <div class="col-md-6">
             <div class="form-floating">
-              <input
-                type="text"
-                class="form-control"
-                id="name"
-                placeholder="Your Name"
-                [(ngModel)]="name"
-                name="name"
-              />
+              <input type="text" class="form-control" id="name" placeholder="Your Name"
+                     [(ngModel)]="name" name="name">
               <label for="name">Your Name</label>
               <div *ngIf="nameError" class="text-danger small mt-1">{{ nameError }}</div>
             </div>
           </div>
 
+          <!-- Email -->
           <div class="col-md-6">
             <div class="form-floating">
-              <input
-                type="email"
-                class="form-control"
-                id="email"
-                placeholder="Your Email"
-                [(ngModel)]="email"
-                name="email"
-              />
+              <input type="email" class="form-control" id="email" placeholder="Your Email"
+                     [(ngModel)]="email" name="email">
               <label for="email">Your Email</label>
               <div *ngIf="emailError" class="text-danger small mt-1">{{ emailError }}</div>
             </div>
           </div>
 
+          <!-- Subject -->
           <div class="col-12">
             <div class="form-floating">
-              <input
-                type="text"
-                class="form-control"
-                id="subject"
-                placeholder="Subject"
-                [(ngModel)]="subject"
-                name="subject"
-              />
+              <input type="text" class="form-control" id="subject" placeholder="Subject"
+                     [(ngModel)]="subject" name="subject">
               <label for="subject">Subject</label>
               <div *ngIf="subjectError" class="text-danger small mt-1">{{ subjectError }}</div>
             </div>
           </div>
 
+          <!-- Message -->
           <div class="col-12">
             <div class="form-floating">
-              <textarea
-                class="form-control"
-                placeholder="Leave a message here"
-                id="message"
-                style="height: 150px"
-                [(ngModel)]="message"
-                name="message"
-              ></textarea>
+              <textarea class="form-control" id="message" placeholder="Leave a message here"
+                        style="height: 150px" [(ngModel)]="message" name="message"></textarea>
               <label for="message">Message</label>
               <div *ngIf="messageError" class="text-danger small mt-1">{{ messageError }}</div>
             </div>
           </div>
 
+          <!-- Submit Button -->
           <div class="col-12">
-            <button class="btn btn-primary w-100 py-3" (click)="createContactInfo()">Send Message</button>
+            <button class="btn btn-primary w-100 py-3" (click)="createContactInfo()">
+              <i class="bi bi-send-fill me-2"></i>Send Message
+            </button>
           </div>
+
+          <!-- Backend Error Alert -->
+          <div *ngIf="errorBackendForm" class="col-12 mt-3">
+            <div class="alert alert-danger text-center">
+              <div>{{ messageErrorArForm }}</div>
+              <div>{{ messageErrorEnForm }}</div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
-  </div>
-  <div *ngIf="errorBackendForm" class="alert alert-danger">
-    <div>{{ messageErrorArForm }}</div>
-    <div>{{ messageErrorEnForm }}</div>
   </div>
 </div>
