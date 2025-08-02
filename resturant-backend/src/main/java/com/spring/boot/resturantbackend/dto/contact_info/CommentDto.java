@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CommentDto {
+public class CommentDto implements Serializable {
     private Long id;
     @NotEmpty(message = "not_empty.value")
     private String value;

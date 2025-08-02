@@ -17,6 +17,7 @@ import java.util.List;
 @Setter
 @Getter
 public class Order extends BaseEntity<String> {
+    @Column(unique = true)
     private String code;
     private String status;
     @Column(nullable = false)

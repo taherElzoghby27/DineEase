@@ -1,6 +1,7 @@
 package com.spring.boot.resturantbackend.services.impl.product;
 
 import com.spring.boot.resturantbackend.dto.product.ProductDetailsDto;
+import com.spring.boot.resturantbackend.dto.product.ProductDto;
 import com.spring.boot.resturantbackend.mappers.ProductMapper;
 import com.spring.boot.resturantbackend.models.product.ProductDetails;
 import com.spring.boot.resturantbackend.repositories.product.ProductDetailsRepo;
@@ -24,7 +25,7 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
 
     @Override
     @CacheEvict(value = "products", allEntries = true)
-    @CachePut(value = "products", key = "#result.product_id")
+    @CachePut(value = "products", key = "#result.productId")
     public ProductDetailsDto addProductDetailsToProduct(ProductDetailsDto productDetailsDto) {
         try {
             if (Objects.nonNull(productDetailsDto.getId())) {
@@ -32,11 +33,8 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
             }
             ProductDetails productDetails = ProductMapper.PRODUCT_MAPPER.toProductDetails(productDetailsDto);
             //set product to product details
-            productDetails.setProduct(
-                    ProductMapper.PRODUCT_MAPPER.toProduct(
-                            productService.getProductById(productDetailsDto.getProduct_id())
-                    )
-            );
+            ProductDto productById = productService.getProductById(productDetailsDto.getProductId());
+            productDetails.setProduct(ProductMapper.PRODUCT_MAPPER.toProduct(productById));
             productDetails = productDetailsRepo.save(productDetails);
             return ProductMapper.PRODUCT_MAPPER.toProductDetailsDto(productDetails);
         } catch (Exception e) {
@@ -56,7 +54,7 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
             }
             ProductDetails productDetails = result.get();
             ProductDetailsDto productDetailsDto = ProductMapper.PRODUCT_MAPPER.toProductDetailsDto(result.get());
-            productDetailsDto.setProduct_id(productDetails.getProduct().getId());
+            productDetailsDto.setProductId(productDetails.getProduct().getId());
             return productDetailsDto;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
@@ -65,22 +63,18 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
 
     @Override
     @CacheEvict(value = "products", allEntries = true)
-    @CachePut(value = "products", key = "#result.product_id")
+    @CachePut(value = "products", key = "#result.productId")
     public ProductDetailsDto updateProductDetails(ProductDetailsDto productDetailsDto) {
         try {
             if (Objects.isNull(productDetailsDto.getId())) {
                 throw new SystemException("id.must_be.not_null");
             }
-            ProductDetailsDto existingProductDetails = getProductDetailsByProductId(productDetailsDto.getProduct_id());
+            ProductDetailsDto existingProductDetails = getProductDetailsByProductId(productDetailsDto.getProductId());
             existingProductDetails.setPreparationTime(productDetailsDto.getPreparationTime());
             existingProductDetails.setProductCode(productDetailsDto.getProductCode());
             ProductDetails productDetails = ProductMapper.PRODUCT_MAPPER.toProductDetails(existingProductDetails);
             //set product to product details
-            productDetails.setProduct(
-                    ProductMapper.PRODUCT_MAPPER.toProduct(
-                            productService.getProductById(productDetailsDto.getProduct_id())
-                    )
-            );
+            productDetails.setProduct(ProductMapper.PRODUCT_MAPPER.toProduct(productService.getProductById(productDetailsDto.getProductId())));
             productDetails = productDetailsRepo.save(productDetails);
             return ProductMapper.PRODUCT_MAPPER.toProductDetailsDto(productDetails);
         } catch (Exception e) {

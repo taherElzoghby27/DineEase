@@ -20,7 +20,7 @@ public class AdminContactInfoStrategy implements ContactInfoRetrievalStrategy {
     @Autowired
     private ContactInfoRepo contactInfoRepo;
 
-    @Cacheable(value = "contacts",key = "'admin'+#filter==null?'ALL':#filter")
+    @Cacheable(value = "contacts",key = "'admin'+(#filter==null?'ALL':#filter)")
     @Override
     public List<ContactInfoDto> getContactInfo(String filter) {
         try {

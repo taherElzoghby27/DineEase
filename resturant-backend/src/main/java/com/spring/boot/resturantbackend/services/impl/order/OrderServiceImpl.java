@@ -21,11 +21,11 @@ import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -61,6 +61,9 @@ public class OrderServiceImpl implements OrderService {
             order.setProducts(products);
             //set status for order
             order.setStatus(OrderStatus.Pending.toString());
+            //create code
+            String orderCode = generateCodeForOrder();
+            order.setCode(orderCode);
             //save order
             order = orderRepo.save(order);
             categoryService.updateRecommendedCategory();
@@ -68,6 +71,11 @@ public class OrderServiceImpl implements OrderService {
         } catch (SystemException e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    //generate code for order
+    private static String generateCodeForOrder() {
+        return UUID.randomUUID().toString().substring(0, 8);
     }
 
 
@@ -78,8 +86,7 @@ public class OrderServiceImpl implements OrderService {
         return orderStrategyFactory.getStrategy(role.toString()).getAccessibleOrders();
     }
 
-    @CacheEvict(value = "orders", key = "'all'")
-    @CachePut(value = "orders", key = "#requestUpdateStatusOrder.id")
+    @CacheEvict(value = "orders", allEntries = true)
     @Override
     public void updateOrder(RequestUpdateStatusOrder requestUpdateStatusOrder) {
         try {

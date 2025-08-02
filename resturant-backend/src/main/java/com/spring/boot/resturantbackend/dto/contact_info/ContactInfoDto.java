@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 @AllArgsConstructor
@@ -21,7 +22,7 @@ import java.util.List;
 @Setter
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ContactInfoDto {
+public class ContactInfoDto implements Serializable {
     private Long id;
     @NotEmpty(message = "not_empty.name")
     @Size(min = 7, max = 100, message = "size.name")

@@ -8,11 +8,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-public class ContactInfoVm {
+public class ContactInfoVm implements Serializable {
     private Long id;
     private String name;
     private String email;

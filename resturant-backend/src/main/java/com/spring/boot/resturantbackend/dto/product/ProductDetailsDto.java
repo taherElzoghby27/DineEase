@@ -20,5 +20,5 @@ public class ProductDetailsDto implements Serializable {
     private String preparationTime;
     @NotEmpty(message = "error.empty.productCode")
     private String productCode;
-    private Long product_id;
+    private Long productId;
 }

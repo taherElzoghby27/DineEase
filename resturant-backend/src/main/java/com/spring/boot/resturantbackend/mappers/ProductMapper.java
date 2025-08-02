@@ -25,14 +25,19 @@ public interface ProductMapper {
     @Mapping(source = "category", target = "categoryId", qualifiedByName = "categoryToId")
     ProductRequestVm toProductRequestVm(Product product);
 
-    @Mapping(source = "product", target = "product_id", ignore = true)
+    @Mapping(source = "product", target = "productId", qualifiedByName = "productToId")
     ProductDetailsDto toProductDetailsDto(ProductDetails productDetails);
 
-    @Mapping(source = "product_id", target = "product", ignore = true)
+    @Mapping(source = "productId", target = "product", ignore = true)
     ProductDetails toProductDetails(ProductDetailsDto productDetailsDto);
 
     @Named("categoryToId")
     default Long categoryToId(Category category) {
         return category.getId();
+    }
+
+    @Named("productToId")
+    default Long productToId(Product product) {
+        return product.getId();
     }
 }

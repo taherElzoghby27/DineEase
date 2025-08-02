@@ -10,11 +10,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-public class ProductRequestVm {
+public class ProductRequestVm implements Serializable {
     private Long id;
     @NotEmpty(message = "not_empty.name")
     @Size(min = 7, max = 50, message = "size.name")
