@@ -12,11 +12,11 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -40,117 +40,78 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @CacheEvict(value = "categories", key = "'all'")
     @CachePut(value = "categories", key = "#result.id")
+    @Transactional
     public CategoryDto createCategory(CategoryDto categoryDto) {
-        try {
-            if (Objects.nonNull(categoryDto.getId())) {
-                throw new SystemException("id.must_be.null");
-            }
-            Category category = CategoryMapper.CATEGORY_MAPPER.toCategory(categoryDto);
-            category.setRecommended(0L);
-            category = categoryRepo.save(category);
-            return CategoryMapper.CATEGORY_MAPPER.toCategoryDto(category);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+        if (Objects.nonNull(categoryDto.getId())) {
+            throw new RuntimeException("id.must_be.null");
         }
+        Category category = CategoryMapper.CATEGORY_MAPPER.toCategory(categoryDto);
+        category.setRecommended(0L);
+        category = categoryRepo.save(category);
+        return CategoryMapper.CATEGORY_MAPPER.toCategoryDto(category);
     }
 
     @Override
     @CacheEvict(value = "categories", key = "'all'")
+    @Transactional
     public List<CategoryDto> createListOfCategory(List<CategoryDto> categoriesDto) {
-        return saveCategoriesDto(categoriesDto);
-    }
-
-    private List<CategoryDto> saveCategoriesDto(List<CategoryDto> categoriesDto) {
-        try {
-            if (categoriesDto.isEmpty()) {
-                throw new SystemException("error.empty.list.category");
-            }
-            List<Category> categories = categoriesDto.stream().map(CategoryMapper.CATEGORY_MAPPER::toCategory).toList();
-            categories = categoryRepo.saveAll(categories);
-            return categories.stream().map(CategoryMapper.CATEGORY_MAPPER::toCategoryDto).toList();
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+        if (categoriesDto.isEmpty()) {
+            throw new RuntimeException("error.empty.list.category");
         }
+        List<Category> categories = categoriesDto.stream().map(CategoryMapper.CATEGORY_MAPPER::toCategory).toList();
+        categories = categoryRepo.saveAll(categories);
+        return categories.stream().map(CategoryMapper.CATEGORY_MAPPER::toCategoryDto).toList();
     }
 
     @Override
     @CachePut(value = "categories", key = "#result.id")
     @CacheEvict(value = "categories", key = "'all'")
+    @Transactional
     public CategoryDto updateCategory(CategoryDto categoryDto) {
-        try {
-            if (Objects.isNull(categoryDto.getId())) {
-                throw new SystemException("id.must_be.not_null");
-            }
-            Category category = CategoryMapper.CATEGORY_MAPPER.toCategory(categoryDto);
-            category = categoryRepo.save(category);
-            return CategoryMapper.CATEGORY_MAPPER.toCategoryDto(category);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+        if (Objects.isNull(categoryDto.getId())) {
+            throw new RuntimeException("id.must_be.not_null");
         }
+        Category category = CategoryMapper.CATEGORY_MAPPER.toCategory(categoryDto);
+        category = categoryRepo.save(category);
+        return CategoryMapper.CATEGORY_MAPPER.toCategoryDto(category);
     }
 
     @Override
-    public List<CategoryDto> updateListOfCategory(List<CategoryDto> categoriesDto) {
-        return saveCategoriesDto(categoriesDto);
-    }
-
-    @Override
-
-    @Caching(
-            evict = {
-                    @CacheEvict(value = "categories", key = "#id"),
-                    @CacheEvict(value = "categories", key = "'all'")
-            }
-    )
+    @Caching(evict = {@CacheEvict(value = "categories", key = "#id"), @CacheEvict(value = "categories", key = "'all'")})
+    @Transactional
     public void deleteCategoryById(Long id) {
-        try {
-            if (Objects.isNull(id)) {
-                throw new SystemException("id.must_be.not_null");
-            }
-            getCategoryById(id);
-            categoryRepo.deleteById(id);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+        if (Objects.isNull(id)) {
+            throw new RuntimeException("id.must_be.not_null");
         }
+        getCategoryById(id);
+        categoryRepo.deleteById(id);
     }
 
-    @Override
-    @CacheEvict(value = "categories", key = "'all'")
-    public void deleteListOfCategory(List<Long> categoryIds) {
-        try {
-            if (categoryIds.isEmpty()) {
-                throw new SystemException("error.empty.list.category");
-            }
-            categoryRepo.deleteAllById(categoryIds);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
 
     @Override
     @Cacheable(value = "categories", key = "#id")
+    @Transactional(readOnly = true)
     public CategoryDto getCategoryById(Long id) {
-        try {
-            if (Objects.isNull(id)) {
-                throw new SystemException("id.must_be.not_null");
-            }
-            Optional<Category> result = categoryRepo.findById(id);
-            if (result.isEmpty()) {
-                throw new SystemException("category.not.found");
-            }
-            return CategoryMapper.CATEGORY_MAPPER.toCategoryDto(result.get());
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+        if (Objects.isNull(id)) {
+            throw new RuntimeException("id.must_be.not_null");
         }
+        Optional<Category> result = categoryRepo.findById(id);
+        if (result.isEmpty()) {
+            throw new RuntimeException("category.not.found");
+        }
+        return CategoryMapper.CATEGORY_MAPPER.toCategoryDto(result.get());
     }
 
     @Override
     @CacheEvict(value = "categories", allEntries = true, condition = "#result")
-    public boolean updateRecommendedCategory() {
+    public boolean updateRecommendedCategory() {//update category recommended flag based on n of products in orders
+        //get category based on n of products in orders
         CategoryDto recommendedCategory = getCategoryBasedOnProducts();
         Long recommendedId = recommendedCategory.getId();
+        //get all categories
         List<Category> categories = categoryRepo.findAll();
         boolean hasChanges = false;
+        //update non-recommended category if recommended
         for (Category category : categories) {
             boolean shouldBeRecommended = category.getId().equals(recommendedId);
             long targetValue = shouldBeRecommended ? 1L : 0L;
