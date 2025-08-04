@@ -71,4 +71,53 @@ The system now includes an intelligent Category Recommendation engine that dynam
 - `Postman` (API Testing)
 - `Tomcat` (Spring Boot embedded server)
 
+### 🏗️ Project Structure
+
+restaurant-management-system/
+├── back-end/                        # 🖥️ Spring Boot Backend
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/com/restaurant/
+│   │   │   │   ├── config/          # 🛠️ Configuration classes (from `config/`)
+│   │   │   │   ├── controller/      # 🎮 REST Controllers (rename from `controllers/`)
+│   │   │   │   ├── dto/             # 📦 Data Transfer Objects (from `dto/`)
+│   │   │   │   ├── entity/          # 🗃️ JPA Entities (rename from `models/`)
+│   │   │   │   ├── mapper/          # 🔄 MapStruct or manual mappers (from `mappers/`)
+│   │   │   │   ├── repository/      # 💾 Data Access Layer (rename from `repositories/`)
+│   │   │   │   ├── service/         # 💡 Business Logic (rename from `services/`)
+│   │   │   │   ├── security/        # 🔒 Security config (move from `setting/` if applicable)
+│   │   │   │   ├── util/            # 🧰 Utility classes (rename from `utils/`)
+│   │   │   │   └── vm/              # 📐 View Models (from `vm/`, optional)
+│   │   │   └── resources/
+│   │   │       ├── application.yml  # ⚙️ Spring Boot main configuration
+│   │   │       ├── db.migration/    # 🧬 DB migration scripts (from `db.migration/`)
+│   │   │       ├── i18n/            # 🌐 Internationalization (from `i18n/`)
+│   │   │       ├── static/          # 🖼️ Static files (from `static/`)
+│   │   │       └── templates/       # 📄 Thymeleaf templates (from `templates/`)
+│   └── pom.xml                      # 📦 Maven Project File
+│
+├── front-end/                       # 🌐 Angular Frontend (if applicable)
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── components/          # 🧩 Angular UI components
+│   │   │   ├── models/              # 📐 TypeScript models/interfaces
+│   │   │   ├── services/            # 🔌 Angular services
+│   │   │   ├── guards/              # 🛡️ Route guards
+│   │   │   ├── interceptors/        # ↔️ HTTP interceptors
+│   │   │   └── shared/              # 🤝 Shared modules, pipes, directives
+│   ├── assets/                      # 🎨 App-wide static assets
+│   └── environments/                # 🌍 Angular environment files
+│
+├── docs/                            # 📚 Documentation
+│   └── api-docs.md                  # 📖 OpenAPI/Swagger or other API specs
+│
+├── assets/                          # 🖼️ Screenshots & demo images
+│   ├── home-page.png
+│   ├── login-page.png
+│   ├── signup-page.png
+│   └── system-banner.png
+│
+└── README.md                        # 📖 Project overview, setup, usage
+
+
 ---
