@@ -17,6 +17,8 @@ import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +49,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public AccountDto createAccount(AccountDto accountDto) {
         try {
             validateCreateAccount(accountDto);
@@ -67,7 +70,8 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
-    private void initRoleToUser(Account user) {
+    @Transactional(propagation = Propagation.MANDATORY)
+    protected void initRoleToUser(Account user) {
         Role role = RoleMapper.ROLE_MAPPER.toRole(roleService.findByRole(RoleEnum.USER.toString()));
         List<Role> roles = user.getRoles();
         if (Objects.isNull(roles)) {
@@ -87,6 +91,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public UpdateProfileVm updateAccount(UpdateProfileVm updateProfileVm) {
         try {
             AccountDto accountDto = validateUpdateAccount(updateProfileVm.getId());
@@ -137,6 +142,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public void deleteAccount(Long id) {
         try {
             validateUpdateAccount(id);
@@ -147,6 +153,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public AccountDto getAccountById(Long id) {
         try {
             if (Objects.isNull(id)) {
@@ -169,10 +176,7 @@ public class AccountServiceImpl implements AccountService {
                 throw new SystemException("not_empty.name");
             }
             Optional<Account> result = accountRepo.findByUsername(username);
-            if (result.isEmpty()) {
-                return null;
-            }
-            return AccountMapper.ACCOUNT_MAPPER.toAccountDto(result.get());
+            return result.map(AccountMapper.ACCOUNT_MAPPER::toAccountDto).orElse(null);
         } catch (SystemException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -184,6 +188,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public void changePassword(ChangePasswordRequest changePasswordRequest) {
         try {
             //get account by username
