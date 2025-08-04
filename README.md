@@ -109,16 +109,6 @@ restaurant-management-system/
 │   │   │   ├── interceptors/        # HTTP interceptors
 │   │   │   └── shared/              # Shared modules/components
 │   ├── assets/                      # Static assets
-│   └── environments/                # Environment configs
-│
-├── docs/                            # Documentation
-│   └── api-docs.md                  # Swagger/OpenAPI docs
-│
-├── assets/                          # Screenshots & images
-│   ├── home-page.png
-│   ├── login-page.png
-│   ├── signup-page.png
-│   └── system-banner.png
-│
+│   └── environments/
 └── README.md                        # You are here 📖
 ```
