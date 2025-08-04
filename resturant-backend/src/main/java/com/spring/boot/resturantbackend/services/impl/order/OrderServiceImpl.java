@@ -1,7 +1,6 @@
 package com.spring.boot.resturantbackend.services.impl.order;
 
 import com.spring.boot.resturantbackend.dto.OrderDto;
-import com.spring.boot.resturantbackend.dto.security.AccountDto;
 import com.spring.boot.resturantbackend.mappers.OrderMapper;
 import com.spring.boot.resturantbackend.models.Order;
 import com.spring.boot.resturantbackend.models.product.Product;
@@ -22,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -44,33 +44,36 @@ public class OrderServiceImpl implements OrderService {
     @CachePut(value = "orders", key = "#result.id")
     @CacheEvict(value = "orders", allEntries = true)
     @Override
+    @Transactional
     public ResponseOrderVm requestOrder(RequestOrderVm requestOrderVm) {
-        try {
-            if (Objects.nonNull(requestOrderVm.getId())) {
-                throw new SystemException("id.must_be.null");
-            }
-            //get products
-            List<Product> products = productService.listOfIdsToListOfProducts(requestOrderVm.getProductsIds());
-            //get account
-            Account account = accountService.idToAccount(requestOrderVm.getAccountId());
-            //convert RequestOrderDto to order
-            Order order = OrderMapper.ORDER_MAPPER.toOrder(requestOrderVm);
-            //set products to order
-            order.setAccount(account);
-            //set products to order
-            order.setProducts(products);
-            //set status for order
-            order.setStatus(OrderStatus.Pending.toString());
-            //create code
-            String orderCode = generateCodeForOrder();
-            order.setCode(orderCode);
-            //save order
-            order = orderRepo.save(order);
-            categoryService.updateRecommendedCategory();
-            return OrderMapper.ORDER_MAPPER.toResponseOrderVm(order);
-        } catch (SystemException e) {
-            throw new RuntimeException(e.getMessage());
+        if (Objects.nonNull(requestOrderVm.getId())) {
+            throw new RuntimeException("id.must_be.null");
         }
+        if (Objects.isNull(requestOrderVm.getProductsIds()) || requestOrderVm.getProductsIds().isEmpty()) {
+            throw new RuntimeException("id.must_be.not_null");
+        }
+        if (Objects.isNull(requestOrderVm.getAccountId())) {
+            throw new RuntimeException("id.must_be.not_null");
+        }
+        //get products
+        List<Product> products = productService.listOfIdsToListOfProducts(requestOrderVm.getProductsIds());
+        //get account
+        Account account = accountService.idToAccount(requestOrderVm.getAccountId());
+        //convert RequestOrderDto to order
+        Order order = OrderMapper.ORDER_MAPPER.toOrder(requestOrderVm);
+        //set products to order
+        order.setAccount(account);
+        //set products to order
+        order.setProducts(products);
+        //set status for order
+        order.setStatus(OrderStatus.Pending.toString());
+        //create code
+        String orderCode = generateCodeForOrder();
+        order.setCode(orderCode);
+        //save order
+        order = orderRepo.save(order);
+        categoryService.updateRecommendedCategory();
+        return OrderMapper.ORDER_MAPPER.toResponseOrderVm(order);
     }
 
     //generate code for order
@@ -88,18 +91,15 @@ public class OrderServiceImpl implements OrderService {
 
     @CacheEvict(value = "orders", allEntries = true)
     @Override
+    @Transactional
     public void updateOrder(RequestUpdateStatusOrder requestUpdateStatusOrder) {
-        try {
-            Order order = getOrderById(requestUpdateStatusOrder.getId());
-            if (Objects.isNull(order)) {
-                throw new SystemException("order.not.found");
-            }
-            OrderStatus.valueOf(requestUpdateStatusOrder.getStatus());
-            order.setStatus(requestUpdateStatusOrder.getStatus());
-            orderRepo.save(order);
-        } catch (SystemException e) {
-            throw new RuntimeException(e.getMessage());
+        Order order = getOrderById(requestUpdateStatusOrder.getId());
+        if (Objects.isNull(order)) {
+            throw new RuntimeException("order.not.found");
         }
+        OrderStatus.valueOf(requestUpdateStatusOrder.getStatus());
+        order.setStatus(requestUpdateStatusOrder.getStatus());
+        orderRepo.save(order);
     }
 
 

@@ -21,7 +21,7 @@ public class AdminOrders implements OrderAccessStrategy {
     @Override
     public List<OrderDto> getAccessibleOrders() {
         try {
-            List<Order> orders = orderRepo.findAll();
+            List<Order> orders = orderRepo.findAllOrderByUpdatedDateDesc();
             if (orders.isEmpty()) {
                 throw new SystemException("error.orders.is.empty");
             }

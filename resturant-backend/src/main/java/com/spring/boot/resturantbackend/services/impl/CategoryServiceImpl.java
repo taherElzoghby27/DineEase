@@ -104,6 +104,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @CacheEvict(value = "categories", allEntries = true, condition = "#result")
+    @Transactional
     public boolean updateRecommendedCategory() {//update category recommended flag based on n of products in orders
         //get category based on n of products in orders
         CategoryDto recommendedCategory = getCategoryBasedOnProducts();

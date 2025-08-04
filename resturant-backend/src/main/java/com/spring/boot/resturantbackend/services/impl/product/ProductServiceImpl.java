@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -228,6 +229,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ProductDto> getProductsByListOfId(List<Long> productIds) {
         try {
             List<Product> products = productRepo.findAllById(productIds);
@@ -241,6 +243,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Product> listOfIdsToListOfProducts(List<Long> ids) {
         List<ProductDto> productsDto = getProductsByListOfId(ids);
         return productsDto.stream().map(ProductMapper.PRODUCT_MAPPER::toProduct).toList();

@@ -26,7 +26,7 @@ public class UserOrders implements OrderAccessStrategy {
             //get account id
             AccountDto accountDto = SecurityUtils.getCurrentAccount();
             // Fetch orders
-            List<Order> orders = orderRepo.findByAccountId(accountDto.getId());
+            List<Order> orders = orderRepo.findByAccountIdOrderByUpdatedDateDesc(accountDto.getId());
             if (orders.isEmpty()) {
                 throw new SystemException("error.orders.is.empty");
             }
