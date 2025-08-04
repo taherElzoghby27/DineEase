@@ -57,6 +57,7 @@ The system now includes an intelligent Category Recommendation engine that dynam
 - `Maven`
 - `JDBC`
 - `RESTful APIs`
+- `Flyway`
 
 ### 🎨 Frontend
 - `Angular`
