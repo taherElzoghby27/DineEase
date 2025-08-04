@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -42,20 +43,17 @@ public class ContactInfoServiceImpl implements ContactInfoService {
     }
 
     @Override
+    @Transactional
     public ContactInfoDto createContactInfo(ContactInfoDto contactInfoDto) {
-        try {
-            Account account = getAccount();
-            if (Objects.nonNull(contactInfoDto.getId())) {
-                throw new SystemException("id.must_be.null");
-            }
-            ContactInfo contactInfo = ContactInfoMapper.CONTACT_INFO_MAPPER.toContactInfo(contactInfoDto);
-            contactInfo.setAccount(account);
-            contactInfo.setStatus(FilterContactInfo.NOT_REPLIED);
-            contactInfo = contactInfoRepo.save(contactInfo);
-            return ContactInfoMapper.CONTACT_INFO_MAPPER.toContactInfoDto(contactInfo);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+        Account account = getAccount();
+        if (Objects.nonNull(contactInfoDto.getId())) {
+            throw new RuntimeException("id.must_be.null");
         }
+        ContactInfo contactInfo = ContactInfoMapper.CONTACT_INFO_MAPPER.toContactInfo(contactInfoDto);
+        contactInfo.setAccount(account);
+        contactInfo.setStatus(FilterContactInfo.NOT_REPLIED);
+        contactInfo = contactInfoRepo.save(contactInfo);
+        return ContactInfoMapper.CONTACT_INFO_MAPPER.toContactInfoDto(contactInfo);
     }
 
     private static Account getAccount() {
@@ -65,6 +63,7 @@ public class ContactInfoServiceImpl implements ContactInfoService {
 
     @CacheEvict(value = "contacts", allEntries = true)
     @Override
+    @Transactional
     public ContactInfoDto updateStatus(FilterContactInfo filterContactInfo, Long id) {
         try {
             ContactInfoDto contactInfoDto = getContactInfo(id);
@@ -84,8 +83,9 @@ public class ContactInfoServiceImpl implements ContactInfoService {
         return AccountMapper.ACCOUNT_MAPPER.toAccount(accountDto);
     }
 
-    @Cacheable(value = "contacts", key = "#result.id")
+    @Cacheable(value = "contacts", key = "#id")
     @Override
+    @Transactional(readOnly = true)
     public ContactInfoDto getContactInfo(Long id) {
         try {
             if (Objects.isNull(id)) {
@@ -104,17 +104,13 @@ public class ContactInfoServiceImpl implements ContactInfoService {
     @Cacheable(value = "contacts", key = "'id '+#id+' accId'+#accountId")
     @Override
     public ContactInfoDto getContactInfoByIdAndAccountId(Long id, Long accountId) {
-        try {
-            if (Objects.isNull(accountId)) {
-                throw new SystemException("id.must_be.not_null");
-            }
-            Optional<ContactInfo> contactInfo = contactInfoRepo.findByIdAndAccountId(id, accountId);
-            if (contactInfo.isEmpty()) {
-                throw new SystemException("empty_contact_info");
-            }
-            return ContactInfoMapper.CONTACT_INFO_MAPPER.toContactInfoDto(contactInfo.get());
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+        if (Objects.isNull(accountId)) {
+            throw new RuntimeException("id.must_be.not_null");
         }
+        Optional<ContactInfo> contactInfo = contactInfoRepo.findByIdAndAccountId(id, accountId);
+        if (contactInfo.isEmpty()) {
+            throw new RuntimeException("empty_contact_info");
+        }
+        return ContactInfoMapper.CONTACT_INFO_MAPPER.toContactInfoDto(contactInfo.get());
     }
 }

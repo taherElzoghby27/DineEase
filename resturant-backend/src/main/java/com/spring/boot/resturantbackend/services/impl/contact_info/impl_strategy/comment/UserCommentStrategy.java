@@ -11,6 +11,8 @@ import com.spring.boot.resturantbackend.services.contact_info.ContactInfoService
 import com.spring.boot.resturantbackend.services.contact_info.strategies.CommentStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,18 +24,18 @@ public class UserCommentStrategy implements CommentStrategy {
     private ContactInfoService contactInfoService;
 
     @Override
+    @Transactional
     public void sendComment(CommentDto commentDto) {
-        ContactInfoDto contactInfoDto;
-        ContactInfo contactInfo;
         Comment comment = CommentMapper.COMMENT_MAPPER.commentDtoToComment(commentDto);
         //user to admin
-        contactInfoDto = contactInfoService.getContactInfo(commentDto.getContactInfoId());
+        ContactInfoDto contactInfoDto = contactInfoService.getContactInfo(commentDto.getContactInfoId());
 
-        contactInfo = ContactInfoMapper.CONTACT_INFO_MAPPER.toContactInfo(contactInfoDto);
+        ContactInfo contactInfo = ContactInfoMapper.CONTACT_INFO_MAPPER.toContactInfo(contactInfoDto);
         saveCommentInDb(contactInfo, comment);
     }
 
-    private void saveCommentInDb(ContactInfo contactInfo, Comment comment) {
+    @Transactional(propagation = Propagation.MANDATORY)
+    protected void saveCommentInDb(ContactInfo contactInfo, Comment comment) {
         List<Comment> comments = contactInfo.getComment();
         Long orderNumber = (long) comments.size() + 1;
         comment.setOrderNumber(orderNumber);

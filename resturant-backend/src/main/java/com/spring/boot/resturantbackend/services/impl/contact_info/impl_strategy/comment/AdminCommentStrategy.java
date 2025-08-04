@@ -14,6 +14,8 @@ import com.spring.boot.resturantbackend.services.security.AccountService;
 import com.spring.boot.resturantbackend.utils.enums.FilterContactInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,21 +29,21 @@ public class AdminCommentStrategy implements CommentStrategy {
     private AccountService accountService;
 
     @Override
+    @Transactional
     public void sendComment(CommentDto commentDto) {
-        ContactInfoDto contactInfoDto;
-        ContactInfo contactInfo;
         Comment comment = CommentMapper.COMMENT_MAPPER.commentDtoToComment(commentDto);
         //admin to user
         AccountDto accountDto = accountService.getAccountById(commentDto.getReceiverId());
-        contactInfoDto = contactInfoService.getContactInfoByIdAndAccountId(commentDto.getContactInfoId(), accountDto.getId());
+        ContactInfoDto contactInfoDto = contactInfoService.getContactInfoByIdAndAccountId(commentDto.getContactInfoId(), accountDto.getId());
         if (contactInfoDto.getStatus() != FilterContactInfo.REPLIED) {
             contactInfoService.updateStatus(FilterContactInfo.REPLIED, contactInfoDto.getId());
         }
-        contactInfo = ContactInfoMapper.CONTACT_INFO_MAPPER.toContactInfo(contactInfoDto);
+        ContactInfo contactInfo = ContactInfoMapper.CONTACT_INFO_MAPPER.toContactInfo(contactInfoDto);
         saveCommentInDb(contactInfo, comment);
     }
 
-    private void saveCommentInDb(ContactInfo contactInfo, Comment comment) {
+    @Transactional(propagation = Propagation.MANDATORY)
+    protected void saveCommentInDb(ContactInfo contactInfo, Comment comment) {
         List<Comment> comments = contactInfo.getComment();
         Long orderNumber = (long) comments.size() + 1;
         comment.setOrderNumber(orderNumber);
