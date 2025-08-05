@@ -57,6 +57,7 @@ The system now includes an intelligent Category Recommendation engine that dynam
 - `Maven`
 - `JDBC`
 - `RESTful APIs`
+- `Flyway`
 
 ### 🎨 Frontend
 - `Angular`
@@ -71,4 +72,43 @@ The system now includes an intelligent Category Recommendation engine that dynam
 - `Postman` (API Testing)
 - `Tomcat` (Spring Boot embedded server)
 
----
+### 🏗️ Project Structure
+
+
+```
+restaurant-management-system/
+├── back-end/                        # 🖥️ Spring Boot Backend
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/com/restaurant/
+│   │   │   │   ├── config/          # Spring configuration classes
+│   │   │   │   ├── controller/      # REST Controllers
+│   │   │   │   ├── dto/             # Data Transfer Objects
+│   │   │   │   ├── entity/          # JPA Entities
+│   │   │   │   ├── mapper/          # Model mappers
+│   │   │   │   ├── repository/      # JPA Repositories
+│   │   │   │   ├── service/         # Business logic
+│   │   │   │   ├── security/        # Security configurations
+│   │   │   │   ├── util/            # Utility classes
+│   │   │   │   └── vm/              # View Models (optional)
+│   │   │   └── resources/
+│   │   │       ├── application.yml  # Spring Boot config
+│   │   │       ├── db.migration/    # Database migration scripts
+│   │   │       ├── i18n/            # Internationalization
+│   │   │       ├── static/          # Static files
+│   │   │       └── templates/       # Thymeleaf templates
+│   └── pom.xml                      # Maven Project File
+│
+├── front-end/                       # 🌐 Angular Frontend
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── components/          # Angular components
+│   │   │   ├── models/              # TypeScript models/interfaces
+│   │   │   ├── services/            # API and logic services
+│   │   │   ├── guards/              # Route guards
+│   │   │   ├── interceptors/        # HTTP interceptors
+│   │   │   └── shared/              # Shared modules/components
+│   ├── assets/                      # Static assets
+│   └── environments/
+└── README.md                        # You are here 📖
+```
