@@ -1,15 +1,14 @@
 package com.spring.boot.resturantbackend.config.security;
 
 import com.spring.boot.resturantbackend.dto.security.AccountDto;
+import com.spring.boot.resturantbackend.exceptions.ExpiredTokenException;
 import com.spring.boot.resturantbackend.services.security.AccountService;
 import com.spring.boot.resturantbackend.setting.JWTToken;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.JwtParser;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -46,7 +45,7 @@ public class TokenHandler {
     }
 
     //validate token
-    public AccountDto validateToken(String token) throws SystemException {
+    public AccountDto validateToken(String token) {
         try {
             if (this.jwtParser.isSigned(token)) {
                 Claims claims = this.jwtParser.parseClaimsJws(token).getBody();
@@ -58,8 +57,7 @@ public class TokenHandler {
                 return valid ? accountDto : null;
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new SystemException("something.wrong");
+            throw new ExpiredTokenException(e.getMessage());
         }
         return null;
     }

@@ -1,14 +1,18 @@
 package com.spring.boot.resturantbackend.config.security.filters;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.boot.resturantbackend.config.security.TokenHandler;
+import com.spring.boot.resturantbackend.dto.ExceptionDto;
 import com.spring.boot.resturantbackend.dto.security.AccountDto;
+import com.spring.boot.resturantbackend.exceptions.ExpiredTokenException;
+import com.spring.boot.resturantbackend.models.BundleMessage;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -60,9 +64,46 @@ public class AuthFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             //7- Continue with the filter chain
             filterChain.doFilter(request, response);
-        } catch (SystemException e) {
-            throw new RuntimeException(e);
+        } catch (ExpiredTokenException ex) {
+            // Handle expired token in filter
+            handleExpiredToken(response);
+            return; // Don't continue filter chain
+
+        } catch (Exception ex) {
+            // Handle other auth exceptions
+            handleAuthException(response, ex);
+            return;
         }
+    }
+
+    private void handleExpiredToken(HttpServletResponse response)
+            throws IOException {
+        response.setStatus(HttpStatus.UNAUTHORIZED.value()); // 401 for expired token
+        response.setContentType("application/json");
+
+        ExceptionDto errorResponse = new ExceptionDto(
+                HttpStatus.UNAUTHORIZED.value(),
+                new BundleMessage("Token has expired"),
+                HttpStatus.UNAUTHORIZED.getReasonPhrase()
+        );
+        // Convert Java object to JSON string and write to response
+        ObjectMapper mapper = new ObjectMapper();
+        response.getWriter().write(mapper.writeValueAsString(errorResponse));
+    }
+
+    private void handleAuthException(HttpServletResponse response, Exception ex)
+            throws IOException {
+        response.setStatus(HttpStatus.FORBIDDEN.value());
+        response.setContentType("application/json");
+
+        ExceptionDto errorResponse = new ExceptionDto(
+                HttpStatus.FORBIDDEN.value(),
+                new BundleMessage(ex.getMessage()),
+                HttpStatus.FORBIDDEN.getReasonPhrase()
+        );
+
+        ObjectMapper mapper = new ObjectMapper();
+        response.getWriter().write(mapper.writeValueAsString(errorResponse));
     }
 
     @Override

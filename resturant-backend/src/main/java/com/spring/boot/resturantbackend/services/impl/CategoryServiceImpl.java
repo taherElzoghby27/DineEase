@@ -1,6 +1,8 @@
 package com.spring.boot.resturantbackend.services.impl;
 
 import com.spring.boot.resturantbackend.dto.CategoryDto;
+import com.spring.boot.resturantbackend.exceptions.BadRequestException;
+import com.spring.boot.resturantbackend.exceptions.NotFoundResourceException;
 import com.spring.boot.resturantbackend.mappers.CategoryMapper;
 import com.spring.boot.resturantbackend.models.Category;
 import com.spring.boot.resturantbackend.repositories.CategoryRepo;
@@ -26,15 +28,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Cacheable(value = "categories", key = "'all'")
     @Override
     public List<CategoryDto> getAllCategories() {
-        try {
-            List<Category> categories = categoryRepo.findAllByOrderByNameAsc();
-            if (categories.isEmpty()) {
-                throw new SystemException("error.empty.list.category");
-            }
-            return categories.stream().map(CategoryMapper.CATEGORY_MAPPER::toCategoryDto).toList();
-        } catch (SystemException e) {
-            throw new RuntimeException(e.getMessage());
+        List<Category> categories = categoryRepo.findAllByOrderByNameAsc();
+        if (categories.isEmpty()) {
+            throw new NotFoundResourceException("error.empty.list.category");
         }
+        return categories.stream().map(CategoryMapper.CATEGORY_MAPPER::toCategoryDto).toList();
     }
 
     @Override
@@ -43,7 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public CategoryDto createCategory(CategoryDto categoryDto) {
         if (Objects.nonNull(categoryDto.getId())) {
-            throw new RuntimeException("id.must_be.null");
+            throw new BadRequestException("id.must_be.null");
         }
         Category category = CategoryMapper.CATEGORY_MAPPER.toCategory(categoryDto);
         category.setRecommended(0L);
@@ -56,7 +54,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public List<CategoryDto> createListOfCategory(List<CategoryDto> categoriesDto) {
         if (categoriesDto.isEmpty()) {
-            throw new RuntimeException("error.empty.list.category");
+            throw new NotFoundResourceException("error.empty.list.category");
         }
         List<Category> categories = categoriesDto.stream().map(CategoryMapper.CATEGORY_MAPPER::toCategory).toList();
         categories = categoryRepo.saveAll(categories);
@@ -69,7 +67,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public CategoryDto updateCategory(CategoryDto categoryDto) {
         if (Objects.isNull(categoryDto.getId())) {
-            throw new RuntimeException("id.must_be.not_null");
+            throw new BadRequestException("id.must_be.not_null");
         }
         Category category = CategoryMapper.CATEGORY_MAPPER.toCategory(categoryDto);
         category = categoryRepo.save(category);
@@ -81,7 +79,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public void deleteCategoryById(Long id) {
         if (Objects.isNull(id)) {
-            throw new RuntimeException("id.must_be.not_null");
+            throw new BadRequestException("id.must_be.not_null");
         }
         getCategoryById(id);
         categoryRepo.deleteById(id);
@@ -93,11 +91,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional(readOnly = true)
     public CategoryDto getCategoryById(Long id) {
         if (Objects.isNull(id)) {
-            throw new RuntimeException("id.must_be.not_null");
+            throw new BadRequestException("id.must_be.not_null");
         }
         Optional<Category> result = categoryRepo.findById(id);
         if (result.isEmpty()) {
-            throw new RuntimeException("category.not.found");
+            throw new NotFoundResourceException("category.not.found");
         }
         return CategoryMapper.CATEGORY_MAPPER.toCategoryDto(result.get());
     }
@@ -130,14 +128,10 @@ public class CategoryServiceImpl implements CategoryService {
 
 
     private CategoryDto getCategoryBasedOnProducts() {
-        try {
-            Optional<Category> result = categoryRepo.findCategoryForRecommendation();
-            if (result.isEmpty()) {
-                throw new SystemException("category.not.found");
-            }
-            return CategoryMapper.CATEGORY_MAPPER.toCategoryDto(result.get());
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+        Optional<Category> result = categoryRepo.findCategoryForRecommendation();
+        if (result.isEmpty()) {
+            throw new NotFoundResourceException("category.not.found");
         }
+        return CategoryMapper.CATEGORY_MAPPER.toCategoryDto(result.get());
     }
 }

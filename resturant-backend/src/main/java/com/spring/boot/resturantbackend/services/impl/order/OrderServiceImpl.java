@@ -1,6 +1,8 @@
 package com.spring.boot.resturantbackend.services.impl.order;
 
 import com.spring.boot.resturantbackend.dto.OrderDto;
+import com.spring.boot.resturantbackend.exceptions.BadRequestException;
+import com.spring.boot.resturantbackend.exceptions.NotFoundResourceException;
 import com.spring.boot.resturantbackend.mappers.OrderMapper;
 import com.spring.boot.resturantbackend.models.Order;
 import com.spring.boot.resturantbackend.models.product.Product;
@@ -16,7 +18,6 @@ import com.spring.boot.resturantbackend.utils.SecurityUtils;
 import com.spring.boot.resturantbackend.vm.RequestOrderVm;
 import com.spring.boot.resturantbackend.vm.RequestUpdateStatusOrder;
 import com.spring.boot.resturantbackend.vm.ResponseOrderVm;
-import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -47,13 +48,13 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public ResponseOrderVm requestOrder(RequestOrderVm requestOrderVm) {
         if (Objects.nonNull(requestOrderVm.getId())) {
-            throw new RuntimeException("id.must_be.null");
+            throw new BadRequestException("id.must_be.null");
         }
         if (Objects.isNull(requestOrderVm.getProductsIds()) || requestOrderVm.getProductsIds().isEmpty()) {
-            throw new RuntimeException("id.must_be.not_null");
+            throw new BadRequestException("products_id.must_be.not_null");
         }
         if (Objects.isNull(requestOrderVm.getAccountId())) {
-            throw new RuntimeException("id.must_be.not_null");
+            throw new BadRequestException("account_id.must_be.not_null");
         }
         //get products
         List<Product> products = productService.listOfIdsToListOfProducts(requestOrderVm.getProductsIds());
@@ -95,7 +96,7 @@ public class OrderServiceImpl implements OrderService {
     public void updateOrder(RequestUpdateStatusOrder requestUpdateStatusOrder) {
         Order order = getOrderById(requestUpdateStatusOrder.getId());
         if (Objects.isNull(order)) {
-            throw new RuntimeException("order.not.found");
+            throw new NotFoundResourceException("order.not.found");
         }
         OrderStatus.valueOf(requestUpdateStatusOrder.getStatus());
         order.setStatus(requestUpdateStatusOrder.getStatus());

@@ -11,5 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExceptionDto {
+    private int status;
     private BundleMessage bundleMessage;
+    private String reason;
 }
