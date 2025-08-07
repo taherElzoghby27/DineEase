@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.spring.boot.resturantbackend.dto.security.AccountDto;
 import com.spring.boot.resturantbackend.models.security.Account;
 import com.spring.boot.resturantbackend.utils.enums.FilterContactInfo;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
@@ -22,17 +23,41 @@ import java.util.List;
 @Setter
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(
+        name = "Contact info Dto",
+        description = "Contact info dto contains (id,name,email,subject,message,status,accountId)"
+)
 public class ContactInfoDto implements Serializable {
     private Long id;
     @NotEmpty(message = "not_empty.name")
+    @Schema(
+            name = "name",
+            description = "name for person",
+            example = "mohamed ahmed"
+    )
     @Size(min = 7, max = 100, message = "size.name")
     private String name;
     @Email(message = "not_valid.email")
     @NotEmpty(message = "not_empty.email")
+    @Schema(
+            name = "email",
+            description = "email for contact info",
+            example = "test@gmail.com"
+    )
     private String email;
     @NotEmpty(message = "not_empty.subject")
+    @Schema(
+            name = "subject",
+            description = "subject for contact info",
+            example = "Orders issue"
+    )
     private String subject;
     @NotEmpty(message = "not_empty.message")
+    @Schema(
+            name = "message",
+            description = "message for contact info",
+            example = "Orders issue........................................."
+    )
     private String message;
     @Enumerated(EnumType.STRING)
     private FilterContactInfo status;

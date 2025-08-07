@@ -45,6 +45,7 @@ public class ContactInfoServiceImpl implements ContactInfoService {
 
     @Override
     @Transactional
+    @CacheEvict(value = "contacts", allEntries = true)
     public ContactInfoDto createContactInfo(ContactInfoDto contactInfoDto) {
         Account account = getAccount();
         if (Objects.nonNull(contactInfoDto.getId())) {

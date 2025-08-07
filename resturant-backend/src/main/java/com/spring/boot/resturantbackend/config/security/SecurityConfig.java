@@ -32,7 +32,12 @@ public class SecurityConfig {
         );
         http.authorizeHttpRequests(
                 authorizeRequests -> authorizeRequests
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers(
+                                "/auth/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html"
+                        ).permitAll()
                         .anyRequest().authenticated()
         );
         http.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);

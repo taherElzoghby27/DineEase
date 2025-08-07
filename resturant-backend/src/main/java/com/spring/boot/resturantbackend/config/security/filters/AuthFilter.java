@@ -108,6 +108,10 @@ public class AuthFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return request.getRequestURI().contains("auth/login") || request.getRequestURI().contains("auth/sign-up");
+        return request.getRequestURI().contains("auth/login")
+               || request.getRequestURI().contains("auth/sign-up")
+               || request.getRequestURI().contains("/v3/api-docs")
+               || request.getRequestURI().contains("/swagger-ui")
+               || request.getRequestURI().contains("/swagger-ui.html");
     }
 }
