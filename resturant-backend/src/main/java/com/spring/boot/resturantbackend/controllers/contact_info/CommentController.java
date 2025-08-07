@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Comment Controller", description = "operations on Comments Contact Info")
 @RestController
 @RequestMapping("/comments")
-@CrossOrigin("http://localhost:4200")
 public class CommentController {
     @Autowired
     private CommentService commentService;

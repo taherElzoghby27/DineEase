@@ -21,7 +21,6 @@ import java.util.List;
 @Tag(name = "Contact info Controller", description = "operations on Contacts info")
 @RestController
 @RequestMapping("/contacts-info")
-@CrossOrigin("http://localhost:4200")
 public class ContactInfoController {
     @Autowired
     private ContactInfoService contactInfoService;

@@ -4,6 +4,7 @@ import com.spring.boot.resturantbackend.dto.ExceptionDto;
 import com.spring.boot.resturantbackend.dto.product.ProductDetailsDto;
 import com.spring.boot.resturantbackend.services.product.ProductDetailsService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,24 +25,57 @@ public class ProductDetailsController {
     @Autowired
     private ProductDetailsService productDetailsService;
 
-    @Operation(summary = "add product details to product")
+    @Operation(
+            summary = "Add detailed information to a product",
+            description = "Associate additional details with an existing product such as nutritional information, " +
+                          "allergen data, preparation time, dietary restrictions, or special cooking instructions. " +
+                          "This operation is restricted to administrators only."
+    )
     @ApiResponses({
             @ApiResponse(
-                    responseCode = "200",
-                    description = "Http Status add product details"),
-            @ApiResponse(
-                    responseCode = "500",
-                    description = "Http Status internal server error",
+                    responseCode = "201",
+                    description = "Product details successfully added",
                     content = @Content(
-                            schema = @Schema(implementation = ExceptionDto.class))
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ProductDetailsDto.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Bad request - Invalid product details data",
+                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized - Authentication required",
+                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Forbidden - Admin role required",
+                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Http Status Not Found",
-                    content = @Content(
-                            schema = @Schema(implementation = ExceptionDto.class))
+                    description = "Product not found - Cannot add details to non-existent product",
+                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "409",
+                    description = "Conflict - Product already has details associated",
+                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "422",
+                    description = "Unprocessable entity - Validation failed",
+                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal server error",
+                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))
             )
-            ,})
+    })
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add-product-details")
     public ResponseEntity<ProductDetailsDto> addProductDetails(@Valid @RequestBody ProductDetailsDto productDetailsDto) {
@@ -52,54 +86,101 @@ public class ProductDetailsController {
         );
     }
 
-    @Operation(summary = "get product details by product id")
+    @Operation(
+            summary = "Retrieve product details by product ID",
+            description = "Get comprehensive details for a specific product including nutritional information, " +
+                          "allergens, preparation time, dietary information, and any special attributes. " +
+                          "Available to all authenticated users for viewing menu item details."
+    )
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
-                    description = "Http Status get product details"),
-            @ApiResponse(
-                    responseCode = "500",
-                    description = "Http Status internal server error",
+                    description = "Successfully retrieved product details",
                     content = @Content(
-                            schema = @Schema(implementation = ExceptionDto.class)
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ProductDetailsDto.class)
                     )
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized - Authentication required",
+                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Forbidden - Access denied",
+                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Http Status Not Found",
-                    content = @Content(
-                            schema = @Schema(implementation = ExceptionDto.class)
-                    )
+                    description = "Product not found or no details available for this product",
+                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))
             ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal server error",
+                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))
+            )
     })
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/get-product-details")
-    public ResponseEntity<ProductDetailsDto> getProductDetailsByProductId(@RequestParam Long id) {
+    public ResponseEntity<ProductDetailsDto> getProductDetailsByProductId(
+            @Parameter(
+                    description = "Unique identifier of the product whose details are being requested",
+                    example = "123",
+                    required = true
+            )
+            @RequestParam Long id
+    ) {
         return ResponseEntity.ok(productDetailsService.getProductDetailsByProductId(id));
     }
 
 
-    @Operation(summary = "update product details")
+    @Operation(
+            summary = "Update existing product details",
+            description = "Modify the detailed information of an existing product. This allows updating " +
+                          "nutritional data, allergen information, preparation instructions, or any other " +
+                          "supplementary product attributes. This operation is restricted to administrators only."
+    )
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
-                    description = "Http Status get product details"),
-            @ApiResponse(
-                    responseCode = "500",
-                    description = "Http Status internal server error",
+                    description = "Product details successfully updated",
                     content = @Content(
-                            schema = @Schema(
-                                    implementation = ExceptionDto.class
-                            )
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ProductDetailsDto.class)
                     )
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Bad request - Invalid product details data",
+                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized - Authentication required",
+                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Forbidden - Admin role required",
+                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Http Status Not Found",
-                    content = @Content(
-                            schema = @Schema(implementation = ExceptionDto.class)
-                    )
+                    description = "Product or product details not found",
+                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))
             ),
+            @ApiResponse(
+                    responseCode = "422",
+                    description = "Unprocessable entity - Validation failed",
+                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal server error",
+                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))
+            )
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update-product-details")
