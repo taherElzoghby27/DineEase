@@ -4,6 +4,7 @@ import com.spring.boot.resturantbackend.dto.CategoryDto;
 import com.spring.boot.resturantbackend.dto.ExceptionDto;
 import com.spring.boot.resturantbackend.services.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -54,7 +55,10 @@ public class CategoryController {
     }
 
     @Operation(
-            summary = "create category"
+            summary = "create category",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    required = true
+            )
     )
     @ApiResponses({
             @ApiResponse(
@@ -100,12 +104,22 @@ public class CategoryController {
     })
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/get-category/{id}")
-    public ResponseEntity<CategoryDto> getCategoryById(@PathVariable Long id) {
+    public ResponseEntity<CategoryDto> getCategoryById(
+            @Parameter(
+                    description = "Unique identifier of the product category to retrieve",
+                    example = "5",
+                    required = true
+            )
+            @PathVariable Long id
+    ) {
         return ResponseEntity.ok(categoryService.getCategoryById(id));
     }
 
     @Operation(
-            summary = "update category"
+            summary = "update category",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    required = true
+            )
     )
     @ApiResponses({
             @ApiResponse(
@@ -151,7 +165,14 @@ public class CategoryController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete-category/{id}")
-    public ResponseEntity<Void> deleteCategoryById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCategoryById(
+            @Parameter(
+                    description = "Unique identifier of the product category to delete",
+                    example = "5",
+                    required = true
+            )
+            @PathVariable Long id
+    ) {
         categoryService.deleteCategoryById(id);
         return ResponseEntity.noContent().build();
     }

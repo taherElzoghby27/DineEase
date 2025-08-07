@@ -27,22 +27,52 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    @Operation(summary = "sign up")
+    @Operation(
+            summary = "sign up",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    required = true
+            )
+    )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Http Status sign up"),
-            @ApiResponse(responseCode = "500", description = "Http Status internal server error",
-                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))),
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Http Status sign up"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Http Status internal server error",
+                    content = @Content(
+                            schema = @Schema(
+                                    implementation = ExceptionDto.class
+                            )
+                    )
+            ),
     })
     @PostMapping("/sign-up")
     public ResponseEntity<AccountAuthResponseVm> signUp(@RequestBody @Valid AccountAuthRequestVm accountAuthRequestVm) {
         return ResponseEntity.created(URI.create("/sign-up")).body(authService.signUp(accountAuthRequestVm));
     }
 
-    @Operation(summary = "login")
+    @Operation(
+            summary = "login",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    required = true
+            )
+    )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Http Status sign up"),
-            @ApiResponse(responseCode = "500", description = "Http Status internal server error",
-                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))),
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Http Status sign up"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Http Status internal server error",
+                    content = @Content(
+                            schema = @Schema(
+                                    implementation = ExceptionDto.class
+                            )
+                    )
+            ),
     })
     @PostMapping("/login")
     public ResponseEntity<AccountAuthResponseVm> login(@RequestBody @Valid AccountAuthRequestVm accountAuthRequestVm) {
@@ -51,9 +81,19 @@ public class AuthController {
 
     @Operation(summary = "get profile")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Http Status get profile"),
-            @ApiResponse(responseCode = "500", description = "Http Status internal server error",
-                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))),
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Http Status get profile"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Http Status internal server error",
+                    content = @Content(
+                            schema = @Schema(
+                                    implementation = ExceptionDto.class
+                            )
+                    )
+            ),
     })
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
@@ -61,11 +101,25 @@ public class AuthController {
         return ResponseEntity.ok(authService.getProfile());
     }
 
-    @Operation(summary = "update profile")
+    @Operation(
+            summary = "update profile",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    required = true
+            )
+    )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Http Status update profile"),
-            @ApiResponse(responseCode = "500", description = "Http Status internal server error",
-                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))),
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Http Status update profile"),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Http Status internal server error",
+                    content = @Content(
+                            schema = @Schema(
+                                    implementation = ExceptionDto.class
+                            )
+                    )
+            ),
     })
     @PreAuthorize("isAuthenticated()")
     @PutMapping("/update-profile")
@@ -73,11 +127,26 @@ public class AuthController {
         return ResponseEntity.created(URI.create("/update-profile")).body(authService.updateProfile(updateProfileVm));
     }
 
-    @Operation(summary = "change Password")
+    @Operation(
+            summary = "change Password",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    required = true
+            )
+    )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Http Status change Password"),
-            @ApiResponse(responseCode = "500", description = "Http Status internal server error",
-                    content = @Content(schema = @Schema(implementation = ExceptionDto.class))),
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Http Status change Password"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Http Status internal server error",
+                    content = @Content(
+                            schema = @Schema(
+                                    implementation = ExceptionDto.class
+                            )
+                    )
+            ),
     })
     @PreAuthorize("isAuthenticated()")
     @PutMapping("/change-password")
