@@ -71,6 +71,7 @@ The system now includes an intelligent Category Recommendation engine that dynam
 - `DBeaver` (DB GUI Tool)
 - `Postman` (API Testing)
 - `Tomcat` (Spring Boot embedded server)
+- `Swagger API` (designing, documenting, and testing REST APIs)
 ## Entity-Relationship Diagram
 ![ERD](assets/ERD.png)
 
