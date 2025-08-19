@@ -1,6 +1,7 @@
 package com.spring.boot.resturantbackend.services.impl.order;
 
 import com.spring.boot.resturantbackend.dto.OrderDto;
+import com.spring.boot.resturantbackend.dto.security.AccountDto;
 import com.spring.boot.resturantbackend.exceptions.BadRequestException;
 import com.spring.boot.resturantbackend.exceptions.NotFoundResourceException;
 import com.spring.boot.resturantbackend.mappers.OrderMapper;
@@ -18,7 +19,7 @@ import com.spring.boot.resturantbackend.utils.SecurityUtils;
 import com.spring.boot.resturantbackend.vm.RequestOrderVm;
 import com.spring.boot.resturantbackend.vm.RequestUpdateStatusOrder;
 import com.spring.boot.resturantbackend.vm.ResponseOrderVm;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
@@ -29,17 +30,14 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
-    @Autowired
-    private OrderRepo orderRepo;
-    @Autowired
-    private ProductService productService;
-    @Autowired
-    private AccountService accountService;
-    @Autowired
-    private OrderStrategyFactory orderStrategyFactory;
-    @Autowired
-    private CategoryService categoryService;
+
+    private final OrderRepo orderRepo;
+    private final ProductService productService;
+    private final AccountService accountService;
+    private final OrderStrategyFactory orderStrategyFactory;
+    private final CategoryService categoryService;
 
 
     @CachePut(value = "orders", key = "#result.id")
@@ -47,19 +45,17 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public ResponseOrderVm requestOrder(RequestOrderVm requestOrderVm) {
+        AccountDto accountDto = SecurityUtils.getCurrentAccount();
         if (Objects.nonNull(requestOrderVm.getId())) {
             throw new BadRequestException("id.must_be.null");
         }
         if (Objects.isNull(requestOrderVm.getProductsIds()) || requestOrderVm.getProductsIds().isEmpty()) {
             throw new BadRequestException("products_id.must_be.not_null");
         }
-        if (Objects.isNull(requestOrderVm.getAccountId())) {
-            throw new BadRequestException("account_id.must_be.not_null");
-        }
         //get products
         List<Product> products = productService.listOfIdsToListOfProducts(requestOrderVm.getProductsIds());
         //get account
-        Account account = accountService.idToAccount(requestOrderVm.getAccountId());
+        Account account = accountService.idToAccount(accountDto.getId());
         //convert RequestOrderDto to order
         Order order = OrderMapper.ORDER_MAPPER.toOrder(requestOrderVm);
         //set products to order

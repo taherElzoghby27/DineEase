@@ -9,7 +9,7 @@ import com.spring.boot.resturantbackend.models.contact_info.ContactInfo;
 import com.spring.boot.resturantbackend.repositories.contact_info.CommentRepo;
 import com.spring.boot.resturantbackend.services.contact_info.ContactInfoService;
 import com.spring.boot.resturantbackend.services.contact_info.strategies.CommentStrategy;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserCommentStrategy implements CommentStrategy {
-    @Autowired
-    private CommentRepo commentRepo;
-    @Autowired
-    private ContactInfoService contactInfoService;
+    private final CommentRepo commentRepo;
+    private final ContactInfoService contactInfoService;
 
     @Override
     @Transactional

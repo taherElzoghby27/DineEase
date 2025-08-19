@@ -8,6 +8,7 @@ import com.spring.boot.resturantbackend.models.Category;
 import com.spring.boot.resturantbackend.repositories.CategoryRepo;
 import com.spring.boot.resturantbackend.services.CategoryService;
 import jakarta.transaction.SystemException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -21,9 +22,9 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
-    @Autowired
-    private CategoryRepo categoryRepo;
+    private final CategoryRepo categoryRepo;
 
     @Cacheable(value = "categories", key = "'all'")
     @Override

@@ -15,7 +15,7 @@ import com.spring.boot.resturantbackend.services.security.AccountService;
 import com.spring.boot.resturantbackend.utils.SecurityUtils;
 import com.spring.boot.resturantbackend.utils.enums.FilterContactInfo;
 import com.spring.boot.resturantbackend.utils.enums.RoleEnum;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -26,14 +26,11 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ContactInfoServiceImpl implements ContactInfoService {
-
-    @Autowired
-    private ContactInfoRepo contactInfoRepo;
-    @Autowired
-    private ContactInfoStrategyFactory contactInfoStrategyFactory;
-    @Autowired
-    private AccountService accountService;
+    private final ContactInfoRepo contactInfoRepo;
+    private final ContactInfoStrategyFactory contactInfoStrategyFactory;
+    private final AccountService accountService;
 
 
     @Override

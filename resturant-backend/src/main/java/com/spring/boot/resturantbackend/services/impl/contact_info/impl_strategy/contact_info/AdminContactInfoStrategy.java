@@ -7,7 +7,7 @@ import com.spring.boot.resturantbackend.models.contact_info.ContactInfo;
 import com.spring.boot.resturantbackend.repositories.contact_info.ContactInfoRepo;
 import com.spring.boot.resturantbackend.services.contact_info.strategies.ContactInfoRetrievalStrategy;
 import com.spring.boot.resturantbackend.utils.enums.FilterContactInfo;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +16,10 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service("adminServiceContactInfo")
+@RequiredArgsConstructor
 public class AdminContactInfoStrategy implements ContactInfoRetrievalStrategy {
-    @Autowired
-    private ContactInfoRepo contactInfoRepo;
+
+    private final ContactInfoRepo contactInfoRepo;
 
     @Cacheable(value = "contacts", key = "'admin'+(#filter==null?'ALL':#filter)")
     @Override

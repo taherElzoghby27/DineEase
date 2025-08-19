@@ -13,6 +13,7 @@ import com.spring.boot.resturantbackend.repositories.product.ProductRepo;
 import com.spring.boot.resturantbackend.services.CategoryService;
 import com.spring.boot.resturantbackend.services.product.ProductService;
 import com.spring.boot.resturantbackend.vm.product.ProductRequestVm;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -28,11 +29,10 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
-    @Autowired
-    private ProductRepo productRepo;
-    @Autowired
-    private CategoryService categoryService;
+    private final ProductRepo productRepo;
+    private final CategoryService categoryService;
 
     @Override
     @Cacheable(value = "products", key = "'products'+#page +'-'+#size")

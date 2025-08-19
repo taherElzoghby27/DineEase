@@ -13,6 +13,7 @@ import com.spring.boot.resturantbackend.vm.Security.AccountAuthRequestVm;
 import com.spring.boot.resturantbackend.vm.Security.AccountAuthResponseVm;
 import com.spring.boot.resturantbackend.vm.Security.ChangePasswordRequest;
 import com.spring.boot.resturantbackend.vm.Security.UpdateProfileVm;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,13 +22,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Objects;
 
 @Service
+@RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
-    @Autowired
-    private AccountService accountService;
-    @Autowired
-    private TokenHandler tokenHandler;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final AccountService accountService;
+    private final TokenHandler tokenHandler;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public AccountAuthResponseVm signUp(AccountAuthRequestVm accountAuthRequestVm) {
@@ -54,7 +53,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public UpdateProfileVm getProfile() {
-        AccountDto accountDto = getUserDataFromContext();
+        AccountDto accountDto = SecurityUtils.getCurrentAccount();
         accountDto = accountService.getAccountById(accountDto.getId());
         return AccountMapper.ACCOUNT_MAPPER.toProfileResponseVm(accountDto);
     }
@@ -62,10 +61,6 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional
     public UpdateProfileVm updateProfile(UpdateProfileVm updateProfileVm) {
-        AccountDto accountDto = getUserDataFromContext();
-        if (Objects.isNull(accountDto)) {
-            throw new NotFoundResourceException("not_found.account");
-        }
         updateProfileVm = accountService.updateAccount(updateProfileVm);
         return updateProfileVm;
     }
@@ -82,20 +77,4 @@ public class AuthServiceImpl implements AuthService {
         accountService.changePassword(changePasswordRequest);
     }
 
-    private AccountDto getUserDataFromContext() {
-        AccountDto accountDto = SecurityUtils.getCurrentAccount();
-        accountDto = validateAccountDto(accountDto);
-        return accountDto;
-    }
-
-    private AccountDto validateAccountDto(AccountDto accountDto) {
-        if (Objects.isNull(accountDto.getId())) {
-            throw new BadRequestException("id.must_be.not_null");
-        }
-        accountDto = accountService.getAccountById(accountDto.getId());
-        if (Objects.isNull(accountDto)) {
-            throw new NotFoundResourceException("not_found.account");
-        }
-        return accountDto;
-    }
 }

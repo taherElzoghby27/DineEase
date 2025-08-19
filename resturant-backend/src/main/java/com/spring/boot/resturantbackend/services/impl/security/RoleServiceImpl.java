@@ -6,16 +6,16 @@ import com.spring.boot.resturantbackend.mappers.security.RoleMapper;
 import com.spring.boot.resturantbackend.models.security.Role;
 import com.spring.boot.resturantbackend.repositories.security.RoleRepo;
 import com.spring.boot.resturantbackend.services.security.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
-    @Autowired
-    private RoleRepo roleRepo;
+    private final RoleRepo roleRepo;
 
     @Override
     public RoleDto findByRole(String role) {

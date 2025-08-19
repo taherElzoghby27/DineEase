@@ -5,14 +5,14 @@ import com.spring.boot.resturantbackend.services.contact_info.CommentService;
 import com.spring.boot.resturantbackend.services.impl.contact_info.factories.CommentStrategyFactory;
 import com.spring.boot.resturantbackend.utils.SecurityUtils;
 import com.spring.boot.resturantbackend.utils.enums.RoleEnum;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
-    @Autowired
-    private CommentStrategyFactory commentStrategyFactory;
+    private final CommentStrategyFactory commentStrategyFactory;
 
     @CacheEvict(value = "contacts", allEntries = true)
     @Override

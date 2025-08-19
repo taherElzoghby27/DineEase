@@ -12,7 +12,7 @@ import com.spring.boot.resturantbackend.services.contact_info.ContactInfoService
 import com.spring.boot.resturantbackend.services.contact_info.strategies.CommentStrategy;
 import com.spring.boot.resturantbackend.services.security.AccountService;
 import com.spring.boot.resturantbackend.utils.enums.FilterContactInfo;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,13 +20,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AdminCommentStrategy implements CommentStrategy {
-    @Autowired
-    private CommentRepo commentRepo;
-    @Autowired
-    private ContactInfoService contactInfoService;
-    @Autowired
-    private AccountService accountService;
+    private final CommentRepo commentRepo;
+    private final ContactInfoService contactInfoService;
+    private final AccountService accountService;
+
 
     @Override
     @Transactional

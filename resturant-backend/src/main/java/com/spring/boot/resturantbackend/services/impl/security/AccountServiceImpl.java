@@ -12,9 +12,11 @@ import com.spring.boot.resturantbackend.models.security.Role;
 import com.spring.boot.resturantbackend.repositories.security.AccountRepo;
 import com.spring.boot.resturantbackend.services.security.AccountService;
 import com.spring.boot.resturantbackend.services.security.RoleService;
+import com.spring.boot.resturantbackend.utils.SecurityUtils;
 import com.spring.boot.resturantbackend.utils.enums.RoleEnum;
 import com.spring.boot.resturantbackend.vm.Security.ChangePasswordRequest;
 import com.spring.boot.resturantbackend.vm.Security.UpdateProfileVm;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,13 +30,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
-    @Autowired
-    private AccountRepo accountRepo;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private RoleService roleService;
+    private final AccountRepo accountRepo;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleService roleService;
 
     @Override
     public List<AccountDto> getAccounts() {
@@ -86,7 +86,8 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public UpdateProfileVm updateAccount(UpdateProfileVm updateProfileVm) {
-        AccountDto accountDto = validateUpdateAccount(updateProfileVm.getId());
+        AccountDto currentUserDto = SecurityUtils.getCurrentAccount();
+        AccountDto accountDto = validateUpdateAccount(currentUserDto.getId());
         Account account = AccountMapper.ACCOUNT_MAPPER.toAccount(accountDto);
         AccountDetails newAccountDetails = AccountDetailsMapper.ACCOUNT_DETAILS_MAPPER.toAccountDetails(
                 updateProfileVm.getAccountDetails()
@@ -167,9 +168,8 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public void changePassword(ChangePasswordRequest changePasswordRequest) {
-        //get account by username
-        AccountDto accountDto = getAccountByUsername(changePasswordRequest.getUsername());
-        Optional<Account> result = accountRepo.findById(accountDto.getId());
+        AccountDto currentUserDto = SecurityUtils.getCurrentAccount();
+        Optional<Account> result = accountRepo.findById(currentUserDto.getId());
         if (result.isEmpty()) {
             throw new NotFoundResourceException("not_found.account");
         }

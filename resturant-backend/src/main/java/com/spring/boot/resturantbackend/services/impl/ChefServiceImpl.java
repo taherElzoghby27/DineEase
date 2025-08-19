@@ -6,15 +6,15 @@ import com.spring.boot.resturantbackend.mappers.ChefMapper;
 import com.spring.boot.resturantbackend.models.Chef;
 import com.spring.boot.resturantbackend.repositories.ChefRepo;
 import com.spring.boot.resturantbackend.services.ChefService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ChefServiceImpl implements ChefService {
-    @Autowired
-    private ChefRepo chefRepo;
+    private final ChefRepo chefRepo;
 
     @Override
     public List<ChefDto> getAllChefs() {

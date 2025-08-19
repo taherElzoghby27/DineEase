@@ -10,7 +10,7 @@ import com.spring.boot.resturantbackend.models.product.ProductDetails;
 import com.spring.boot.resturantbackend.repositories.product.ProductDetailsRepo;
 import com.spring.boot.resturantbackend.services.product.ProductDetailsService;
 import com.spring.boot.resturantbackend.services.product.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
@@ -21,11 +21,10 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ProductDetailsServiceImpl implements ProductDetailsService {
-    @Autowired
-    private ProductDetailsRepo productDetailsRepo;
-    @Autowired
-    private ProductService productService;
+    private final ProductDetailsRepo productDetailsRepo;
+    private final ProductService productService;
 
     @Override
     @CacheEvict(value = "products", allEntries = true)

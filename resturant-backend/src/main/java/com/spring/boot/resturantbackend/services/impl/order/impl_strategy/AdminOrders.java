@@ -6,16 +6,16 @@ import com.spring.boot.resturantbackend.mappers.OrderMapper;
 import com.spring.boot.resturantbackend.models.Order;
 import com.spring.boot.resturantbackend.repositories.OrderRepo;
 import com.spring.boot.resturantbackend.services.order.OrderAccessStrategy;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AdminOrders implements OrderAccessStrategy {
-    @Autowired
-    private OrderRepo orderRepo;
+    private final OrderRepo orderRepo;
 
     @Cacheable(value = "orders", key = "'all'")
     @Override

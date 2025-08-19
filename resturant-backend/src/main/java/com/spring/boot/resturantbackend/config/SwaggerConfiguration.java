@@ -9,15 +9,15 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @OpenAPIDefinition(
         info = @Info(
-                title = "Resturant Endpoints",
-                description = "all apis for Resturant",
+                title = "DineEasy Endpoints",
+                description = "all apis for DineEasy",
                 contact = @Contact(
                         name = "Taher Elzoghby",
                         email = "tataamen678@gmail.com",
                         url = "https://www.linkedin.com/in/taher-elzoghby-99499b231/"
                 ),
                 license = @License(
-                        name = "resturant license",
+                        name = "DineEasy license",
                         url = "http://localhost:4200"
                 ),
                 version = "1"

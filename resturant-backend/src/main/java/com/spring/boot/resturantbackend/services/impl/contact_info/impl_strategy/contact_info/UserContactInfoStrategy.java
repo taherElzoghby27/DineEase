@@ -9,7 +9,7 @@ import com.spring.boot.resturantbackend.repositories.contact_info.ContactInfoRep
 import com.spring.boot.resturantbackend.services.contact_info.strategies.ContactInfoRetrievalStrategy;
 import com.spring.boot.resturantbackend.utils.SecurityUtils;
 import com.spring.boot.resturantbackend.utils.enums.FilterContactInfo;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,9 +17,9 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service("userServiceContactInfo")
+@RequiredArgsConstructor
 public class UserContactInfoStrategy implements ContactInfoRetrievalStrategy {
-    @Autowired
-    private ContactInfoRepo contactInfoRepo;
+    private final ContactInfoRepo contactInfoRepo;
 
     @Override
     public List<ContactInfoDto> getContactInfo(String filter) {
