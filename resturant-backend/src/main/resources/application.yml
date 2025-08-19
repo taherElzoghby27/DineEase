@@ -29,7 +29,7 @@ spring:
       host: localhost
       port: 6379
 server:
-  port: 7070
+  port: 6060
 
 token:
   secret: 832t82eg8dgwd2fc8cg2bfghbftg8oe8g2e8hihrfghe87drf
