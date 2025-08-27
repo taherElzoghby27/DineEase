@@ -113,5 +113,5 @@ restaurant-management-system/
 │   │   │   └── shared/              # Shared modules/components
 │   ├── assets/                      # Static assets
 │   └── environments/
-└── README.md                        # You are here 📖
+└── README.md                        
 ```
