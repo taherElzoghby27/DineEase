@@ -77,7 +77,7 @@ public class ProductDetailsController {
             )
     })
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/add-product-details")
+    @PostMapping
     public ResponseEntity<ProductDetailsDto> addProductDetails(@Valid @RequestBody ProductDetailsDto productDetailsDto) {
         return ResponseEntity.created(
                 URI.create("/add-product-details-to-product")
@@ -123,14 +123,14 @@ public class ProductDetailsController {
             )
     })
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/get-product-details")
+    @GetMapping("/{id}")
     public ResponseEntity<ProductDetailsDto> getProductDetailsByProductId(
             @Parameter(
                     description = "Unique identifier of the product whose details are being requested",
                     example = "123",
                     required = true
             )
-            @RequestParam Long id
+            @PathVariable Long id
     ) {
         return ResponseEntity.ok(productDetailsService.getProductDetailsByProductId(id));
     }
@@ -183,7 +183,7 @@ public class ProductDetailsController {
             )
     })
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/update-product-details")
+    @PutMapping
     public ResponseEntity<ProductDetailsDto> updateProductDetailsByProductId(@RequestBody @Valid ProductDetailsDto productDetailsDto) {
         return ResponseEntity.ok(productDetailsService.updateProductDetails(productDetailsDto));
     }

@@ -49,7 +49,7 @@ public class CategoryController {
             ),
     })
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/all-categories")
+    @GetMapping
     public ResponseEntity<List<CategoryDto>> getAllCategories() {
         return ResponseEntity.ok(categoryService.getAllCategories());
     }
@@ -74,7 +74,7 @@ public class CategoryController {
             ),
     })
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/create-category")
+    @PostMapping
     public ResponseEntity<CategoryDto> createCategory(@RequestBody @Valid CategoryDto categoryDto) {
         return ResponseEntity.created(URI.create("create-category")).body(categoryService.createCategory(categoryDto));
     }
@@ -103,7 +103,7 @@ public class CategoryController {
             ),
     })
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/get-category/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CategoryDto> getCategoryById(
             @Parameter(
                     description = "Unique identifier of the product category to retrieve",
@@ -135,7 +135,7 @@ public class CategoryController {
             ),
     })
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/update-category")
+    @PutMapping
     public ResponseEntity<CategoryDto> updateCategory(@RequestBody @Valid CategoryDto categoryDto) {
         return ResponseEntity.ok(categoryService.updateCategory(categoryDto));
     }
@@ -164,7 +164,7 @@ public class CategoryController {
             ),
     })
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/delete-category/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategoryById(
             @Parameter(
                     description = "Unique identifier of the product category to delete",
@@ -176,6 +176,4 @@ public class CategoryController {
         categoryService.deleteCategoryById(id);
         return ResponseEntity.noContent().build();
     }
-
-
 }

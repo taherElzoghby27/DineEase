@@ -60,7 +60,7 @@ public class OrderController {
             )
     })
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/all-request-orders")
+    @GetMapping
     public ResponseEntity<List<OrderDto>> getRequestOrders() {
         return ResponseEntity.ok(orderService.getAccessibleOrders());
     }
@@ -109,7 +109,7 @@ public class OrderController {
             )
     })
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/request-order")
+    @PostMapping
     public ResponseEntity<ResponseOrderVm> requestOrder(@RequestBody @Valid RequestOrderVm requestOrderDto) {
         return ResponseEntity.created(URI.create("/request-order")).body(orderService.requestOrder(requestOrderDto));
     }
@@ -159,7 +159,7 @@ public class OrderController {
             )
     })
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/update-order")
+    @PutMapping
     public ResponseEntity<Void> updateOrder(@RequestBody @Valid RequestUpdateStatusOrder requestUpdateStatusOrder) {
         orderService.updateOrder(requestUpdateStatusOrder);
         return ResponseEntity.noContent().build();

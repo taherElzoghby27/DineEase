@@ -1,6 +1,6 @@
 package com.spring.boot.resturantbackend.services.impl.product;
 
-import com.spring.boot.resturantbackend.controllers.vm.ProductResponseVm;
+import com.spring.boot.resturantbackend.vm.ProductResponseVm;
 import com.spring.boot.resturantbackend.dto.CategoryDto;
 import com.spring.boot.resturantbackend.dto.product.ProductDto;
 import com.spring.boot.resturantbackend.exceptions.BadRequestException;
@@ -14,7 +14,6 @@ import com.spring.boot.resturantbackend.services.CategoryService;
 import com.spring.boot.resturantbackend.services.product.ProductService;
 import com.spring.boot.resturantbackend.vm.product.ProductRequestVm;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;

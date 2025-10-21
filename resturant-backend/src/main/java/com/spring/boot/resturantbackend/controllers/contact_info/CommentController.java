@@ -46,7 +46,7 @@ public class CommentController {
             ),
     })
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
-    @PostMapping("/send-comment")
+    @PostMapping
     public ResponseEntity<Void> sendComment(@Valid @RequestBody CommentDto commentDto) {
         commentService.sendComment(commentDto);
         return ResponseEntity.ok().build();

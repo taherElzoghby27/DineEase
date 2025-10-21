@@ -1,6 +1,6 @@
 package com.spring.boot.resturantbackend.services.product;
 
-import com.spring.boot.resturantbackend.controllers.vm.ProductResponseVm;
+import com.spring.boot.resturantbackend.vm.ProductResponseVm;
 import com.spring.boot.resturantbackend.dto.product.ProductDto;
 import com.spring.boot.resturantbackend.models.product.Product;
 import com.spring.boot.resturantbackend.vm.product.ProductRequestVm;

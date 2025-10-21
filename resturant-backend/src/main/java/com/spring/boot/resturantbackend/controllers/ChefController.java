@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
 @Tag(
         name = "Chef Controller",
         description = "get all chefs"
@@ -29,6 +30,7 @@ import java.util.List;
 public class ChefController {
     @Autowired
     private ChefService chefService;
+
     @Operation(
             summary = "get all chefs",
             description = "all chefs in resturant"
@@ -47,7 +49,7 @@ public class ChefController {
             ),
     })
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/all-chefs")
+    @GetMapping
     public ResponseEntity<List<ChefDto>> getAllChefs() {
         return ResponseEntity.ok(chefService.getAllChefs());
     }

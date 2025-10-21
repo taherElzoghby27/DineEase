@@ -1,8 +1,7 @@
 package com.spring.boot.resturantbackend.controllers.product;
 
-import com.spring.boot.resturantbackend.controllers.vm.ProductResponseVm;
+import com.spring.boot.resturantbackend.vm.ProductResponseVm;
 import com.spring.boot.resturantbackend.dto.ExceptionDto;
-import com.spring.boot.resturantbackend.dto.product.ProductDto;
 import com.spring.boot.resturantbackend.services.product.ProductService;
 import com.spring.boot.resturantbackend.vm.product.ProductRequestVm;
 import io.swagger.v3.oas.annotations.Operation;
@@ -60,7 +59,7 @@ public class ProductController {
             )
     })
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/all-products")
+    @GetMapping
     public ResponseEntity<ProductResponseVm> getAllProducts(
             @Parameter(
                     description = "Page number (1-based)",
@@ -114,7 +113,7 @@ public class ProductController {
             )
     })
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/all-products/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ProductResponseVm> getAllProductsByCategoryId(
             @Parameter(
                     description = "Unique identifier of the product category",
@@ -175,7 +174,7 @@ public class ProductController {
             )
     })
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/all-products-by-key")
+    @GetMapping("/by-key")
     public ResponseEntity<ProductResponseVm> getAllProductsByKey(
             @Parameter(
                     description = "Search keyword to filter products by name or description",
@@ -237,7 +236,7 @@ public class ProductController {
             )
     })
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/all-products-by-key-and-category-id")
+    @GetMapping("/by-key-and-category-id")
     public ResponseEntity<ProductResponseVm> getAllProductsByKeyAndCategoryId(
             @Parameter(
                     description = "Unique identifier of the product category to filter by",
@@ -307,7 +306,7 @@ public class ProductController {
             )
     })
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/delete-product")
+    @DeleteMapping
     public ResponseEntity<Void> deleteProductById(
             @Parameter(
                     description = "Unique identifier of the product to be deleted",
@@ -366,7 +365,7 @@ public class ProductController {
             )
     })
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/create-product")
+    @PostMapping
     public ResponseEntity<ProductRequestVm> createProduct(@Valid @RequestBody ProductRequestVm productRequestVm) {
         return ResponseEntity.created(URI.create("/create-product")).body(
                 productService.createProduct(productRequestVm)

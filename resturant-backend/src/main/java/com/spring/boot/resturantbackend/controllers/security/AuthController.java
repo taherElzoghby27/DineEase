@@ -122,7 +122,7 @@ public class AuthController {
             ),
     })
     @PreAuthorize("isAuthenticated()")
-    @PutMapping("/update-profile")
+    @PutMapping("/profile")
     public ResponseEntity<UpdateProfileVm> updateProfile(@Valid @RequestBody UpdateProfileVm updateProfileVm) {
         return ResponseEntity.created(URI.create("/update-profile")).body(authService.updateProfile(updateProfileVm));
     }

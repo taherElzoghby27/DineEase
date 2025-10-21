@@ -48,7 +48,7 @@ public class ContactInfoController {
             ),
     })
     @PreAuthorize("authentication.authorities.size()==1 and hasRole('USER')")
-    @PostMapping("/create-contact-info")
+    @PostMapping
     public ResponseEntity<ContactInfoDto> createContactInfo(@Valid @RequestBody ContactInfoDto contactInfoDto) {
         return ResponseEntity.created(URI.create("/all-categories")).body(contactInfoService.createContactInfo(contactInfoDto));
     }
@@ -56,7 +56,7 @@ public class ContactInfoController {
     @Operation(summary = "get all contacts info for admin", description = "all contacts info for admin in restaurant")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "Http Status get all contacts"), @ApiResponse(responseCode = "500", description = "Http Status internal server error", content = @Content(schema = @Schema(implementation = ExceptionDto.class))),})
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    @GetMapping("/contacts-info")
+    @GetMapping
     public ResponseEntity<List<ContactInfoDto>> getAllContactsInfo(@RequestParam(required = false) String filter) {
         return ResponseEntity.ok(contactInfoService.allContactInfos(filter));
     }
